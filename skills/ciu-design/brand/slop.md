@@ -46,8 +46,8 @@ Run this list against every preview (SKILL.md §6). A hit is evidence of a defau
 31. Sparkle, rocket, light-bulb and ✨ decoration, or emoji used as bullets inside the image. → Nothing; the hero carries the design.
 32. The same corner radius and the same card on every element. → One shape language per design: sharp panels, or a single arch/circle moment.
 33. Cheap trend cosplay: Y2K chrome, bubble letters, glitch, film grain, neon glow. → Not UKÜ (flat, honest). Use scale, crop and a sharp color field for energy instead.
-34. Low-contrast support text (light gray on photo or on a color field, < 4.5:1). → White or `ink` at full strength; thin weights (300) only at ≥ 3.4 % of canvas height.
-35. Tiny type for the info row (date, place) because the title "needs the room". → Info row ≥ 3 % of canvas height; shorten the title instead.
+34. Low-contrast support text (light gray on photo or on a color field, < 4.5:1). → White or `ink` at full strength; thin weights (300) only at ≥ 3.4 % of the canvas short side.
+35. Tiny type for the info row (date, place) because the title "needs the room". → Info row ≥ 3 % of the canvas short side; shorten the title instead.
 36. Video: every scene zooms in the same direction, every cut is the same fade or push, every line pops on the beat. → Alternate drift direction, vary entrances (wipe / rise / scale), one signature move; hard cuts are fine on the beat.
 
 ## Refine pass (after the list)

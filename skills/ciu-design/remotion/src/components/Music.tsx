@@ -15,5 +15,5 @@ export const Music: FC<MusicProps & { duck?: [number, number] }> = ({ music, mus
     const gain = duck ? interpolate(f, [duck[0] - ramp, duck[0], duck[1], duck[1] + ramp], [1, DUCK_GAIN, DUCK_GAIN, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 1;
     return musicVolume * fade * gain;
   };
-  return <Audio src={src} volume={volume} loop />;
+  return <Audio src={src} volume={volume} loop loopVolumeCurveBehavior="extend" />;
 };

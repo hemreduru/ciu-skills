@@ -10,6 +10,7 @@ const SRC = join(dirname(fileURLToPath(import.meta.url)), "..", "remotion", "src
 const args = process.argv.slice(2);
 const wi = args.indexOf("--work");
 const work = wi >= 0 ? args.splice(wi, 2)[1] : undefined;
+if (wi >= 0 && !work) (console.log("--work için klasör yolu ver."), process.exit(2));
 const file = args[0];
 if (!file) {
   console.log("Kullanım: node check.mjs <design.json> [--work <WORK>]");
@@ -29,7 +30,10 @@ if (work) {
   const input = (n) => join(work, "public", "input", n);
   const cache = new Map();
   const info = (n) => cache.get(n) ?? cache.set(n, probe(work, input(n))).get(n);
-  const tracks = JSON.parse(readFileSync(join(work, "public", "music", "index.json"), "utf8")).map((t) => t.id);
+  let tracks = [];
+  try {
+    tracks = JSON.parse(readFileSync(join(work, "public", "music", "index.json"), "utf8")).map((t) => t.id);
+  } catch {}
   files = {
     exists: (n) => existsSync(input(n)),
     seconds: (n) => (existsSync(input(n)) ? info(n).seconds : undefined),

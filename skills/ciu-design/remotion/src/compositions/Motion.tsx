@@ -9,13 +9,13 @@ import { VideoFrame } from "../components/VideoFrame";
 import { enter, ease, exit, STAGGER, wipe } from "../lib/motion";
 import { safeArea } from "../lib/rules";
 import { useUserFont } from "../lib/useUserFont";
-import type { FontChoice, MotionProps, Slide } from "../schema";
+import type { FontChoice, Lang, MotionProps, Slide } from "../schema";
 
 const OUTRO_SECONDS = 3;
 
 export const motionSeconds = (p: MotionProps): number => p.slides.reduce((sum, s) => sum + s.seconds, 0) + OUTRO_SECONDS;
 
-const SlideView: FC<{ slide: Slide; lang: string; frames: number; index: number; font?: FontChoice }> = ({ slide, lang, frames, index, font }) => {
+const SlideView: FC<{ slide: Slide; lang: Lang; frames: number; index: number; font?: FontChoice }> = ({ slide, lang, frames, index, font }) => {
   const fonts = useUserFont(font);
   const frame = useCurrentFrame();
   const { fps, width, height } = useVideoConfig();

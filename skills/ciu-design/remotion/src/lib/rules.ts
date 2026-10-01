@@ -64,7 +64,7 @@ export type Surface = "light" | "dark";
 export const toneFitsSurface = (tone: LogoEntry["tone"], surface: Surface): boolean =>
   surface === "dark" ? tone === "white" : tone !== "white";
 
-const TIME = String.raw`(?:\s*[^\d\s]?\s*(\d{1,2})[:.](\d{2}))?`;
+const TIME = String.raw`(?:\s*[^\d\s\-–—]?\s*(\d{1,2})[:.](\d{2})(?!\d|\.\d))?`;
 const DATE_RE = new RegExp(String.raw`(?<![\d.:/-])(?:(\d{4})[./-](\d{1,2})[./-](\d{1,2})(?![\d])|\d{1,2}[./-]\d{1,2}[./-]\d{2,4}(?![\d.]))` + TIME, "g");
 const DATE_OK = /^\d{2}\.\d{2}\.\d{4}(?: \d{2}:\d{2})?$/;
 const DMY_RE = /^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})/;
@@ -145,6 +145,7 @@ export const fileProblems = (d: Json, files: FileInfo): string[] => {
   for (const [kind, name, where] of refs(d)) {
     if (!(EXT[kind] as readonly string[]).includes(extOf(name))) errors.push(`${where}: "${name}" ${KIND_TR[kind]} dosyası olamaz. Desteklenen türler: ${EXT[kind].join(", ")}.`);
     else if (!files.exists(name)) errors.push(`${where}: "${name}" bulunamadı. Dosyayı çalışma klasöründeki public/input içine kopyala.`);
+    else if (kind === "video" && files.seconds(name) === undefined) errors.push(`${where}: "${name}" okunamadı (bozuk dosya ya da desteklenmeyen codec). Dosyayı mp4 (H.264) olarak yeniden kodla.`);
   }
   if (d.music && d.musicTrack) errors.push("music ve musicTrack birlikte olamaz: kendi müziğin ya da paketten bir parça seç.");
   if (d.musicTrack && !files.tracks.includes(d.musicTrack)) errors.push(`musicTrack bulunamadı: ${d.musicTrack}. Geçerli id'ler: ${files.tracks.join(", ")}.`);

@@ -19,7 +19,7 @@ Colors and fonts are fixed, so distinctiveness comes from these:
 - **Color field** — one deep field (`wine`, `ink`, or the `panels.*` token that matches the photo's mood) plus at most one accent (`orange`), used small: bars, numbers, rules.
 - **Weight range** — Poppins 300/400/600/700/900 and 900 italic; Source Sans 3 200–900. Pair extremes (900 hero + 300/400 support), not 700 everywhere.
 - **Grid breaking** — keep one strong grid, then break it once on purpose: one element bleeds off the canvas edge (3–8 % cut off), overlaps the photo seam, or sits off the shared axis. Break it for the hero only, never for the logo or the info row.
-- **Contrast floor** — text vs. its ground ≥ 4.5:1 (white on `wine`/`ink`/`panels.*` passes; white on `orange` only for large bold type ≥ 5 % of height). Hierarchy needs at least three clearly different sizes (hero / support / info) and two weights.
+- **Contrast floor** — text vs. its ground ≥ 4.5:1 (white on `wine`/`ink`/`panels.*` passes; white on `orange` only for bold type ≥ 5 % of the short side). Hierarchy needs at least three clearly different sizes (hero / support / info) and two weights.
 - **Color split** — roughly 60 % calm ground (photo or deep field), 30 % second tone (photo tint, white), ≤ 10 % `orange`/`red` accent.
 - **Hook** — a still must be understood in 1 s: the hero is readable at thumbnail size (phone feed, ≈ 300 px wide). Video: the hero or a bold first line is on screen within the first second.
 - **Rhythm** — repeat one element (bars, tiles, photo strips, hairlines) and break the repetition once, on purpose.

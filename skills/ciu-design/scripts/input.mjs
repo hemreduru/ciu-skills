@@ -36,7 +36,7 @@ const name = `${arg("name") ? ascii(arg("name")) : ascii(basename(origName, extn
 const dest = join(dir, name);
 try {
   if (isUrl) {
-    const res = await fetch(source, { redirect: "follow" });
+    const res = await fetch(source, { redirect: "follow", signal: AbortSignal.timeout(60000) });
     if (!res.ok) die(`İndirilemedi (${res.status}). Dosyayı yükleyip yolunu ver.`);
     writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
   } else copyFileSync(source, dest);

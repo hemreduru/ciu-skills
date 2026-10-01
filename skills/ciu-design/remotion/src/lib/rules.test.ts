@@ -148,3 +148,9 @@ test("designWarnings: low-res photo and off-brand font", () => {
   assert.match(designWarnings({ font: { file: "f.ttf" } }).join(), /Marka fontu/);
   assert.deepEqual(designWarnings({ photo: { src: "a.jpg" } }), []);
 });
+
+test("dateProblems: date ranges are not read as date + time", () => {
+  assert.deepEqual(dateProblems("11.09.2026 - 13.09.2026"), []);
+  assert.deepEqual(dateProblems("11.09.2026-13.09.2026"), []);
+  assert.deepEqual(dateProblems("11.09.2026–13.09.2026"), []);
+});
