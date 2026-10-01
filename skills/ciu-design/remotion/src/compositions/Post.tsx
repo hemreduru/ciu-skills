@@ -5,13 +5,15 @@ import { LogoRow } from "../components/Logo";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { TextBlock } from "../components/TextBlock";
 import { safeArea } from "../lib/rules";
+import { useUserFont } from "../lib/useUserFont";
 import type { PostProps } from "../schema";
 
 export const Post: FC<PostProps> = (p) => {
   const { width, height } = useVideoConfig();
   const u = Math.min(width, height) / 100;
   const safe = safeArea(width, height);
-  const text = { title: p.title, subtitle: p.subtitle, meta: p.meta, lang: p.lang, accent: colors[p.accent ?? "red"], u, titleScale: p.titleScale };
+  const fonts = useUserFont(p.font);
+  const text = { fonts, title: p.title, subtitle: p.subtitle, meta: p.meta, lang: p.lang, accent: colors[p.accent ?? "red"], u, titleScale: p.titleScale };
 
   if (p.layout === "band" && !p.transparent) {
     const bandH = Math.round(height * 0.38);
@@ -36,10 +38,10 @@ export const Post: FC<PostProps> = (p) => {
       <div
         style={{
           position: "absolute",
-          left: safe.side,
-          right: safe.side,
+          left: p.transparent ? safe.side : 0,
+          right: p.transparent ? safe.side : safe.side * 2.5,
           bottom: safe.bottom,
-          padding: p.transparent ? 0 : 5 * u,
+          padding: p.transparent ? 0 : `${5 * u}px ${5 * u}px ${5 * u}px ${safe.side}px`,
           backgroundColor: p.transparent ? undefined : colors.wine,
         }}
       >

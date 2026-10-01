@@ -1,10 +1,11 @@
 import type { FC } from "react";
-import { AbsoluteFill, Audio, OffthreadVideo, Sequence, staticFile, useVideoConfig } from "remotion";
+import { AbsoluteFill, OffthreadVideo, Sequence, staticFile, useVideoConfig } from "remotion";
 import { colors } from "../brand";
 import { BrandCard } from "../components/BrandCard";
 import { Captions } from "../components/Captions";
 import { Logo } from "../components/Logo";
 import { LowerThird } from "../components/LowerThird";
+import { Music } from "../components/Music";
 import { safeArea } from "../lib/rules";
 import type { BrandedProps } from "../schema";
 
@@ -38,7 +39,7 @@ export const Branded: FC<BrandedProps> = (p) => {
       <Sequence from={f(INTRO_SECONDS + p.videoSeconds)} durationInFrames={f(OUTRO_SECONDS)}>
         <BrandCard logoId={p.cardLogoId} lines={p.outro} />
       </Sequence>
-      {p.music && <Audio src={staticFile(`input/${p.music}`)} volume={p.musicVolume ?? 0.25} />}
+      <Music {...p} musicVolume={p.musicVolume ?? 0.4} duck={p.musicDuck === false ? undefined : [f(INTRO_SECONDS), f(INTRO_SECONDS + p.videoSeconds)]} />
     </AbsoluteFill>
   );
 };

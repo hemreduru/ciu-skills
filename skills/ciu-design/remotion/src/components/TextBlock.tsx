@@ -12,15 +12,16 @@ type Props = {
   accent: string;
   u: number;
   titleScale?: number;
+  fonts?: { heading: string; body: string };
 };
 
-export const TextBlock: FC<Props> = ({ title, subtitle, meta, lang, color, accent, u, titleScale = 1 }) => (
-  <div lang={lang} style={{ color, fontFamily: fontCss.body }}>
+export const TextBlock: FC<Props> = ({ title, subtitle, meta, lang, color, accent, u, titleScale = 1, fonts = fontCss }) => (
+  <div lang={lang} style={{ color, fontFamily: fonts.body }}>
     <div style={{ width: 12 * u, height: 0.8 * u, backgroundColor: accent, marginBottom: 2.5 * u }} />
-    <div style={{ fontFamily: fontCss.heading, fontSize: 7 * u * titleScale, fontWeight: 700, lineHeight: 1.05 }}>
+    <div style={{ fontFamily: fonts.heading, fontSize: 8 * u * titleScale, fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.02em", textWrap: "balance" }}>
       {typography.titleUpper ? trUpper(title, lang) : title}
     </div>
-    {subtitle && <div style={{ fontSize: 3.6 * u, marginTop: 2 * u, lineHeight: 1.25 }}>{subtitle}</div>}
+    {subtitle && <div style={{ fontSize: 3.6 * u, fontWeight: 300, marginTop: 2.5 * u, lineHeight: 1.25 }}>{subtitle}</div>}
     {meta && <div style={{ fontSize: 3 * u, fontWeight: 600, marginTop: 3 * u }}>{meta}</div>}
   </div>
 );

@@ -107,7 +107,79 @@ const strings = (v: unknown): string[] =>
 const copyText = (d: Json): string[] =>
   strings([d.title, d.subtitle, d.meta, d.text, d.outro, d.slides?.map((s: Json) => [s.title, s.subtitle]), d.lowerThirds?.map((l: Json) => [l.name, l.role])]);
 
-export const checkDesign = (d: Json, logos: readonly LogoEntry[]): string[] => {
+/** Lookup of user files in public/input/; omitted when the work folder is unknown (file checks are then skipped). */
+export type FileInfo = {
+  exists: (name: string) => boolean;
+  seconds: (name: string) => number | undefined;
+  size: (name: string) => { width: number; height: number } | undefined;
+  tracks: readonly string[];
+};
+
+export const EXT = {
+  photo: ["jpg", "jpeg", "png", "webp"],
+  video: ["mp4", "mov", "webm", "m4v"],
+  audio: ["mp3", "wav", "m4a", "aac", "ogg"],
+  font: ["ttf", "otf", "woff2", "woff"],
+} as const;
+type Kind = keyof typeof EXT;
+const KIND_TR: Record<Kind, string> = { photo: "fotoğraf", video: "video", audio: "müzik", font: "font" };
+const MIN_PHOTO_SIDE = 1080;
+const SLACK = 0.3;
+
+const refs = (d: Json): [Kind, string, string][] => {
+  const out: [Kind, string, string][] = [];
+  const add = (kind: Kind, name: unknown, where: string) => typeof name === "string" && name && out.push([kind, name, where]);
+  add("photo", d.photo?.src, "photo");
+  (d.photos ?? []).forEach((p: Json, i: number) => add("photo", p?.src, `photos[${i}]`));
+  (d.slides ?? []).forEach((s: Json, i: number) => (add("photo", s?.photo?.src, `slides[${i}].photo`), add("video", s?.video, `slides[${i}].video`)));
+  add("video", d.video, "video");
+  add("audio", d.music, "music");
+  add("font", d.font?.file, "font");
+  return out;
+};
+
+const extOf = (name: string): string => name.split(".").pop()?.toLowerCase() ?? "";
+
+export const fileProblems = (d: Json, files: FileInfo): string[] => {
+  const errors: string[] = [];
+  for (const [kind, name, where] of refs(d)) {
+    if (!(EXT[kind] as readonly string[]).includes(extOf(name))) errors.push(`${where}: "${name}" ${KIND_TR[kind]} dosyası olamaz. Desteklenen türler: ${EXT[kind].join(", ")}.`);
+    else if (!files.exists(name)) errors.push(`${where}: "${name}" bulunamadı. Dosyayı çalışma klasöründeki public/input içine kopyala.`);
+  }
+  if (d.music && d.musicTrack) errors.push("music ve musicTrack birlikte olamaz: kendi müziğin ya da paketten bir parça seç.");
+  if (d.musicTrack && !files.tracks.includes(d.musicTrack)) errors.push(`musicTrack bulunamadı: ${d.musicTrack}. Geçerli id'ler: ${files.tracks.join(", ")}.`);
+  if (d.font && !["title", "all", undefined].includes(d.font.use)) errors.push(`font.use "title" ya da "all" olmalı, gelen: ${d.font.use}`);
+
+  (d.slides ?? []).forEach((s: Json, i: number) => {
+    if (!s.photo && !s.video) errors.push(`slides[${i}]: fotoğraf (photo) ya da video gerekli.`);
+    if (s.photo && s.video) errors.push(`slides[${i}]: photo ve video birlikte olamaz.`);
+    const total = s.video ? files.seconds(s.video) : undefined;
+    if (total === undefined) return;
+    const from = s.trimStartSec ?? 0;
+    const to = s.trimEndSec ?? total;
+    if (to > total + SLACK) errors.push(`slides[${i}]: kırpma bitişi (${to} sn) videonun süresinden (${total.toFixed(1)} sn) uzun.`);
+    else if (to - from < s.seconds - SLACK) errors.push(`slides[${i}]: videonun kullanılan kısmı ${(to - from).toFixed(1)} sn, slayt süresi ${s.seconds} sn. Süreyi kısalt ya da kırpmayı genişlet.`);
+  });
+  if (d.video && typeof d.videoSeconds === "number") {
+    const total = files.seconds(d.video);
+    if (total !== undefined && Math.abs(total - d.videoSeconds) > SLACK) errors.push(`videoSeconds ${d.videoSeconds} sn ama videonun gerçek süresi ${total.toFixed(1)} sn. videoSeconds'ı gerçek süreye eşitle.`);
+  }
+  return errors;
+};
+
+/** Non-blocking notes the designer should hear about. */
+export const designWarnings = (d: Json, files?: FileInfo): string[] => {
+  const warnings: string[] = [];
+  if (d.font) warnings.push("UYARI: Marka fontu (Poppins / Source Sans 3) dışında bir font kullanılıyor. Fontun lisansı sende; marka rehberinden sapıyor.");
+  if (files)
+    for (const [kind, name, where] of refs(d)) {
+      const dim = kind === "photo" ? files.size(name) : undefined;
+      if (dim && Math.min(dim.width, dim.height) < MIN_PHOTO_SIDE) warnings.push(`UYARI: ${where} "${name}" düşük çözünürlüklü (${dim.width}×${dim.height}); kısa kenar ${MIN_PHOTO_SIDE} px altında, bulanık çıkabilir.`);
+    }
+  return warnings;
+};
+
+export const checkDesign = (d: Json, logos: readonly LogoEntry[], files?: FileInfo): string[] => {
   const errors: string[] = [];
   const need = (...keys: string[]) => keys.forEach((k) => (d[k] == null || d[k] === "" ) && errors.push(`Zorunlu alan eksik: ${k}`));
   const logo = (key: string, surface?: Surface) => {
@@ -155,6 +227,7 @@ export const checkDesign = (d: Json, logos: readonly LogoEntry[]): string[] => {
     logo("cardLogoId", "light");
   } else errors.push("Tasarım türü anlaşılamadı: layout (Post), slides (Motion), video (Branded) ya da text (özel kompozisyon) alanı olmalı.");
 
+  if (files) errors.push(...fileProblems(d, files));
   if (d.srt) errors.push(...srtProblems(d.srt));
   for (const s of copyText(d)) errors.push(...dateProblems(s));
   return errors;
