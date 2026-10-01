@@ -4,6 +4,9 @@ import { colors, fontCss } from "../brand";
 import { activeWord, parseSrtCues } from "../lib/captions";
 import { safeArea } from "../lib/rules";
 
+/** Cues are at most 32 chars, so they wrap to 2 lines at most; anything stacked above the captions lifts by this much. */
+export const captionReserve = (u: number): number => 21 * u;
+
 /** Burned-in subtitles: one line in the safe area, the spoken word turns orange (no other movement). `offsetSec` = clip time at frame 0. */
 export const Captions: FC<{ srt: string; offsetSec?: number }> = ({ srt, offsetSec = 0 }) => {
   const frame = useCurrentFrame();
@@ -17,7 +20,7 @@ export const Captions: FC<{ srt: string; offsetSec?: number }> = ({ srt, offsetS
   const active = activeWord(current, ms);
   return (
     <div style={{ position: "absolute", left: safe.side, right: safe.side, bottom: safe.bottom, textAlign: "center" }}>
-      <span style={{ backgroundColor: `${colors.ink}CC`, color: colors.white, fontFamily: fontCss.body, fontWeight: 600, fontSize: 4.2 * u, lineHeight: 1.5, padding: `${0.4 * u}px ${1.2 * u}px`, boxDecorationBreak: "clone", WebkitBoxDecorationBreak: "clone" }}>
+      <span style={{ backgroundColor: `${colors.ink}CC`, color: colors.white, fontFamily: fontCss.body, fontWeight: 600, fontSize: 5.8 * u, lineHeight: 1.35, padding: `${0.4 * u}px ${1.2 * u}px`, boxDecorationBreak: "clone", WebkitBoxDecorationBreak: "clone" }}>
         {current.text.split(" ").map((w, i, all) => (
           <span key={i} style={{ color: i === active ? colors.orange : undefined }}>
             {w}
