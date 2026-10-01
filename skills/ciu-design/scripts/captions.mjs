@@ -8,7 +8,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fold } from "./text.mjs";
 import { formatSrt, mergeTokens, parseSrtCues, reflowCues, textToCues, wordsToCues } from "../remotion/src/lib/captions.ts";
 
@@ -84,8 +84,9 @@ const main = async () => {
     return;
   }
   if (cmd === "transcribe") {
-    const [work, data, out] = ["work", "data", "out"].map((n) => arg(n) ?? die(`--${n} gerekli`, 2));
+    const [work, data, out] = ["work", "data", "out"].map((n) => resolve(arg(n) ?? die(`--${n} gerekli`, 2)));
     if (!input || !existsSync(input)) die(`Dosya bulunamadı: ${input}`);
+    const media = resolve(input);
     const p = plan(data);
     if (p.status === "unavailable") die(p.lines[0], 3);
     if (p.status === "needs-install" && !process.argv.includes("--install")) (console.log(["WHISPER=needs-install", ...p.lines].join("\n")), process.exit(3));
@@ -99,9 +100,9 @@ const main = async () => {
       await installWhisperCpp({ version: WHISPER_VERSION, to: join(dir, "whisper.cpp"), printOutput: false });
       await downloadWhisperModel({ model: MODEL, folder: dir, printOutput: false });
       const wav = join(tmp, "audio.wav");
-      const ff = spawnSync("npx", ["remotion", "ffmpeg", "-y", "-i", input, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", wav], { cwd: work, encoding: "utf8" });
+      const ff = spawnSync("npx", ["remotion", "ffmpeg", "-y", "-i", media, "-ar", "16000", "-ac", "1", "-c:a", "pcm_s16le", wav], { cwd: work, encoding: "utf8" });
       if (!existsSync(wav)) die(`Ses çıkarılamadı (videoda ses olmayabilir): ${ff.stderr.trim().split("\n").at(-1)}`);
-      process.chdir(tmp);
+      process.chdir(tmp); // whisper writes its tmp json to cwd; all paths above are absolute
       const json = await transcribe({
         inputPath: wav, whisperPath: join(dir, "whisper.cpp"), whisperCppVersion: WHISPER_VERSION, model: MODEL, modelFolder: dir,
         tokenLevelTimestamps: true, language: arg("lang") ?? "tr", printOutput: false,

@@ -83,7 +83,7 @@ Layout patterns (with logo position and size for each format) live in a per-type
   - Scholarship posts mostly use no emoji.
   - The designs themselves never contain emoji.
 - No sign-off, signature or "UKÜ Kurumsal İletişim" line; the caption ends with the hashtag line.
-- **16–30 voice (captions and image text):** the first line is the hook and must work alone (it is all that shows before "devamı"): a fact or a question, ≤ ~12 words. Body 1–2 short sentences, ≈ 15–35 words (shorter than the 25–50 observed above: this audience reads less). Friendly but still a university: "sen", plain verbs, at most one exclamation mark per caption. Avoid brochure phrases ("sizlerle buluşturmaktan mutluluk duyarız", "bilgilerinize sunarız") and slang that ages ("kanka", "slay"). 1–2 emoji, never inside the image.
+- **16–30 voice (captions and image text):** the first line is the hook and must work alone (it is all that shows before "devamı"): a fact or a question, ≤ ~12 words. Body 1–2 short sentences, ≈ 15–35 words (shorter than the 25–50 observed above: this audience reads less). Friendly but still a university: "sen", plain verbs, at most one exclamation mark per caption. Avoid brochure phrases (banned list: `paylasim.md`) and slang that ages ("kanka", "slay"). 1–2 emoji, never inside the image.
 - **Copy on the image is short:** a headline of up to about 8 words, an optional subtitle, and facts only (date, time, venue, speakers, organizer). Sentences and CTAs stay in the caption.
 
 ## Hashtags & handles

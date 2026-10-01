@@ -10,7 +10,7 @@ import { dirname } from "node:path";
 import { fold } from "./text.mjs";
 
 const SERIES_KEYS = { layout: "layout", vurgu: "vurgu", logo: "logo", etiketler: "etiketler", numara: "son numara" };
-const PERSONAL = [/[^\s@]+@[^\s@]+\.[^\s@]+/, /\+?\d[\d\s()-]{8,}\d/, /\b\d{11}\b/, /\bTR\d{2}[\s\d]{10,}/i];
+const PERSONAL = [/[^\s@]+@[^\s@]+\.[^\s@]+/, /\+?\d[\d\s()-]{8,}\d/, /\bTR\d{2}[\s\d]{10,}/i];
 
 export const personalData = (text) => PERSONAL.some((re) => re.test(text));
 
@@ -76,7 +76,7 @@ export const apply = (m, cmd, args, flags = {}) => {
   }
   if (cmd === "unut") {
     const q = fold(value);
-    if (!q) throw new Error("Neyi unutayım? Metin, seri adı ya da hepsi yaz.");
+    if (q.length < 3) throw new Error("Neyi unutayım? Metin, seri adı ya da hepsi yaz.");
     const ser = findSeries(m, value);
     if (ser) delete m.seriler[ser];
     const before = m.begeni.length + m.begenmeme.length;

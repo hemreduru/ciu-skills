@@ -15,7 +15,7 @@ Copy tone, length, emoji and hook rules are **style.md "Copy tone" and "16–30 
     "x": { "tags": 2, "maxChars": 280 },
     "tiktok": { "tags": 5, "maxChars": 2200 }
   },
-  "maxWords": 60,
+  "maxWords": 45,
   "maxAltChars": 300,
   "banned": ["mutluluk duyarız", "bilgilerinize sunarız", "geleceğe adım at", "hayallerine ulaş", "fırsatları keşfet", "excellence in education", "we are thrilled", "we are excited to announce", "stay tuned", "kurumsal iletişim"],
   "postTime": "Genel öneri (hesabın kendi istatistiği önceliklidir; KKTC saati): hafta içi 12:00–13:00 ya da 19:00–21:00; LinkedIn salı–perşembe 09:00–11:00; story ve Reels akşam 19:00–22:00."
@@ -24,9 +24,9 @@ Copy tone, length, emoji and hook rules are **style.md "Copy tone" and "16–30 
 
 ## Platform rules (one line each)
 - **instagram** — hook line first (it is all that shows before "devamı"), 1–2 short sentences, the full tag set on the last line.
-- **linkedin** — a bit more formal and factual (what, when, where, who it is for), no slang, 3–4 tags, first-person plural for UKÜ ("biz"/"we") is fine.
-- **x** — one short block, ≤ 280 characters including tags, 1–2 tags, no emoji row.
-- **tiktok** — the hook is the caption: one line, 3–5 tags (include the fixed tags), no link.
+- **linkedin** — a bit more formal and factual (what, when, where, who it is for), no slang, fewer tags, first-person plural for UKÜ ("biz"/"we") is fine.
+- **x** — one short block that fits the limit including tags, no emoji row.
+- **tiktok** — the hook is the caption: one line, few tags (include the fixed tags), no link.
 
 Fixed tags always come first; the rest (topic tags) are specific to the post (event name, unit, topic), CamelCase, no spaces. The whole set is 5–10; "Bu platformda" in the output shows the first N for that platform.
 
