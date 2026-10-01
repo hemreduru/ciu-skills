@@ -65,3 +65,22 @@ Skill tarafı (gerçek hatalar):
 - Case 06'daki model hatası (`head` ile kesilmiş çıktıyı yanlış okuma) skill'den değil modelden kaynaklı; tekrarlanırsa SKILL'e "klibi `ls` yerine ffprobe ile doğrula" eklenebilir.
 - Her case tek koşu: modelin kararsızlığı (flake) için tekrar sayısı yok.
 - Eval'ler CI'da koşmaz (yalnızca grader testi `evals/run.test.mjs` koşar).
+
+## Tarz sorusu ve Sıra dışı mod (vaka 16–21, 3. koşu)
+
+Claude Code + Sonnet 5.5, vaka başına tek koşu, ön planda sırayla koşuldu (`/tmp/w4-runs/3`). Mekanik grader'lar `run.mjs` ile, llm grader'lar transcript son mesajı ve `final.png`/önizlemeler gözle bakılarak notlandı.
+
+| case | mekanik | llm (elle) | süre | not |
+|---|---|---|---|---|
+| ciu-design/16-tarz-sorusu-soruluyor | 4/4 | geçti | 19 sn | Brif + tek soru; Canlı (Önerilen) ilk, ardından Sıra dışı ve Kurumsal; render yok; "direkt yap" ipucu verildi |
+| ciu-design/17-tarz-taziye-sorulmaz | 4/4 | geçti | 84 sn | Soru yok, sade beyaz zemin, döndürme/taşma yok; sırıtan gülen fotoğrafı kullanmadı |
+| ciu-design/18-tarz-istemden-cilgin | 5/5 | geçti | 117 sn | "çılgın" → Sıra dışı kolaj, soru yok; A final, B önizleme |
+| ciu-design/19-tarz-hafizadan | 6/6 | geçti | 114 sn | Hafızadan Sıra dışı + seri; 3. sayı görselde, taşan dev yazı; yanıtta hafızadan kullanıldığı söyleniyor |
+| ciu-design/20-direkt-yap-varsayilan-cift | 6/6 | geçti | 118 sn | A Sıra dışı (final), B Canlı; iskeletler farklı, A belirgin daha cesur |
+| ciu-design/21-sira-disi-iskelet-izleri | 8/8 | sınırda geçti | 207 sn | Sol kenardan taşan dikey dev "MÜZİK" (Bleed word); tarih tek satır; logo temiz düz zeminde ama tarih/mekânla aynı koyu blokta (ölçüt "kendi bloğu" diyor) |
+
+Toplam 6/6 geçti (21 sınırda). Render yapan 17–21'de `check.mjs` hata ya da `UYARI` vermedi (hepsinde `OK`; 16'da render olmadığı için koşmadı), yani Sıra dışı iskeletleri (taşma, döndürme) doğrulayıcıyla çakışmıyor; skill ya da prompt değişikliği gerekmedi.
+
+Notlar:
+- Vaka 21'de model `final.png`'yi açıp görsel doğrulamadığını kendisi söyledi (yalnızca önizlemeleri gördü). Yanıtındaki "K'nin ucu tuvalden taşıyor" iddiası final.png'de doğrulanmadı: K tuval içinde, taşma yalnızca sol kenardan. Logo ayrı blok yerine paylaşılan koyu blokta; skill'e "logo için ayrı temiz blok" vurgusu eklemek istenirse bu vaka tekrar koşulmalı.
+- Vaka başına tek koşu; kararsızlık (flake) ölçülmedi. llm notları elle verildi.
