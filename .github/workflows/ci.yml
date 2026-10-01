@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: node --test skills/ciu-design/scripts/scripts.test.mjs
+      - run: node --test skills/ciu-design/scripts/scripts.test.mjs evals/run.test.mjs
 
   smoke:
     runs-on: ubuntu-latest
