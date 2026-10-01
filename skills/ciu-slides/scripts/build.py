@@ -220,6 +220,11 @@ def build(deck_path, templates_dir, in_dir, out_dir, work):
 
     for _ in range(original):
         drop_slide(prs, 0)
+    pkg = prs.part.package
+    for rid, rel in list(pkg._rels.items()):
+        if rel.reltype.endswith("/thumbnail"):
+            pkg._rels.pop(rid)
+    prs.core_properties.title = str(slides[0]["title"]).strip()
     os.makedirs(out_dir, exist_ok=True)
     name = slug(deck.get("name") or slides[0]["title"])
     out = os.path.join(out_dir, f"{name}.pptx")

@@ -2,7 +2,7 @@ name: Slides
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths: ["skills/ciu-slides/**", ".github/workflows/slides.yml", "tools/build.mjs"]
   pull_request:
     paths: ["skills/ciu-slides/**", ".github/workflows/slides.yml", "tools/build.mjs"]

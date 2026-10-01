@@ -184,6 +184,27 @@ class CheckTests(Base):
         self.assertIn("konuşmacı notu", out)
 
 
+    def test_example_text_in_table_group_and_notes_is_error(self):
+        def table(prs):
+            t = prs.slides[1].shapes.add_table(1, 1, 0, 0, 100000, 100000).table
+            t.cell(0, 0).text = "Click to add text"
+        def group(prs):
+            g = prs.slides[1].shapes.add_group_shape()
+            g.shapes.add_textbox(0, 0, 100, 100).text_frame.text = "Lorem ipsum"
+        def notes(prs):
+            prs.slides[1].notes_slide.notes_text_frame.text = "Lorem ipsum"
+        for fn in (table, group, notes):
+            code, out = self.run_check(self.edit(fn))
+            self.assertEqual(code, 1, out)
+            self.assertIn("örnek metin", out)
+
+    def test_output_has_no_template_thumbnail_and_has_title(self):
+        path = self.make(GOOD)["file"]
+        with zipfile.ZipFile(path) as z:
+            self.assertFalse([n for n in z.namelist() if "thumbnail" in n])
+        self.assertEqual(Presentation(path).core_properties.title, "Kampüs Tanıtımı")
+
+
 class UnitTests(unittest.TestCase):
     def test_estimate_grows_with_text_and_size(self):
         w = 8000000
