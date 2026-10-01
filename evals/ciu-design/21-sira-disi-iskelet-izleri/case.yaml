@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: 21-sira-disi-iskelet-izleri
+context:
+  scaffold_script: scaffold.sh
