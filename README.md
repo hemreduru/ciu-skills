@@ -84,6 +84,7 @@ npx skills update                                        # update
 Creates images and videos that follow the official corporate identity guide and UKÜ's social media style.
 
 - **Post**: stills such as posts, stories, banners and carousels, in the sizes you ask for. By default you get two variants with different layouts to choose from.
+- Starts by asking how the design should feel: **Kurumsal** (corporate: plain, formal, trustworthy), **Canlı** (lively: young and energetic but tidy) or **Sıra dışı** (unconventional: like a magazine cover or festival poster). It does not ask for condolences, formal statements, rector messages and formal academic/administrative announcements (always Kurumsal), when you already named the tone, when a style is saved for the series or unit, in batch runs, or when you say "direkt yap". Your choice is saved to `ciu-hafiza.md`.
 - **Motion**: reels and animations from photos, optionally with music from the built-in pack or your own file.
 - **Branded**: your own video clip with intro and outro cards, logo, name bars and subtitles. Subtitles come from an SRT/text you provide, or are transcribed when you ask for them.
 - Takes a prompt plus optional photos, clips, fonts, music, a `ciu.edu.tr` news/event link, or a CSV/Excel list for **batch** production (one image per row).

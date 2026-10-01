@@ -84,6 +84,7 @@ npx skills update                                        # güncelle
 Resmi kurumsal kimlik kılavuzuna ve UKÜ'nün sosyal medya diline uygun görsel ve video üretir.
 
 - **Post**: istediğiniz boyutlarda post, story, banner ve carousel gibi durağan görseller. Varsayılan olarak seçmeniz için farklı yerleşimli iki varyant sunulur.
+- Başta tasarımın nasıl bir his vereceğini sorar: **Kurumsal** (sade, resmî, güven veren), **Canlı** (genç ve enerjik ama derli toplu) ya da **Sıra dışı** (dergi kapağı / festival afişi gibi). Taziye, resmî açıklama, rektör mesajı ve resmî akademik/idari duyurularda (her zaman Kurumsal), tonu zaten belirttiyseniz, seri ya da birim için kayıtlı bir tarz varsa, toplu üretimde ve "direkt yap" dediğinizde sormaz. Seçiminiz `ciu-hafiza.md` dosyasına yazılır.
 - **Motion**: fotoğraflardan Reels ve animasyon; isteğe bağlı olarak hazır paketteki ya da kendi müziğinizle.
 - **Branded**: kendi video klibinize intro ve outro kartı, logo, isim bandı ve altyazı ekler. Altyazı, verdiğiniz SRT/metinden gelir ya da siz isterseniz konuşmadan çıkarılır.
 - Girdi olarak bir istek ile isteğe bağlı fotoğraf, klip, font, müzik, `ciu.edu.tr` haber/etkinlik bağlantısı ya da **toplu üretim** için CSV/Excel listesi (satır başına bir görsel) alır.

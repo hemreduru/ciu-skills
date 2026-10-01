@@ -4,7 +4,7 @@ LinkedIn is behind a login wall and was not observed. References live in `refere
 
 ## Overall feel
 - Most designs are built around a photo. Over 80% of observed designs are either a real campus/student photo or a stock photo with flat color laid over it. Pure flat-color designs are rare (`facebook-01-kampanya.jpg` is the only one).
-- There are two registers. Events and announcements are calm and orderly (thin hairline grid, generous flat panels, white type: `web-01-etkinlik.jpg` … `web-07-etkinlik.jpg`). Campaigns and reels are loud and youthful (saturated colors, big numbers, stickers, brush lettering, tilted text bars: `x-01-kampanya.jpg`, `instagram-02-reels.jpg`, `youtube-01-reels.jpg`).
+- There are two registers (this skill calls them *kurumsal* and *canlı*; art-direction.md §7 adds *sıra dışı*, which goes beyond what UKÜ has published). Events and announcements are kurumsal: calm and orderly (thin hairline grid, generous flat panels, white type: `web-01-etkinlik.jpg` … `web-07-etkinlik.jpg`). Campaigns and reels are canlı: loud and youthful (saturated colors, big numbers, stickers, brush lettering, tilted text bars: `x-01-kampanya.jpg`, `instagram-02-reels.jpg`, `youtube-01-reels.jpg`).
 - Every event design shows an achievement badge: the THE World University Rankings badge ("TOP 601–800", newer: "TOP 651–700") sits next to the logo. The sustainability message is repeated through UN SDG goal tiles on event designs (`web-01`…`web-07`) and through GreenMetric posts (`instagram-01-duyuru.jpg`, `x-04-diger.jpg`).
 - The audience is international. Event designs are mostly English. Turkish-market campaigns (YKS scholarships) are Turkish only. Corporate posts are bilingual.
 - Sizes observed:

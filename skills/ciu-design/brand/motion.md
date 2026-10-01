@@ -8,7 +8,7 @@ Helpers live in `remotion/src/lib/motion.ts`: `enter`, `exit`, `wipe`, `breathe`
 4. **Exits exist and are faster** — about 8 frames (`exit`), before the scene cut. Otherwise the whole scene transitions out.
 5. **Photos always move** — `<PhotoFrame zoomFrames={sceneFrames}>` (1 → 1.08). Footage uses `OffthreadVideo`.
 6. **Nothing freezes** — an element held longer than 1 s gets `breathe` (a 2–4 px sine drift), or the photo keeps drifting under it.
-7. **Timing comes from `fps`** (seconds × fps), with no magic frame numbers. Scenes last 1.5–3 s for the 16–30 audience (up to 4 s for calm topics); the first line appears within 1 s; text stays readable for ≥ 1.5 s after it settles.
+7. **Timing comes from `fps`** (seconds × fps), with no magic frame numbers. Scenes last 1.5–3 s for the 16–30 audience (up to 4 s for kurumsal topics); the first line appears within 1 s; text stays readable for ≥ 1.5 s after it settles.
 8. **Text reveals** — label bars `wipe` in from the left (UKÜ reels style). Headlines `enter`. Numbers may count up (`interpolate` + `Math.round`, `ease.out`, ≤ 1 s).
 9. **Rhythm** — vary entrances across scenes (wipe, rise, scale) but keep one signature move for the whole video.
 10. **The brand look stays flat** — no film grain, vignette, color grade, glitch, lens flare or 3D unless the user asks.
