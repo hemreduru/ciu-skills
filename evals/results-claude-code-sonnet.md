@@ -84,3 +84,15 @@ Toplam 6/6 geçti (21 sınırda). Render yapan 17–21'de `check.mjs` hata ya da
 Notlar:
 - Vaka 21'de model `final.png`'yi açıp görsel doğrulamadığını kendisi söyledi (yalnızca önizlemeleri gördü). Yanıtındaki "K'nin ucu tuvalden taşıyor" iddiası final.png'de doğrulanmadı: K tuval içinde, taşma yalnızca sol kenardan. Logo ayrı blok yerine paylaşılan koyu blokta; skill'e "logo için ayrı temiz blok" vurgusu eklemek istenirse bu vaka tekrar koşulmalı.
 - Vaka başına tek koşu; kararsızlık (flake) ölçülmedi. llm notları elle verildi.
+
+## Logo kendi bloğunda (v0.3.2, vaka 21 + regresyon 18, 20)
+
+Claude Code + Sonnet 5.5, vaka başına tek koşu, ön planda sırayla (`/tmp/w4-runs/4`). Değişiklik: art-direction.md §7 "Never loosened" Logo satırına ve SKILL.md §6 öz-kontrole tek cümle (logo kendi temiz bloğunda; tarih/mekân/başlıkla aynı panelde değil, üstüne/yanına metin yok). Vaka 21'e `logo-own-block-llm.md` grader'ı eklendi; v0.3.1 koşusundaki çıktı (logo tarih/mekânla aynı koyu blokta) bu grader'dan kalırdı. Prompt tek turda yetti, ikinci tur gerekmedi.
+
+| case | mekanik | llm (elle) | not |
+|---|---|---|---|
+| ciu-design/21-sira-disi-iskelet-izleri | 8/8 | geçti (logo-own-block dahil) | Dikey "MÜZİK" Bleed word; bilgi koyu blokta, logo altında ayrı beyaz blokta, çevresinde boşluk |
+| ciu-design/18-tarz-istemden-cilgin | 5/5 | geçti | "FEST" dev yazı, A final; logo ayrı beyaz şeritte |
+| ciu-design/20-direkt-yap-varsayilan-cift | 6/6 | geçti | A Sıra dışı: bilgi ve logo ayrı beyaz bloklarda; B Canlı hâlâ logoyu bilgi satırıyla aynı bordo zeminde (Canlı davranışı değişmedi) |
+
+Not: vaka başına tek koşu; kararsızlık ölçülmedi, llm notları elle verildi.
