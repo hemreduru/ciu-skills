@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: { source: file, path: eval-final.png }
+focus: { source: file, path: "**/ciktilar/*/final.png" }
 ---
 
 The image is the final design for a SQUARE (1:1, target 1080x1080) announcement titled "Robotik Atölyesi" for the Faculty of Engineering (Mühendislik Fakültesi) of Cyprus International University.

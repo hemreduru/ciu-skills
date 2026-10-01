@@ -1,6 +1,6 @@
 ---
-type: 'regex'
+type: file_regex
+path: '**/ciktilar/*/design*.json'
 pattern: '"music"\s*:\s*"'
-target: 'trace'
 negate: true
 ---

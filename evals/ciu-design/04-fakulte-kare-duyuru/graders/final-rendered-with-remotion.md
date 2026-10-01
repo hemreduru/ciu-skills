@@ -1,5 +1,5 @@
 ---
 type: tool_used
 tool: Bash
-input_match: 'remotion still src/index\.ts Post.*final\.png'
+input_match: 'remotion still src/index\.ts \w+ .*final\.png'
 ---

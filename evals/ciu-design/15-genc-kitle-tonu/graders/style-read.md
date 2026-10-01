@@ -1,5 +1,5 @@
 ---
 type: 'tool_used'
-tool: 'Read'
+tool: 'Read|Bash'
 input_match: 'style\.md'
 ---

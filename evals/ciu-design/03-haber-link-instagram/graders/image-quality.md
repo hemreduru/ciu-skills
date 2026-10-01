@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: { source: file, path: eval-final.png }
+focus: { source: file, path: "**/ciktilar/*/final.png" }
 ---
 
 The image is a finished Instagram post made from a ciu.edu.tr news article about "UKÜ 2026-2027 Yılı Oryantasyon Günleri Başlıyor".

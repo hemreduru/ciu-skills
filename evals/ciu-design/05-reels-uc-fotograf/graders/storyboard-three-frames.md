@@ -1,5 +1,5 @@
 ---
 type: regex
-pattern: '(still src/index\.ts Motion\w* \S*frame-[\s\S]*?){3}|for \w+ in \d+( \d+){2,}; do npx remotion still src/index\.ts Motion\w* \S*frame-'
+pattern: '(still src/index\.ts \w+ \S*frame-[\s\S]*?){3}|for \w+ in \d+( \d+){2,}; do npx remotion still src/index\.ts \w+ \S*frame-'
 target: trace
 ---
