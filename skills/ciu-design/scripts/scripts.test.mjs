@@ -157,11 +157,13 @@ test("batch.mjs: plan prints count + first-row preview; every bad row is reporte
   assert.equal(ok.status, 0);
   assert.match(ok.stdout, /^SATIR=2\nGORSEL=2\n/);
   assert.match(ok.stdout, /ONIZLEME \(satır 2\).*15\.10\.2026 · Salon/);
+  assert.ok(!existsSync(join(d, "o")), "önizleme çıktı klasörüne hiçbir şey yazmaz");
   writeFileSync(csv, "Başlık,Tarih,Dil\nİyi,15.10.2026,tr\n,bozuk,tr\nÜç,16.10.2026,fr\nDört,x,tr\n");
   const bad = plan();
   assert.equal(bad.status, 1);
   assert.match(bad.stdout, /HATALI_SATIR=3/);
   for (const l of [3, 4, 5]) assert.match(bad.stdout, new RegExp(`- Satır ${l} `));
+  assert.ok(!existsSync(join(d, "o")), "önizleme/hata modu çıktı klasörüne hiçbir şey yazmaz");
   writeFileSync(csv, "Ad,Gün\nx,y\n");
   assert.match(plan().stdout, /başlık sütunu yok/);
   writeFileSync(join(d, "e.xlsx"), "not a workbook");
@@ -221,4 +223,13 @@ test("hafiza: round-trips, series counter, forget, and no personal data", () => 
   assert.match(run("hafiza.mjs", f, "show").stdout, /son numara: 1/);
   assert.match(run("hafiza.mjs", f, "unut", "hepsi").stdout, /silindi/);
   assert.ok(!existsSync(f));
+});
+
+test("hafiza: hand-written lines and notes survive a rewrite; personal-data filter unchanged", () => {
+  const md = "# UKÜ tasarım hafızası\n\nBirim: BM\nSık kullanılan: post\nElle eklenen serbest satır\n\n## Beğenilenler\n- düz panel\n\n## Notlar\nBayram haftası logo küçük olsun.\n- madde de korunur\n\n## Seriler\n\n### S\n- layout: band\n";
+  const m = apply(parseMemory(md), "add", ["begeni", "yeni"]).memory;
+  const out = formatMemory(m);
+  for (const keep of ["Elle eklenen serbest satır", "## Notlar", "Bayram haftası logo küçük olsun.", "- madde de korunur"]) assert.ok(out.includes(keep), keep);
+  assert.deepEqual(parseMemory(out), m);
+  assert.throws(() => apply(m, "add", ["begeni", "ad@ciu.edu.tr"]), /Kişisel veri/);
 });

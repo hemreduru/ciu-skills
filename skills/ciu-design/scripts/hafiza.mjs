@@ -15,22 +15,25 @@ const PERSONAL = [/[^\s@]+@[^\s@]+\.[^\s@]+/, /\+?\d[\d\s()-]{8,}\d/, /\bTR\d{2}
 export const personalData = (text) => PERSONAL.some((re) => re.test(text));
 
 export const parseMemory = (md) => {
-  const m = { birim: "", sik: "", begeni: [], begenmeme: [], seriler: {} };
+  const m = { birim: "", sik: "", begeni: [], begenmeme: [], seriler: {}, notlar: [] };
   let section = "", serie;
   for (const line of md.split(/\r?\n/)) {
+    if (!line.trim() || /^#\s/.test(line)) continue;
     const h = /^(#{2,3})\s+(.*)$/.exec(line);
-    if (h) {
-      if (h[1] === "###") (section = "seriler", (serie = m.seriler[h[2].trim()] = {}));
-      else (section = fold(h[2]), (serie = undefined));
-      continue;
+    if (h && h[1] === "##" && fold(h[2]) === "notlar") (section = "notlar", (serie = undefined));
+    else if (h && h[1] === "###" && section === "seriler") serie = m.seriler[h[2].trim()] = {};
+    else if (h && h[1] === "##" && ["begenilenler", "begenilmeyenler", "seriler"].includes(fold(h[2]))) (section = fold(h[2]), (serie = undefined));
+    else {
+      const item = /^-\s+(.*)$/.exec(line);
+      const kv = /^-?\s*([^:]+):\s*(.*)$/.exec(line);
+      if (section === "notlar") m.notlar.push(line);
+      else if (section === "seriler" && serie && item && kv) serie[Object.keys(SERIES_KEYS).find((k) => SERIES_KEYS[k] === fold(kv[1]).trim()) ?? fold(kv[1])] = kv[2].trim();
+      else if (!section && kv && fold(kv[1]) === "birim") m.birim = kv[2].trim();
+      else if (!section && kv && fold(kv[1]).startsWith("sik")) m.sik = kv[2].trim();
+      else if (item && section === "begenilenler") m.begeni.push(item[1].trim());
+      else if (item && section === "begenilmeyenler") m.begenmeme.push(item[1].trim());
+      else m.notlar.push(line);
     }
-    const item = /^-\s+(.*)$/.exec(line);
-    const kv = /^-?\s*([^:]+):\s*(.*)$/.exec(line);
-    if (section === "seriler" && serie && item && kv) serie[Object.keys(SERIES_KEYS).find((k) => SERIES_KEYS[k] === fold(kv[1]).trim()) ?? fold(kv[1])] = kv[2].trim();
-    else if (!section && kv && fold(kv[1]) === "birim") m.birim = kv[2].trim();
-    else if (!section && kv && fold(kv[1]).startsWith("sik")) m.sik = kv[2].trim();
-    else if (item && section.startsWith("begenilen")) m.begeni.push(item[1].trim());
-    else if (item && section.startsWith("begenilmeyen")) m.begenmeme.push(item[1].trim());
   }
   return m;
 };
@@ -43,6 +46,7 @@ export const formatMemory = (m) =>
     "## Beğenilmeyenler", ...m.begenmeme.map((x) => `- ${x}`), "",
     "## Seriler", "",
     ...Object.entries(m.seriler).flatMap(([ad, s]) => [`### ${ad}`, ...Object.keys(SERIES_KEYS).filter((k) => s[k] !== undefined && s[k] !== "").map((k) => `- ${SERIES_KEYS[k]}: ${s[k]}`), ""]),
+    ...(m.notlar.length ? ["## Notlar", ...m.notlar, ""] : []),
   ].join("\n");
 
 const findSeries = (m, ad) => Object.keys(m.seriler).find((k) => fold(k) === fold(ad));
@@ -82,6 +86,7 @@ export const apply = (m, cmd, args, flags = {}) => {
     const before = m.begeni.length + m.begenmeme.length;
     m.begeni = m.begeni.filter((x) => !fold(x).includes(q));
     m.begenmeme = m.begenmeme.filter((x) => !fold(x).includes(q));
+    m.notlar = m.notlar.filter((x) => !fold(x).includes(q));
     for (const k of ["birim", "sik"]) if (fold(m[k]).includes(q)) m[k] = "";
     return { memory: m, say: ser ? `Seri "${ser}" silindi.` : before === m.begeni.length + m.begenmeme.length ? "Eşleşen bir kayıt bulunamadı." : `"${value}" içeren kayıtlar silindi.` };
   }

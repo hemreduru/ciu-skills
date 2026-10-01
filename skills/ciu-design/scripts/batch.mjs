@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 // Usage: node batch.mjs <liste.csv|xlsx> --work <WORK> --out <D> [--in <IN>] [--chrome <path>] [--render]
-// Without --render: parses, builds a Post design per row, validates with check.mjs and prints a plan (count, first-row preview, all errors).
-// With --render: renders every row (Remotion) to <D>/NN-slug.png and writes <D>/paylasim.json to fill in for paylasim.mjs.
+// Without --render: parses, builds a Post design per row, validates with check.mjs and prints a plan (count, first-row preview, all errors); writes nothing to <D>.
+// With --render: renders every row (Remotion) to <D>/NN-slug.png, keeps the designs in <D>/tasarimlar/ and writes <D>/paylasim.json to fill in for paylasim.mjs.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { basename, dirname, isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { fold } from "./text.mjs";
@@ -178,8 +179,8 @@ const main = () => {
     return r;
   };
 
-  const dir = join(out, "tasarimlar");
-  mkdirSync(dir, { recursive: true });
+  const dir = mkdtempSync(join(tmpdir(), "ciu-batch-"));
+  process.on("exit", () => rmSync(dir, { recursive: true, force: true }));
   const rows = records.map((rec, i) => {
     const base = `${pad(i + 1)}-${slug(rec.title ?? "")}`;
     const { design, errors } = designFromRecord(rec, logos);
@@ -212,6 +213,8 @@ const main = () => {
   if (!process.argv.includes("--render")) (console.log(lines.join("\n")), process.exit(0));
 
   const chrome = arg("chrome");
+  mkdirSync(join(out, "tasarimlar"), { recursive: true });
+  rows.forEach((r) => copyFileSync(r.designFile, join(out, "tasarimlar", basename(r.designFile))));
   const sections = [];
   const failed = [];
   for (const r of rows) {
