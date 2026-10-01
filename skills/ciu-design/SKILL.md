@@ -38,7 +38,7 @@ Pull these from the request: **goal, type** (duyuru, etkinlik, haber, kampanya, 
 - Video (Motion/Branded) with no mention of music: offer it **once** as one of the questions ("Müzik ekleyelim mi? 1) Evet, sinematik (Önerilen) 2) Evet, başka bir ruh hali 3) Kendi müziğimi vereceğim 4) Müziksiz"). List the pack with `node <skill>/scripts/music.mjs`; the user's own file goes through input.mjs. Rules → motion.md §12.
 - A clip with speech and no word about subtitles: offer captions **once** as a question ("Konuşmaları altyazı olarak ekleyelim mi? 1) Evet (Önerilen) 2) Hayır"); never transcribe unasked → §9. A CSV/Excel list: say how many images will come out and any assumptions (size, language) → §10.
 - Request already clear or "direkt yap" → no questions at all. Never block on a nice-to-have; name your defaults instead.
-- Vague request (no occasion, text or material, e.g. "bir şey yap") → offer 2–3 concept directions (idea + headline + layout) as the question options, then stop: render only after the user picks one.
+- Vague request (no occasion, text or material, e.g. "bir şey yap") → first show the 3–5 line brief (goal, audience, platform, key message; name your defaults), then offer 2–3 concept directions (idea + headline + layout) as the question options, then stop: render only after the user picks one.
 - Insufficient material (low resolution, missing speaker photo, text too long for the size) → say so in one line before designing.
 Then write a 3–5 line brief (goal, audience, platform, key message, material) and show it. Add suggestions only when they add clear value (EN version, carousel split, caption + hashtags, alt text) or the user asks ("ne önerirsin").
 **Concept — always, even for "direkt yap":** write the art-direction.md §1 concept (idea, hero, skeleton, register) for each variant before composing. Vague requests: the 2–3 directions above are 2–3 concepts with different skeletons.
@@ -51,7 +51,7 @@ Create `$OUT/<YYYYMMDD-HHmm>-<slug>/` (`$D`, written out in full) and write `des
 - **Branded** (`BrandedProps`) stays the default for an uploaded clip: `lowerThirds` timings in clip seconds, `srt` as SRT text, each caption ≤ ~32 characters, one line, so it never overlaps the name bar.
 Rules:
 - Logo ids only from the picker — never read `logos.json` (38 KB): `node <skill>/scripts/logo.mjs --tone white|color --lang tr|en [--unit <search>]` prints matching ids. `lang` is the logotype order: `tr` = Turkish line first, `en` = English line first — match it to the post language. Tone follows the area under the logo: dark panel, tint or photo → `tone: white`; white or light area (incl. `band`, BrandCard, `cardLogoId`) → `tone: color`. If no logo has both the needed tone and the language order, tone/contrast wins — the logos are bilingual anyway. Unit logos are color-only → light areas only. Follow brand.md for unit logos. In a custom composition's design.json set `"logoSurface": "dark"|"light"` (area under `logoId`) so the check can verify the tone.
-- Copy in the tone of style.md. Dates/times exactly as `15.10.2026 14:00` (one space between date and time; no `|`, not split over two lines). Long titles in built-ins → `titleScale` 0.7–0.9.
+- Copy in the tone of style.md. Dates/times exactly as `15.10.2026 14:00` (one space between date and time; no `|`, not split over two lines). A hero number (big "15") may repeat the date but never replaces it: the full `15.10.2026 14:00` stays in one line on the image (also on EN designs). Long titles in built-ins → `titleScale` 0.7–0.9.
 - Music: `"musicTrack": "<pack id>"` or `"music": "<file>"` (never both) — see §3 and motion.md §12. Custom compositions: `<Music {...props} />`, `useUserFont(props.font)`, `<VideoFrame />` (all in `src/components` / `src/lib`).
 
 ## 5. Validate, then preview
@@ -64,7 +64,7 @@ Every remotion command starts with `cd $WORK &&` (shell state is not kept).
 Open each rendered image and check: logo intact, correct tone, not too small; a white corner/bug logo sits on a dark enough area, otherwise move it or pick another corner/tone; text legible with enough contrast, nothing overflowing or cut; Turkish letters correct (İ, ı, ğ, ş); on 9:16 nothing important in the top 14 % / bottom 20 %; no faces cropped. Then run every item of slop.md and one refine pass (remove or sharpen — never add). Fix and re-render (max 2 rounds), then show the user the previews with each variant's concept in 1–2 lines.
 
 ## 7. Final render & revisions
-- Still: `cd $WORK && npx remotion still src/index.ts <Id> $D/final.png --props=$D/design.json`
+- Still: `cd $WORK && npx remotion still src/index.ts <Id> $D/final.png --props=$D/design.json` — one `final.png` for the variant the user picked; if they did not pick (no answer, "direkt yap", automated run) render only your recommended variant as `final.png` and leave the other as a preview. Never `final-a.png`/`final-b.png`.
 - Video: `cd $WORK && npx remotion render src/index.ts <Id> $D/final.mp4 --props=$D/design.json --codec=h264`
 - Carousel: one design-N.json per slide (same composition), rendered as final-N.png.
 - After a custom final, copy `$WORK/src/custom/stills.tsx` (or `videos.tsx`) and the photos, font and music files it uses (not video clips) into `$D/` (`$D/input/`) so the design can be revised later.
@@ -76,7 +76,7 @@ Render error → read it, fix, retry at most twice; then fall back to the built-
 After the final render write `paylasim.md` next to the files: TR + EN captions, 5–10 hashtags, TR + EN alt text per image, file list, posting time. Steps and rules: `<skill>/brand/paylasim.md` (a `paylasim.json` and `node <skill>/scripts/paylasim.mjs`). Say in one line that it is there.
 
 ## 9. Captions — only on request
-The user wants subtitles on a talking video (or §3 found speech and they said yes): read `<skill>/workflows/captions.md` and follow it. Model: whisper `small` (~465 MB) — clearly better Turkish than tiny/base, far smaller than medium/large (1.5–3 GB), fine speed on a CPU. No whisper here (claude.ai, no network) → ask for an SRT or the plain text; that path is identical afterwards.
+The user wants subtitles on a talking video (or §3 found speech and they said yes), or hands over an SRT/text of the speech: read `<skill>/workflows/captions.md` and follow it. Model: whisper `small` (~465 MB) — clearly better Turkish than tiny/base, far smaller than medium/large (1.5–3 GB), fine speed on a CPU. No whisper here (claude.ai, no network) → ask for an SRT or the plain text; that path is identical afterwards. A user-supplied SRT/text always goes through `captions.mjs import` (never paste it into design.json by hand) and `altyazi.srt` is delivered with the video.
 
 ## 10. Batch — CSV / Excel
 One image per row → read `<skill>/workflows/batch.md`. Show the count and the first row's preview and wait for a yes before rendering; bad rows are reported together, never skipped silently. `.xlsx`: converted when `python3` + `openpyxl` exist, otherwise ask "Excel'de Farklı Kaydet → CSV UTF-8 olarak kaydedip ver". Example list: `<skill>/examples/toplu-ornek.csv`.

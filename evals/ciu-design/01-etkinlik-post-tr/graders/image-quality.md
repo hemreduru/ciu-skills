@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: { source: file, path: eval-final.png }
+focus: { source: file, path: "**/ciktilar/*/final.png" }
 ---
 
 The image is the final design for a 4:5 portrait event announcement (target 1080x1350).

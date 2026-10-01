@@ -50,6 +50,18 @@ UKÜ'nün resmi sunum şablonuyla (https://ciu.edu.tr/tr/uku-sablonu) marka uyum
 - Önizleme (PDF + slayt PNG'leri) için LibreOffice (`soffice`) gerekir; yoksa atlanır.
 - Test: `pip install -r skills/ciu-slides/requirements.txt && python -m unittest discover -s skills/ciu-slides/scripts -p 'test_*.py'`; CI: `.github/workflows/slides.yml`. Şablon yapısı: `skills/ciu-slides/templates.md`.
 
+## Eval'ler
+
+`evals/` altında skill davranış testleri var (case: `prompt.md`, `scaffold.sh`, `graders/*.md`). Koşu başsız Claude Code ile yapılır, transcript'ler `/tmp/w4-runs/<koşu>/` altına yazılır ve repoya girmez:
+
+```bash
+node evals/run.mjs run ciu-design/01-etkinlik-post-tr ciu-slides/04-kullanici-sablonu --run 3 --parallel 2
+node evals/run.mjs run ciu-design/01-etkinlik-post-tr --run 3 --grade-only   # yalnız yeniden notlandır
+node evals/run.mjs report --run 3             # tablo; llm grader'lar için verdicts.json gerekir
+```
+
+Slides case'leri için `CIU_PYTHON` python-pptx'li bir python'u göstermeli. Son baseline (claude 2.1.286, `claude-sonnet-5-5`, 2026-10-01): 1. koşu 11/19 → düzeltmeler sonrası 2. koşu 19/19; ayrıntı ve kök nedenler `evals/results-claude-code-sonnet.md`. Grader testi: `node --test evals/run.test.mjs` (CI'da koşar; eval'ler CI'da koşmaz).
+
 ## Bakımcı için
 
 - Test: `cd skills/ciu-design/remotion && npm ci && npm test && npm run typecheck`; scriptler: `node --test skills/ciu-design/scripts/scripts.test.mjs`
