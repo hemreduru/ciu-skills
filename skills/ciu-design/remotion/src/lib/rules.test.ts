@@ -56,6 +56,12 @@ test("dateProblems: only 15.10.2026 14:00 form passes", () => {
   assert.equal(dateProblems("15.10.2026 14.00").length, 1);
   assert.equal(dateProblems("5.10.2026").length, 1);
   assert.equal(dateProblems("15/10/2026").length, 1);
+  assert.deepEqual(dateProblems("11.09.2026 09:00"), []);
+  assert.match(dateProblems("2026-09-11").join(), /11\.09\.2026/);
+  assert.match(dateProblems("2026-09-11 9:00").join(), /11\.09\.2026 09:00/);
+  assert.match(dateProblems("2026-09-11T09:00").join(), /11\.09\.2026 09:00/);
+  assert.match(dateProblems("2026/9/1 14:30").join(), /01\.09\.2026 14:30/);
+  assert.match(dateProblems("11.09.2026 9:00").join(), /11\.09\.2026 09:00/);
   assert.deepEqual(dateProblems("Sürüm 2.5 çıktı"), []);
   assert.deepEqual(dateProblems("Saat 10.00-12.00 arası"), []);
 });

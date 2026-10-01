@@ -64,11 +64,24 @@ export type Surface = "light" | "dark";
 export const toneFitsSurface = (tone: LogoEntry["tone"], surface: Surface): boolean =>
   surface === "dark" ? tone === "white" : tone !== "white";
 
-const DATE_RE = /(?<![\d.:/-])\d{1,2}[./-]\d{1,2}[./-]\d{2,4}(?![\d.])(?:\s*[^\d\s]?\s*\d{1,2}[:.]\d{2})?/g;
+const TIME = String.raw`(?:\s*[^\d\s]?\s*(\d{1,2})[:.](\d{2}))?`;
+const DATE_RE = new RegExp(String.raw`(?<![\d.:/-])(?:(\d{4})[./-](\d{1,2})[./-](\d{1,2})(?![\d])|\d{1,2}[./-]\d{1,2}[./-]\d{2,4}(?![\d.]))` + TIME, "g");
 const DATE_OK = /^\d{2}\.\d{2}\.\d{4}(?: \d{2}:\d{2})?$/;
+const DMY_RE = /^(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})/;
+const pad = (n: string) => n.padStart(2, "0");
+
+const suggest = (m: RegExpMatchArray): string => {
+  const [raw, year, month, day, hh, mm] = m;
+  const dmy = year ? [day, month, year] : DMY_RE.exec(raw)!.slice(1);
+  const [d, mo, y] = dmy;
+  const date = `${pad(d)}.${pad(mo)}.${y.length === 2 ? "20" + y : y}`;
+  return hh ? `${date} ${pad(hh)}:${mm}` : date;
+};
 
 export const dateProblems = (text: string): string[] =>
-  (text.match(DATE_RE) ?? []).filter((d) => !DATE_OK.test(d)).map((d) => `Tarih/saat biçimi hatalı: "${d.replace(/\n/g, "↵")}". Doğrusu: 15.10.2026 14:00 (tek satır, aralarında tek boşluk).`);
+  [...text.matchAll(DATE_RE)]
+    .filter((m) => !DATE_OK.test(m[0]))
+    .map((m) => `Tarih/saat biçimi hatalı: "${m[0].replace(/\n/g, "↵")}". Doğrusu: ${suggest(m)} (tek satır, aralarında tek boşluk).`);
 
 export const MAX_CAPTION_CHARS = 32;
 
