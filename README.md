@@ -9,6 +9,13 @@ Uluslararası Kıbrıs Üniversitesi (UKÜ / CIU) için skill seti. Agent Skills
 - Tasarım: `docs/superpowers/specs/2026-10-01-ciu-design.md`
 - Plan: `docs/superpowers/plans/2026-10-01-ciu-design.md`
 
+## Ön koşullar
+
+- **Node.js 22.18 veya üstü** (https://nodejs.org, LTS). claude.ai'de kod çalıştırma ortamında hazır gelir.
+- **Ağ erişimi:** ilk çalıştırmada skill, Remotion paketlerini ve bir tarayıcıyı indirir. Bu 1–3 dakika sürer; sonraki sohbetler hızlıdır.
+- **claude.ai:** Ayarlar → Yetenekler'de *Kod çalıştırma ve dosya oluşturma* açık olmalı. Ağ kısıtlıysa yöneticiniz kod çalıştırma ağ izinlerinde `registry.npmjs.org`, `remotion.media` ve `storage.googleapis.com` adreslerine izin vermelidir.
+- Remotion'ı ayrıca kurmanız gerekmez; skill kendisi kurar.
+
 ## Kurulum — ciu-design (tasarımcı için)
 
 ### claude.ai (web / masaüstü sohbet)
@@ -35,10 +42,13 @@ Node.js gerekir. Kurulu ajanlar otomatik algılanır:
 
 ## Bakımcı için
 
-- Test: `cd skills/ciu-design/remotion && npm test && npm run typecheck`
+- Test: `cd skills/ciu-design/remotion && npm ci && npm test && npm run typecheck`; scriptler: `node --test skills/ciu-design/scripts/scripts.test.mjs`
+- CI: `.github/workflows/ci.yml` (test + temiz dizinde setup/render smoke + paketleme). Release: `v<sürüm>` tag'i (marketplace.json `metadata.version` ile aynı olmalı) `release.yml`'i çalıştırır, `dist/*.zip` dosyalarını GitHub Release'e ekler.
+- Remotion kuralları (`remotion-dev/skills`) tek commit'e sabit: `skills/ciu-design/scripts/remotion-rules.mjs` (setup ve build aynı dosyayı kullanır). Güncellemek için SHA'yı değiştir.
+- Doğrulayıcı `scripts/check.mjs`, logo seçici `scripts/logo.mjs`; kural mantığı `remotion/src/lib/rules.ts` içinde.
 - Tasarım kalitesi: `brand/art-direction.md` (konsept + iskelet kataloğu), `brand/slop.md` (yapma listesi), `brand/motion.md` (video hareket kuralları). Özel kompozisyonlar `remotion/src/custom/` altında; her export otomatik kayıtlı.
 - Logolar değişti: yeni dosyaları `raw/` altına koy → `python3 tools/make_logos.py`
 - claude.ai paketleri: `node tools/build.mjs` → her skill için `dist/<skill>.zip`
 - Sürüm: `.claude-plugin/marketplace.json` → `metadata.version`'ı artır (Claude Code güncellemeleri); `npx skills update` doğrudan repodan çeker.
 - Yeni skill eklemek: `skills/<ad>/SKILL.md` oluştur; marketplace.json'a `<ad>` girişi ekle ve `ciu-skills` girişinin `skills` dizisine `./skills/<ad>` yaz; README tablosunu güncelle. `build.mjs` ve `npx skills` yeni skill'i otomatik bulur.
-- Lisans: Remotion (https://github.com/remotion-dev/remotion/blob/main/LICENSE.md) — UKÜ'nün kâr amacı gütmeyen statüsü teyit edilmeli. Source Sans 3 ve Poppins: SIL OFL 1.1.
+- Lisans: Remotion (https://github.com/remotion-dev/remotion/blob/main/LICENSE.md). Source Sans 3 ve Poppins: SIL OFL 1.1.
