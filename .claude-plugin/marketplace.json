@@ -11,7 +11,7 @@
       "description": "Setin tamamı: tüm CIU skill'leri.",
       "source": "./",
       "strict": false,
-      "skills": ["./skills/ciu-design"]
+      "skills": ["./skills/ciu-design", "./skills/ciu-slides"]
     },
     {
       "name": "ciu-design",
@@ -19,6 +19,13 @@
       "source": "./",
       "strict": false,
       "skills": ["./skills/ciu-design"]
+    },
+    {
+      "name": "ciu-slides",
+      "description": "UKÜ'nün resmi sunum şablonuyla marka uyumlu PowerPoint (.pptx) sunumu hazırlar.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/ciu-slides"]
     }
   ]
 }

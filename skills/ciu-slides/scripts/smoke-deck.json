@@ -1,0 +1,13 @@
+{
+  "template": 1,
+  "lang": "tr",
+  "name": "smoke",
+  "slides": [
+    {"layout": "title", "title": "Kampüs Tanıtımı", "subtitle": "Uluslararası Kıbrıs Üniversitesi", "notes": "Açılış."},
+    {"layout": "content", "title": "Neden UKÜ?", "bullets": ["Uluslararası kampüs", "Güçlü akademik kadro", "Öğrenci odaklı eğitim"], "notes": "Üç güçlü yön."},
+    {"layout": "section", "title": "Eğitim ve Araştırma", "subtitle": "Programlar", "notes": "Bölüm geçişi."},
+    {"layout": "two", "title": "Lisans ve Lisansüstü", "left": ["Lisans programları", "Çift ana dal"], "right": ["Yüksek lisans", "Doktora"], "notes": "İki düzey."},
+    {"layout": "comparison", "title": "Kampüs Yaşamı", "left_title": "Öğrenciler", "left": ["Yurt", "Kulüpler"], "right_title": "Akademisyenler", "right": ["Fonlar", "Ortaklıklar"], "notes": "Karşılaştırma."},
+    {"layout": "closing", "title": "Teşekkürler", "subtitle": "www.ciu.edu.tr", "notes": "Sorular."}
+  ]
+}

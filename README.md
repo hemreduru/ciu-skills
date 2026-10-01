@@ -40,6 +40,16 @@ Node.js gerekir. Kurulu ajanlar otomatik algılanır:
 
 `ciu-design` için ajanın komut çalıştırabilmesi ve görsel okuyabilmesi gerekir.
 
+## ciu-slides (sunum)
+
+UKÜ'nün resmi sunum şablonuyla (https://ciu.edu.tr/tr/uku-sablonu) marka uyumlu `.pptx` hazırlar: konu, taslak ya da belge ver; skill slaytları planlar, şablonu **her çalıştırmada güncel haliyle indirir**, sunumu üretir ve teslimden önce denetler (boş alan, örnek metin, taşma, çok madde, uzun başlık, konuşmacı notu).
+
+- Kurulum `ciu-design` ile aynıdır (`ciu-slides.zip` ya da `ciu-skills` seti). Node.js ve Python 3 gerekir; python-pptx claude.ai'de hazırdır, yerelde skill 1.0.2 sürümünü kendisi kurar.
+- Ağ: `share.ciu.edu.tr` (şablon) ve yerelde ilk kurulumda `pypi.org`. claude.ai'de ağ kısıtlıysa yöneticiden `share.ciu.edu.tr` için izin istenir; indirme olmazsa son kopya ya da kullanıcının yüklediği şablon kullanılır.
+- TLS: sunucu ara sertifikayı göndermediği için GlobalSign GCC R46 OV TLS CA 2025 genel sertifikası skill'e gömülüdür (`skills/ciu-slides/globalsign-gcc-r46-ov-tls-ca-2025.pem`) ve sistem kökleriyle birlikte kullanılır; doğrulama hiçbir zaman kapatılmaz. Sertifika 2029'da biter; sunucu ara sertifikasını değiştirirse yenisini bu dosyaya koy.
+- Önizleme (PDF + slayt PNG'leri) için LibreOffice (`soffice`) gerekir; yoksa atlanır.
+- Test: `pip install -r skills/ciu-slides/requirements.txt && python -m unittest discover -s skills/ciu-slides/scripts -p 'test_*.py'`; CI: `.github/workflows/slides.yml`. Şablon yapısı: `skills/ciu-slides/templates.md`.
+
 ## Bakımcı için
 
 - Test: `cd skills/ciu-design/remotion && npm ci && npm test && npm run typecheck`; scriptler: `node --test skills/ciu-design/scripts/scripts.test.mjs`

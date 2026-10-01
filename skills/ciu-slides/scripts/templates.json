@@ -1,0 +1,38 @@
+{
+  "font": "Myriad Pro",
+  "colors": { "wine": "862633", "orange": "FE5000", "ink": "231F20", "white": "FFFFFF" },
+  "layouts": {
+    "title": "Title Slide", "section": "Section Header", "content": "Title and Content", "two": "Two Content",
+    "comparison": "Comparison", "picture": "Title and Content", "title_only": "Title Only", "closing": "Title Slide"
+  },
+  "generic_layouts": {
+    "title": "Title Slide", "section": "Section Header", "content": "Title and Content", "two": "Two Content",
+    "comparison": "Comparison", "picture": "Picture with Caption", "title_only": "Title Only", "closing": "Title Slide"
+  },
+  "placeholders": {
+    "Title Slide": { "title": 0, "subtitle": 1 },
+    "Section Header": { "title": 0, "subtitle": 1 },
+    "Title and Content": { "title": 0, "body": 1 },
+    "Two Content": { "title": 0, "left": 1, "right": 2 },
+    "Comparison": { "title": 0, "left_title": 1, "left": 2, "right_title": 3, "right": 4 },
+    "Picture with Caption": { "title": 0, "picture": 1, "body": 2 },
+    "Title Only": { "title": 0 }
+  },
+  "templates": {
+    "1": {
+      "name": "Sunum Template 1", "use": "resmi / kurumsal: beyaz zemin, solda turuncu-bordo şerit",
+      "bg": { "hero": 0, "content": 1, "closing": 2 }, "tone": { "hero": "light", "content": "light", "closing": "light" },
+      "hero": [0.12, 0.30, 0.88, 0.72], "safe": [0.09, 0.20, 0.91, 0.78]
+    },
+    "2": {
+      "name": "Sunum Template 2", "use": "tanıtım / etkinlik: koyu kampüs binası kapak, beyaz içerik sayfası",
+      "bg": { "hero": 0, "content": 1, "closing": 2 }, "tone": { "hero": "dark", "content": "light", "closing": "dark" },
+      "hero": [0.12, 0.30, 0.88, 0.72], "safe": [0.09, 0.20, 0.91, 0.78]
+    },
+    "3": {
+      "name": "Sunum Template 3", "use": "akademik / bilgi: kampüs kuş bakışı kapak (yarı saydam çerçeve), beyaz içerik sayfası",
+      "bg": { "hero": 0, "content": 1, "closing": 2 }, "tone": { "hero": "light", "content": "light", "closing": "light" },
+      "hero": [0.17, 0.29, 0.83, 0.67], "safe": [0.09, 0.08, 0.91, 0.84]
+    }
+  }
+}

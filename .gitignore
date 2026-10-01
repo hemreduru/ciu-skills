@@ -9,4 +9,5 @@ skills/*/vendor/
 skills/ciu-design/remotion/public/input/*
 !skills/ciu-design/remotion/public/input/sample.jpg
 evals/**/results/
+__pycache__/
 skills/ciu-design/.remotion/
