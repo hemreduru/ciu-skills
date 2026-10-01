@@ -61,3 +61,33 @@ test("restoreDesign: latest folder by default, named folder on request, restores
   assert.throws(() => restoreDesign(out, work, "yok"), /bulunamadı/);
   assert.throws(() => restoreDesign(tmp(), work), /bulunamadı/);
 });
+
+test("music pack: index, files and CREDITS agree; CC0 only; under 8 MB", async () => {
+  const { readdirSync, statSync } = await import("node:fs");
+  const dir = join(import.meta.dirname, "..", "remotion", "public", "music");
+  const index = JSON.parse(readFileSync(join(dir, "index.json"), "utf8"));
+  const credits = readFileSync(join(dir, "CREDITS.md"), "utf8");
+  const mp3 = readdirSync(dir).filter((f) => f.endsWith(".mp3")).sort();
+  assert.deepEqual(index.map((t) => `${t.id}.mp3`).sort(), mp3);
+  assert.ok(index.length >= 4 && index.length <= 6);
+  for (const t of index) assert.ok(credits.includes(t.source) && credits.includes(`${t.id}.mp3`), t.id);
+  assert.match(credits, /CC0 1\.0/);
+  assert.ok(mp3.reduce((sum, f) => sum + statSync(join(dir, f)).size, 0) < 8 * 1048576);
+  const listed = run("music.mjs").stdout;
+  index.forEach((t) => assert.ok(listed.includes(t.id)));
+});
+
+test("check.mjs --work: missing user file and unknown musicTrack are reported; input.mjs rejects bad types", () => {
+  const d = tmp();
+  const work = join(import.meta.dirname, "..", "remotion");
+  const design = { size: "reels", lang: "tr", slides: [{ photo: { src: "yok-yok.jpg" }, seconds: 2 }], bugLogoId: W, cardLogoId: "official-ciu-color-1line-bilingual-tr", outro: ["x"], musicTrack: "yok" };
+  writeFileSync(join(d, "m.json"), JSON.stringify(design));
+  const r = run("check.mjs", join(d, "m.json"), "--work", work);
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /yok-yok\.jpg" bulunamadı/);
+  assert.match(r.stdout, /musicTrack bulunamadı/);
+  writeFileSync(join(d, "a.exe"), "x");
+  const bad = run("input.mjs", join(d, "a.exe"), "--work", d);
+  assert.equal(bad.status, 1);
+  assert.match(bad.stdout, /desteklenmiyor/);
+});
