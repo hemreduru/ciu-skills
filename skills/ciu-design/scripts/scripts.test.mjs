@@ -1,10 +1,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { RULES_SHA, RULES_TARBALL } from "./remotion-rules.mjs";
+import { designFromRecord, normDate, normTime, parseCsv, toRecords } from "./batch.mjs";
+import { importCues, protectNames } from "./captions.mjs";
+import { apply, formatMemory, parseMemory, personalData } from "./hafiza.mjs";
+import { lintSection, loadRules, renderPack } from "./paylasim.mjs";
 import { restoreDesign } from "./revise.mjs";
 
 const run = (script, ...args) => spawnSync("node", [join(import.meta.dirname, script), ...args], { encoding: "utf8" });
@@ -90,4 +94,131 @@ test("check.mjs --work: missing user file and unknown musicTrack are reported; i
   const bad = run("input.mjs", join(d, "a.exe"), "--work", d);
   assert.equal(bad.status, 1);
   assert.match(bad.stdout, /desteklenmiyor/);
+});
+
+// ---- W2b: captions, batch, paylasim, hafiza -------------------------------
+
+const LOGOS = JSON.parse(readFileSync(join(import.meta.dirname, "..", "remotion", "src", "logos.json"), "utf8"));
+
+test("captions: SRT import normalizes BOM/CRLF/2-line/long cues; plain text needs a length; names are protected", () => {
+  const srt = "\uFEFF1\r\n00:00:00,000 --> 00:00:04,000\r\nuku'ye hoş geldiniz, yeni dönem\r\nbugün başlıyor\r\n";
+  const cues = importCues(srt);
+  assert.ok(cues.length >= 2 && cues.every((c) => c.text.length <= 32 && !c.text.includes("\n")));
+  assert.equal(cues.at(-1).endMs, 4000);
+  assert.throws(() => importCues("Sadece metin"), /süresi/);
+  assert.equal(importCues("Sadece metin", 5).at(-1).endMs, 5000);
+  assert.equal(protectNames("ciu ve uku, bilgisayar mühendisliği bölümü", ["Bilgisayar Mühendisliği"]), "CIU ve UKÜ, Bilgisayar Mühendisliği bölümü");
+});
+
+test("captions.mjs import -> Motion design with slide captions passes check.mjs", () => {
+  const d = tmp();
+  writeFileSync(join(d, "in.srt"), "1\n00:00:00,500 --> 00:00:03,500\nBugün UKÜ'de oryantasyon günü ve hepsi başlıyor\n");
+  const r = run("captions.mjs", "import", join(d, "in.srt"), "--out", join(d, "out.srt"));
+  assert.equal(r.status, 0);
+  const srt = readFileSync(join(d, "out.srt"), "utf8");
+  const design = { size: "reels", lang: "tr", slides: [{ video: "k.mp4", seconds: 3, videoSound: true, srt }], bugLogoId: W, cardLogoId: "official-ciu-color-1line-bilingual-tr", outro: ["x"] };
+  writeFileSync(join(d, "m.json"), JSON.stringify(design));
+  assert.equal(run("check.mjs", join(d, "m.json")).stdout.trim(), "OK");
+  assert.equal(run("captions.mjs", "plan", "--data", d).status, 0);
+  assert.match(run("captions.mjs", "transcribe", join(d, "in.srt"), "--work", d, "--data", d, "--out", join(d, "x.srt")).stdout, /WHISPER=(needs-install|unavailable)|HATA/);
+});
+
+test("parseCsv: delimiters, quotes, escaped quotes, newline in field, BOM, CRLF, blank lines, trailing delimiter", () => {
+  assert.deepEqual([...parseCsv("\uFEFFa;b;c\r\n1;\"x;y\";3\r\n\r\n")].map((r) => [...r]), [["a", "b", "c"], ["1", "x;y", "3"]]);
+  assert.deepEqual([...parseCsv('a,b\n"he said ""hi""","two\nlines"\n')[1]], ['he said "hi"', "two\nlines"]);
+  assert.deepEqual([...parseCsv("a\tb\n1\t2")[1]], ["1", "2"]);
+  assert.deepEqual([...parseCsv("a,b,\n1,2,\n")[1]], ["1", "2", ""]);
+  assert.deepEqual([...parseCsv("a,b\r1,2")[1]], ["1", "2"]);
+  assert.equal(parseCsv("a,b\n\n\n1,2")[1].line, 4);
+  assert.throws(() => parseCsv('a,b\n"açık,2'), /Tırnak kapanmıyor/);
+});
+
+test("batch: TR and EN column names, date/time normalization, design built, bad rows reported with reasons", () => {
+  const { records, unknown, hasTitle } = toRecords(parseCsv("Başlık;ALT_BAŞLIK;Date;Time;Venue;Language;Renk\nA;b;2026-10-05;9.30;Salon;İngilizce;x"));
+  assert.ok(hasTitle);
+  assert.deepEqual(unknown, ["Renk"]);
+  const { design, errors } = designFromRecord(records[0], LOGOS);
+  assert.deepEqual(errors, []);
+  assert.deepEqual([design.meta, design.lang, design.logoId, design.subtitle], ["05.10.2026 09:30 · Salon", "en", "official-ciu-white-3lines-en", "b"]);
+  assert.equal(normDate("5/3/26"), "05.03.2026");
+  assert.equal(normDate("31.02.x"), undefined);
+  assert.equal(normTime("25:00"), undefined);
+  const bad = designFromRecord({ line: 3, date: "yarın", time: "14:00", lang: "fr" }, LOGOS).errors;
+  assert.equal(bad.length, 4);
+  assert.match(bad.join("\n"), /Başlık boş[\s\S]*Dil anlaşılamadı[\s\S]*Tarih anlaşılamadı[\s\S]*Saat var ama tarih yok/);
+});
+
+test("batch.mjs: plan prints count + first-row preview; every bad row is reported together; nothing is skipped", () => {
+  const d = tmp();
+  const csv = join(d, "l.csv");
+  const plan = () => run("batch.mjs", csv, "--work", d, "--out", join(d, "o"));
+  writeFileSync(csv, "Başlık,Tarih,Yer\nİlk Etkinlik,15.10.2026,Salon\nİkinci,16.10.2026,Kampüs\n");
+  const ok = plan();
+  assert.equal(ok.status, 0);
+  assert.match(ok.stdout, /^SATIR=2\nGORSEL=2\n/);
+  assert.match(ok.stdout, /ONIZLEME \(satır 2\).*15\.10\.2026 · Salon/);
+  writeFileSync(csv, "Başlık,Tarih,Dil\nİyi,15.10.2026,tr\n,bozuk,tr\nÜç,16.10.2026,fr\nDört,x,tr\n");
+  const bad = plan();
+  assert.equal(bad.status, 1);
+  assert.match(bad.stdout, /HATALI_SATIR=3/);
+  for (const l of [3, 4, 5]) assert.match(bad.stdout, new RegExp(`- Satır ${l} `));
+  writeFileSync(csv, "Ad,Gün\nx,y\n");
+  assert.match(plan().stdout, /başlık sütunu yok/);
+  writeFileSync(join(d, "e.xlsx"), "not a workbook");
+  assert.match(run("batch.mjs", join(d, "e.xlsx"), "--work", d, "--out", d).stdout, /CSV UTF-8/);
+});
+
+test("paylasim: lint catches style/tag/alt/limit problems; a good section renders every part", () => {
+  const rules = loadRules();
+  assert.deepEqual(rules.fixedTags, ["#WeAreCIU", "#CIU"]);
+  const ok = {
+    title: "Oryantasyon", platform: "instagram", topicTags: ["Oryantasyon", "#YeniDönem", "KampüsHayatı"],
+    caption: { tr: "Yeni dönem 11 Eylül'de başlıyor 🎓\nOryantasyon günlerinde kampüste görüşürüz.", en: "The new term starts on 11 September 🎓\nSee you on campus." },
+    files: [{ file: "final.png", platform: "Instagram feed 1080×1350", alt: { tr: "Bordo panelde Oryantasyon Günleri yazısı.", en: "Text on a wine panel: Orientation Days." } }],
+  };
+  assert.deepEqual(lintSection(ok, rules), []);
+  const md = renderPack({ sections: [ok] }, rules, () => 1048576);
+  for (const part of ["Caption (TR)", "Caption (EN)", "#WeAreCIU #CIU #Oryantasyon", "TR: Bordo", "EN: Text", "| final.png | 1.0 MB |", "Önerilen paylaşım saati"]) assert.ok(md.includes(part), part);
+  const bad = { ...ok, platform: "x", topicTags: ["A"], caption: { tr: "Sizlerle buluşturmaktan mutluluk duyarız! Çok! 🎓🎓🎓 #etiket", en: "" }, files: [{ file: "yok.png", alt: { tr: "", en: "x" } }] };
+  const out = lintSection(bad, rules, (f) => f !== "yok.png").join("\n");
+  for (const re of [/etiket sayısı/, /yasaklı kalıp/, /en fazla bir ünlem/, /en fazla 2 emoji/, /içinde #/, /EN caption boş/, /dosya bulunamadı/, /TR alt text boş/]) assert.match(out, re);
+});
+
+test("paylasim.mjs: writes paylasim.md next to the files, or lists errors and writes nothing", () => {
+  const d = tmp();
+  writeFileSync(join(d, "final.png"), "png");
+  const section = { title: "T", platform: "linkedin", topicTags: ["A", "B", "C"], caption: { tr: "Kısa ve net bir cümle.", en: "A short, clear sentence." }, files: [{ file: "final.png", alt: { tr: "a", en: "b" } }] };
+  writeFileSync(join(d, "p.json"), JSON.stringify({ sections: [section] }));
+  const ok = run("paylasim.mjs", join(d, "p.json"), "--out", join(d, "paylasim.md"));
+  assert.equal(ok.status, 0);
+  assert.match(readFileSync(join(d, "paylasim.md"), "utf8"), /## 1\. T — linkedin/);
+  writeFileSync(join(d, "p.json"), JSON.stringify({ sections: [{ ...section, files: [{ file: "yok.png", alt: { tr: "a", en: "b" } }] }] }));
+  rmSync(join(d, "paylasim.md"));
+  assert.equal(run("paylasim.mjs", join(d, "p.json"), "--out", join(d, "paylasim.md")).status, 1);
+  assert.ok(!existsSync(join(d, "paylasim.md")));
+});
+
+test("hafiza: round-trips, series counter, forget, and no personal data", () => {
+  let m = parseMemory("");
+  m = apply(m, "set", ["birim", "Bilgisayar Mühendisliği"]).memory;
+  m = apply(m, "add", ["begeni", "düz bordo panel"]).memory;
+  m = apply(m, "add", ["begeni", "Düz Bordo Panel"]).memory;
+  m = apply(m, "seri", ["Haftalık Etkinlik"], { layout: "overlay", vurgu: "orange", etiketler: "#HaftalıkEtkinlik", sonraki: true }).memory;
+  const r = apply(m, "seri", ["haftalık etkinlik"], { sonraki: true });
+  assert.equal(r.numara, "2");
+  const back = parseMemory(formatMemory(r.memory));
+  assert.deepEqual(back, r.memory);
+  assert.equal(back.begeni.length, 1);
+  for (const pii of ["0533 123 45 67", "ad@ciu.edu.tr", "12345678901", "TR33 0006 1005 1978 6457 8413 26"]) assert.ok(personalData(pii), pii);
+  assert.ok(!personalData("15.10.2026 haftalık etkinlik 3. sayı"));
+  assert.throws(() => apply(m, "add", ["begeni", "beni 0533 123 45 67 ara"]), /Kişisel veri/);
+  assert.match(apply(m, "unut", ["haftalık etkinlik"]).say, /silindi/);
+  assert.deepEqual(Object.keys(apply(m, "unut", ["Haftalık Etkinlik"]).memory.seriler), []);
+  assert.equal(apply(parseMemory(formatMemory(r.memory)), "unut", ["bordo"]).memory.begeni.length, 0);
+  const d = tmp();
+  const f = join(d, "ciu-hafiza.md");
+  assert.equal(run("hafiza.mjs", f, "seri", "Seri", "--sonraki").status, 0);
+  assert.match(run("hafiza.mjs", f, "show").stdout, /son numara: 1/);
+  assert.match(run("hafiza.mjs", f, "unut", "hepsi").stdout, /silindi/);
+  assert.ok(!existsSync(f));
 });
