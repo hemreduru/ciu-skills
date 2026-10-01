@@ -1,6 +1,7 @@
 {
   "name": "ciu-design-remotion",
   "private": true,
+  "type": "module",
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "typecheck": "tsc --noEmit",

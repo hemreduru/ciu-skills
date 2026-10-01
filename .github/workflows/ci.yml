@@ -96,7 +96,8 @@ jobs:
           B=${CHROME:+--browser-executable=$CHROME}
           S="$GITHUB_WORKSPACE/skills/ciu-design/scripts"
           printf '1\n00:00:00,200 --> 00:00:01,800\nYeni dönem başlıyor\n\n2\n00:00:02,000 --> 00:00:03,500\nHoş geldiniz UKÜ\n' > "$OUT_DIR/in.srt"
-          node "$S/captions.mjs" import "$OUT_DIR/in.srt" --out "$OUT_DIR/altyazi.srt"
+          node "$S/captions.mjs" import "$OUT_DIR/in.srt" --out "$OUT_DIR/altyazi.srt" 2> "$OUT_DIR/cap.err"
+          test ! -s "$OUT_DIR/cap.err" || { cat "$OUT_DIR/cap.err"; exit 1; }
           node -e 'const fs=require("fs");const o=process.env.OUT_DIR;fs.writeFileSync(o+"/cap.json",JSON.stringify({size:"reels",lang:"tr",slides:[{video:"klip.mp4",videoSound:true,trimStartSec:1,title:"Yeni Dönem",seconds:3,srt:fs.readFileSync(o+"/altyazi.srt","utf8")}],bugLogoId:"official-ciu-white-1line-bilingual-tr",cardLogoId:"official-ciu-color-1line-bilingual-tr",outro:["www.ciu.edu.tr"]}))'
           node "$S/check.mjs" "$OUT_DIR/cap.json" --work "$WORK"
           (cd "$WORK" && npx remotion render src/index.ts Motion "$OUT_DIR/cap.mp4" --props="$OUT_DIR/cap.json" --frames=0-59 --scale=0.25 --codec=h264 $B)

@@ -115,6 +115,7 @@ test("captions.mjs import -> Motion design with slide captions passes check.mjs"
   writeFileSync(join(d, "in.srt"), "1\n00:00:00,500 --> 00:00:03,500\nBugün UKÜ'de oryantasyon günü ve hepsi başlıyor\n");
   const r = run("captions.mjs", "import", join(d, "in.srt"), "--out", join(d, "out.srt"));
   assert.equal(r.status, 0);
+  assert.equal(r.stderr, "", "Node uyarısı kullanıcıya görünmez");
   const srt = readFileSync(join(d, "out.srt"), "utf8");
   const design = { size: "reels", lang: "tr", slides: [{ video: "k.mp4", seconds: 3, videoSound: true, srt }], bugLogoId: W, cardLogoId: "official-ciu-color-1line-bilingual-tr", outro: ["x"] };
   writeFileSync(join(d, "m.json"), JSON.stringify(design));
