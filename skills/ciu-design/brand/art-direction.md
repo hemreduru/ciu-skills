@@ -81,7 +81,7 @@ The third register, for when the user wants the feed to stop scrolling: a studen
 - More than one grid break; hero ≥ 5× the next element.
 
 **Never loosened (every register)**
-- Logo: no recolor, rescale out of proportion, frame, rotation or overlap; it sits upright on its own clean block or calm area with the right tone (`logoSurface`), never inside the collage (brand.md "Logo misuse").
+- Logo: no recolor, rescale out of proportion, frame, rotation or overlap; it sits upright on its own clean block or calm area with the right tone (`logoSurface`), never inside the collage (brand.md "Logo misuse"). It keeps its own block: it never shares a panel with the date, place or title, and no text sits over or beside it (clear space around the logo).
 - Legibility and contrast: the copy that carries the message (hero, info row) ≥ 4.5:1 against what is actually behind it; where a word crosses a photo piece, that piece is duotoned or tinted dark enough, or the word sits on a solid block.
 - The full date line `15.10.2026 14:00`, in one line, upright, inside the canvas — never cut, rotated or repeated as decoration. Turkish letters intact: an edge may cut a letter's body, never the İ dot, ğ breve or ş/ç cedilla.
 - Palette tokens and brand fonts only (the existing SOFT warning for anything else); 9:16 safe areas (top 14 % / bottom 20 %) for every word that must be read — bleeding type may enter them, the info row and logo may not; no cropped faces (a piece may crop to a detail, never through a face); no blurry photos (short side ≥ 1080 px).
