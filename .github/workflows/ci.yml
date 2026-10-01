@@ -72,6 +72,10 @@ jobs:
           npx remotion still src/index.ts Post "$OUT_DIR/post.png" --props="$OUT_DIR/post.json" --scale=0.5 $B
           npx remotion render src/index.ts Motion "$OUT_DIR/motion.mp4" --props="$OUT_DIR/motion.json" --frames=0-44 --scale=0.25 --codec=h264 $B
           test -s "$OUT_DIR/post.png" && test -s "$OUT_DIR/motion.mp4"
+      - name: input props do not pick up sample content
+        run: |
+          echo '{"size":"post","lang":"tr","layout":"overlay","title":"Deneme","logoId":"official-ciu-white-1line-bilingual-tr"}' > "$OUT_DIR/bare.json"
+          node skills/ciu-design/scripts/props-smoke.mjs "$OUT_DIR/bare.json" --work "$WORK" ${CHROME:+--chrome "$CHROME"}
       - name: user video + bundled music (audio track present)
         run: |
           B=${CHROME:+--browser-executable=$CHROME}
