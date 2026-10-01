@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_call:
+
+env:
+  REMOTION_DIR: skills/ciu-design/remotion
+
+jobs:
+  remotion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ${{ env.REMOTION_DIR }}/package-lock.json
+      - run: npm ci
+        working-directory: ${{ env.REMOTION_DIR }}
+      - run: npm run typecheck
+        working-directory: ${{ env.REMOTION_DIR }}
+      - run: npm test
+        working-directory: ${{ env.REMOTION_DIR }}
+
+  scripts:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["22.18.0", "24"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node --test skills/ciu-design/scripts/scripts.test.mjs
+
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: setup.mjs in a clean directory
+        run: |
+          mkdir -p "$RUNNER_TEMP/clean" && cd "$RUNNER_TEMP/clean"
+          CLAUDE_PLUGIN_DATA="$RUNNER_TEMP/ciu-data" node "$GITHUB_WORKSPACE/skills/ciu-design/scripts/setup.mjs" | tee setup.out
+          grep -q '^FIRST_RUN=1$' setup.out
+          grep -q '^REMOTION_RULES=' setup.out && test -z "$(grep '^RULES_WARNING=' setup.out)"
+          rules=$(sed -n 's/^REMOTION_RULES=//p' setup.out)
+          test -s "$rules/remotion-best-practices/SKILL.md"
+          echo "WORK=$(sed -n 's/^WORK=//p' setup.out)" >> "$GITHUB_ENV"
+          echo "CHROME=$(sed -n 's/^CHROME=//p' setup.out)" >> "$GITHUB_ENV"
+          echo "OUT_DIR=$RUNNER_TEMP/clean/out" >> "$GITHUB_ENV"
+      - name: validate, then render a still and a short video
+        run: |
+          mkdir -p "$OUT_DIR"
+          cat > "$OUT_DIR/post.json" <<'JSON'
+          {"size":"post","lang":"tr","layout":"overlay","title":"Oryantasyon Günleri Başlıyor","meta":"11.09.2026 09:00 · UKÜ Kampüsü","photo":{"src":"sample.jpg"},"logoId":"official-ciu-white-1line-bilingual-tr"}
+          JSON
+          cat > "$OUT_DIR/motion.json" <<'JSON'
+          {"size":"reels","lang":"tr","slides":[{"photo":{"src":"sample.jpg"},"title":"Yeni Dönem","seconds":1}],"bugLogoId":"official-ciu-white-1line-bilingual-tr","cardLogoId":"official-ciu-color-1line-bilingual-tr","outro":["www.ciu.edu.tr"]}
+          JSON
+          node skills/ciu-design/scripts/check.mjs "$OUT_DIR/post.json"
+          node skills/ciu-design/scripts/check.mjs "$OUT_DIR/motion.json"
+          B=${CHROME:+--browser-executable=$CHROME}
+          cd "$WORK"
+          npx remotion still src/index.ts Post "$OUT_DIR/post.png" --props="$OUT_DIR/post.json" --scale=0.5 $B
+          npx remotion render src/index.ts Motion "$OUT_DIR/motion.mp4" --props="$OUT_DIR/motion.json" --frames=0-44 --scale=0.25 --codec=h264 $B
+          test -s "$OUT_DIR/post.png" && test -s "$OUT_DIR/motion.mp4"
+      - name: second setup run is not a first run
+        run: |
+          cd "$RUNNER_TEMP/clean"
+          CLAUDE_PLUGIN_DATA="$RUNNER_TEMP/ciu-data" node "$GITHUB_WORKSPACE/skills/ciu-design/scripts/setup.mjs" | tee setup2.out
+          ! grep -q '^FIRST_RUN=1$' setup2.out
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/build.mjs
+      - run: test -s dist/ciu-design.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*.zip
