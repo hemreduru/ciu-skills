@@ -171,6 +171,7 @@ export const fileProblems = (d: Json, files: FileInfo): string[] => {
 /** Non-blocking notes the designer should hear about. */
 export const designWarnings = (d: Json, files?: FileInfo): string[] => {
   const warnings: string[] = [];
+  (d.slides ?? []).forEach((s: Json, i: number) => s.srt && !s.videoSound && warnings.push(`UYARI: slides[${i}] altyazılı ama videonun sesi kapalı (videoSound). Konuşma duyulmayacaksa altyazı yalnızca metin gibi görünür.`));
   if (d.font) warnings.push("UYARI: Marka fontu (Poppins / Source Sans 3) dışında bir font kullanılıyor. Fontun lisansı sende; marka rehberinden sapıyor.");
   if (files)
     for (const [kind, name, where] of refs(d)) {
@@ -230,6 +231,7 @@ export const checkDesign = (d: Json, logos: readonly LogoEntry[], files?: FileIn
 
   if (files) errors.push(...fileProblems(d, files));
   if (d.srt) errors.push(...srtProblems(d.srt));
+  (d.slides ?? []).forEach((s: Json, i: number) => s.srt && errors.push(...srtProblems(s.srt).map((e) => `slides[${i}]: ${e}`)));
   for (const s of copyText(d)) errors.push(...dateProblems(s));
   return errors;
 };

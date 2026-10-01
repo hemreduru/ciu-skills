@@ -154,3 +154,11 @@ test("dateProblems: date ranges are not read as date + time", () => {
   assert.deepEqual(dateProblems("11.09.2026-13.09.2026"), []);
   assert.deepEqual(dateProblems("11.09.2026–13.09.2026"), []);
 });
+
+test("slide captions: srt problems are located, muted clip with captions warns", () => {
+  const slide = { video: "k.mp4", seconds: 2, srt: "1\n00:00:00,000 --> 00:00:01,000\nbu satır otuz iki karakterden çok daha uzun bir altyazı\n" };
+  const d = { size: "reels", lang: "tr", slides: [slide], bugLogoId: "a", cardLogoId: "b", outro: ["x"] };
+  assert.ok(checkDesign(d, []).some((e) => e.startsWith("slides[0]: Altyazı 32 karakteri geçiyor")));
+  assert.ok(designWarnings(d).some((w) => w.includes("slides[0] altyazılı")));
+  assert.equal(designWarnings({ ...d, slides: [{ ...slide, videoSound: true }] }).length, 0);
+});
