@@ -87,9 +87,7 @@ Layout patterns (with logo position and size for each format) live in a per-type
 - **Copy on the image is short:** a headline of up to about 8 words, an optional subtitle, and facts only (date, time, venue, speakers, organizer). Sentences and CTAs stay in the caption.
 
 ## Hashtags & handles
-- Hashtags go on the last line, 1–6 per post, in CamelCase, and always start with a brand tag:
-  - `#WeAreCIU` (7 of 12 Instagram posts)
-  - `#CIU` (5 of 12)
+- Hashtags go on the last line in CamelCase. Counts, the fixed brand tags and per-platform use live in `paylasim.md` (one place); observed brand tags: `#WeAreCIU` (7 of 12 Instagram posts), `#CIU` (5 of 12).
 - Recurring topic tags:
   - campus life: `#CampusLife` (3), `#StudentClubs` (2), `#StudentLife`
   - welcome/new semester: `#WelcomeToCIU`, `#FirstDay`, `#NewSemester`
@@ -104,7 +102,7 @@ Layout patterns (with logo position and size for each format) live in a per-type
   - X `@ciuofficial` (account `@CIUOfficial`)
   - web `www.ciu.edu.tr`, written with "www."
 - Feed and reels designs carry no handle or URL. URLs go in the caption (`honet-ict.org`; `aday.ciu.edu.tr` / `prospective.ciu.edu.tr` in the pinned X post). Event designs may use a QR code with a "For registration:" label at the top-right of the panel instead of a URL.
-- X mirrors the Instagram designs with a shortened single-block caption and usually no hashtags.
+- X mirrors the Instagram designs with a shortened single-block caption (platform limits: `paylasim.md`).
 
 ## Do / Don't
 - **Do:**
