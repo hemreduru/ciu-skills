@@ -63,6 +63,15 @@ test("file_exists / file_regex: glob, adet, içerik", () => {
   assert.equal(grade({ type: "file_regex", path: "**/yok.md", pattern: "x" }, { tx, workDir: dir }).pass, false);
 });
 
+test("file_regex: data/ öneki veri dizinine bakar", () => {
+  const dir = mkdtempSync(join(tmpdir(), "evrun-"));
+  mkdirSync(join(dir, "w")); mkdirSync(join(dir, "d"));
+  writeFileSync(join(dir, "d", "ciu-hafiza.md"), "- son numara: 5");
+  const ctx = { tx, workDir: join(dir, "w"), dataDir: join(dir, "d") };
+  assert.equal(grade({ type: "file_regex", path: "data/ciu-hafiza.md", pattern: "son numara: 5" }, ctx).pass, true);
+  assert.equal(grade({ type: "file_regex", path: "data/ciu-hafiza.md", pattern: "son numara: 4" }, ctx).pass, false);
+});
+
 test("llm: otomatik değerlendirilmez (pass=null)", () => {
   assert.equal(grade({ type: "llm" }, { tx }).pass, null);
 });

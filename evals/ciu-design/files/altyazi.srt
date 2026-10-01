@@ -1,0 +1,11 @@
+1
+00:00:00,500 --> 00:00:02,500
+Merhaba, UKÜ'ye hoş geldiniz.
+
+2
+00:00:02,600 --> 00:00:05,000
+Kampüsümüzü birlikte gezelim.
+
+3
+00:00:05,200 --> 00:00:08,000
+Sorularınız için buradayız.

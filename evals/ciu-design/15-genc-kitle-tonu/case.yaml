@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: 15-genc-kitle-tonu
+context:
+  scaffold_script: scaffold.sh

@@ -71,9 +71,13 @@ const re = (pattern, flags = "") => {
   return new RegExp(inline ? pattern.slice(inline[0].length) : pattern, flags + (inline ? inline[1] : ""));
 };
 const matches = (tx, { tool, input_match }) => tx.tools.map((t, i) => ({ ...t, i })).filter((t) => t.tool === tool && (!input_match || re(input_match).test(flat(t.input))));
-const files = (workDir, pattern) => globSync(pattern, { cwd: workDir }).filter((f) => statSync(join(workDir, f)).isFile());
+const files = ({ workDir, dataDir }, pattern) => {
+  const [cwd, glob] = pattern.startsWith("data/") ? [dataDir, pattern.slice(5)] : [workDir, pattern];
+  return globSync(glob, { cwd }).filter((f) => statSync(join(cwd, f)).isFile()).map((f) => join(cwd, f));
+};
 
-export const grade = (g, { tx, workDir }) => {
+export const grade = (g, ctx) => {
+  const { tx } = ctx;
   const r = (pass, detail) => ({ pass, detail });
   switch (g.type) {
     case "tool_used": {
@@ -89,12 +93,12 @@ export const grade = (g, { tx, workDir }) => {
       return r(g.negate ? !hit : hit, `/${g.pattern}/ ${g.target ?? "trace"} ${hit ? "bulundu" : "yok"}`);
     }
     case "file_exists": {
-      const n = files(workDir, g.path).length;
+      const n = files(ctx, g.path).length;
       return r(n >= (g.min ?? 1), `${g.path}: ${n} dosya`);
     }
     case "file_regex": {
-      const fs = files(workDir, g.path);
-      const hit = fs.length > 0 && fs.some((f) => re(g.pattern, g.flags).test(readFileSync(join(workDir, f), "utf8")));
+      const fs = files(ctx, g.path);
+      const hit = fs.length > 0 && fs.some((f) => re(g.pattern, g.flags).test(readFileSync(f, "utf8")));
       return r(fs.length > 0 && (g.negate ? !hit : hit), `${g.path}: ${fs.length ? (hit ? "eşleşti" : "eşleşmedi") : "dosya yok"} /${g.pattern}/`);
     }
     case "llm": return r(null, "elle değerlendirilir");
@@ -126,7 +130,7 @@ const gradeRun = (dir, caseDir, env) => {
   const tx = loadTranscript(readFileSync(join(dir, "transcript.jsonl"), "utf8"));
   const graders = graderFiles(caseDir).map((f) => {
     const { meta, body } = parseFrontmatter(readFileSync(join(caseDir, "graders", f), "utf8"));
-    const res = grade(meta, { tx, workDir: join(dir, "work") });
+    const res = grade(meta, { tx, workDir: join(dir, "work"), dataDir: join(dir, "data") });
     return { name: f.replace(/\.md$/, ""), type: meta.type, ...res, ...(meta.type === "llm" ? { criteria: body.trim(), focus: meta.focus } : {}) };
   });
   const result = { turns: tx.turns, durationMs: tx.durationMs, isError: tx.isError, graders, outputs: inspectOutputs(join(dir, "work"), env) };
