@@ -26,7 +26,8 @@ export type PostProps = {
   font?: FontChoice;
 };
 
-export type Slide = { photo?: Photo; video?: string; trimStartSec?: number; trimEndSec?: number; videoSound?: boolean; title?: string; subtitle?: string; seconds: number };
+/** `srt` is timed to the source clip (0 = clip start), so trimStartSec is applied automatically. */
+export type Slide = { photo?: Photo; video?: string; trimStartSec?: number; trimEndSec?: number; videoSound?: boolean; srt?: string; title?: string; subtitle?: string; seconds: number };
 
 export type MotionProps = MusicProps & {
   size: string;

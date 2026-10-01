@@ -27,9 +27,12 @@ const data = env === "claudeai" ? CLAUDEAI.data : process.env.CLAUDE_PLUGIN_DATA
 const inDir = env === "claudeai" ? CLAUDEAI.in : join(process.cwd(), "girdiler");
 const outDir = env === "claudeai" ? CLAUDEAI.out : join(process.cwd(), "ciktilar");
 const work = join(data, "remotion");
+// claude.ai has no persistent folder: the memory file travels with the outputs and comes back as an upload.
+const memory = join(env === "claudeai" ? outDir : data, "ciu-hafiza.md");
 let lock;
 try {
   [data, inDir, outDir].forEach((d) => mkdirSync(d, { recursive: true }));
+  if (!existsSync(memory) && existsSync(join(inDir, "ciu-hafiza.md"))) cpSync(join(inDir, "ciu-hafiza.md"), memory);
   rmSync(join(work, "src"), { recursive: true, force: true });
   rmSync(join(work, "public"), { recursive: true, force: true });
   cpSync(join(SKILL, "remotion"), work, { recursive: true, filter: (src) => basename(src) !== "node_modules" });
@@ -82,7 +85,7 @@ if (revArg) {
 }
 
 console.log([
-  `ENV=${env}`, `IN=${inDir}`, `OUT=${outDir}`, `WORK=${work}`, `REMOTION_RULES=${rules}`, `CHROME=${chrome}`,
+  `ENV=${env}`, `IN=${inDir}`, `OUT=${outDir}`, `WORK=${work}`, `DATA=${data}`, `MEMORY=${memory}`, existsSync(memory) && "MEMORY_EXISTS=1", `REMOTION_RULES=${rules}`, `CHROME=${chrome}`,
   rulesWarning && `RULES_WARNING=${rulesWarning}`,
   firstRun && "FIRST_RUN=1",
   revise,
