@@ -66,7 +66,7 @@ Open each rendered image and check: logo intact, correct tone, not too small; a 
 - Video: `cd $WORK && npx remotion render src/index.ts <Id> $D/final.mp4 --props=$D/design.json --codec=h264`
 - Carousel: one design-N.json per slide (same composition), rendered as final-N.png.
 - After a custom final, copy `$WORK/src/custom/stills.tsx` (or `videos.tsx`) and the photos it uses (not video clips) into `$D/` (`$D/input/`) so the design can be revised later.
-Revising a design from an earlier conversation: run setup with `--revise` (or `--revise=<folder>`); it restores the composition and photos from `$OUT` into `$WORK` and prints `REVISE_DIR`. Edit a copy of its design.json (new folder `$D`) and/or the restored composition, then validate (§6) and render as usual. `REVISE_ERROR` → no earlier design in `$OUT`; ask the user for the files.
+Revising a design from an earlier conversation: run setup with `--revise` (or `--revise=<folder>`); it restores the composition and photos from `$OUT` into `$WORK` and prints `REVISE_DIR` (and `REVISED`, the restored files). Edit a copy of its design.json (new folder `$D`) and/or the restored composition, then validate (§6) and render as usual. `REVISE_ERROR` → no earlier design in `$OUT`; ask the user for the files.
 Revisions edit design.json (copy) or the composition (layout) and re-render. "Aynısını İngilizce / story yap" → copy design.json, change `lang`/`size`, rewrite `text`, re-check the layout at the new size.
 Render error → read it, fix, retry at most twice; then fall back to the built-in, or explain plainly what failed and what the user can do.
 

@@ -5,7 +5,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { RULES_SHA, RULES_TARBALL } from "./remotion-rules.mjs";
-import { listDesigns, restoreDesign } from "./revise.mjs";
+import { restoreDesign } from "./revise.mjs";
 
 const run = (script, ...args) => spawnSync("node", [join(import.meta.dirname, script), ...args], { encoding: "utf8" });
 const tmp = () => mkdtempSync(join(tmpdir(), "ciu-"));
@@ -50,7 +50,6 @@ test("restoreDesign: latest folder by default, named folder on request, restores
     writeFileSync(join(out, name, "input", `${code}.jpg`), "x");
   }
   writeFileSync(join(out, "dosya.txt"), "not a folder");
-  assert.deepEqual(listDesigns(out), ["20261001-1000-a", "20261002-1000-b"]);
 
   const latest = restoreDesign(out, work);
   assert.deepEqual(latest.restored, ["stills.tsx"]);

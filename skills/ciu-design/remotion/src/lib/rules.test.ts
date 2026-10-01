@@ -57,12 +57,23 @@ test("dateProblems: only 15.10.2026 14:00 form passes", () => {
   assert.equal(dateProblems("5.10.2026").length, 1);
   assert.equal(dateProblems("15/10/2026").length, 1);
   assert.deepEqual(dateProblems("Sürüm 2.5 çıktı"), []);
+  assert.deepEqual(dateProblems("Saat 10.00-12.00 arası"), []);
 });
 
 test("srtProblems: one line, <= 32 chars per cue", () => {
   assert.deepEqual(srtProblems("1\n00:00:00,500 --> 00:00:02,000\nKısa altyazı\n"), []);
   assert.equal(srtProblems("1\n00:00:00,500 --> 00:00:02,000\n" + "a".repeat(33) + "\n").length, 1);
   assert.equal(srtProblems("1\n00:00:00,500 --> 00:00:02,000\nbir\niki\n").length, 1);
+});
+
+test("checkDesign: file names are not scanned for dates; srt checked on any design", () => {
+  assert.deepEqual(checkDesign({ ...post, photo: { src: "IMG_15.10.26.jpg" } }, LOGOS), []);
+  const custom = { size: "post", lang: "tr", logoId: "w", text: { title: "T" } };
+  assert.match(checkDesign({ ...custom, srt: "1\n00:00:00,500 --> 00:00:02,000\n" + "a".repeat(40) }, LOGOS).join(), /32/);
+});
+
+test("srtProblems: block without timing line is ignored", () => {
+  assert.deepEqual(srtProblems("7\n"), []);
 });
 
 test("checkDesign: clean post is OK", () => {

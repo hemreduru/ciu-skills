@@ -64,7 +64,7 @@ export type Surface = "light" | "dark";
 export const toneFitsSurface = (tone: LogoEntry["tone"], surface: Surface): boolean =>
   surface === "dark" ? tone === "white" : tone !== "white";
 
-const DATE_RE = /\d{1,2}[./-]\d{1,2}[./-]\d{2,4}(?:\s*[^\d\s]?\s*\d{1,2}[:.]\d{2})?/g;
+const DATE_RE = /(?<![\d.:/-])\d{1,2}[./-]\d{1,2}[./-]\d{2,4}(?![\d.])(?:\s*[^\d\s]?\s*\d{1,2}[:.]\d{2})?/g;
 const DATE_OK = /^\d{2}\.\d{2}\.\d{4}(?: \d{2}:\d{2})?$/;
 
 export const dateProblems = (text: string): string[] =>
@@ -77,7 +77,9 @@ export const srtProblems = (srt: string): string[] =>
     .split(/\r?\n\r?\n/)
     .flatMap((block) => {
       const lines = block.trim().split(/\r?\n/);
-      const textLines = lines.slice(lines.findIndex((l) => l.includes("-->")) + 1).filter(Boolean);
+      const at = lines.findIndex((l) => l.includes("-->"));
+      if (at < 0) return [];
+      const textLines = lines.slice(at + 1).filter(Boolean);
       const label = `"${textLines.join(" / ").slice(0, 40)}"`;
       if (textLines.length > 1) return [`Altyazı tek satır olmalı: ${label}`];
       if (textLines[0] && textLines[0].length > MAX_CAPTION_CHARS) return [`Altyazı ${MAX_CAPTION_CHARS} karakteri geçiyor (${textLines[0].length}): ${label}`];
@@ -88,6 +90,9 @@ type Json = Record<string, any>;
 
 const strings = (v: unknown): string[] =>
   typeof v === "string" ? [v] : Array.isArray(v) ? v.flatMap(strings) : v && typeof v === "object" ? Object.values(v).flatMap(strings) : [];
+
+const copyText = (d: Json): string[] =>
+  strings([d.title, d.subtitle, d.meta, d.text, d.outro, d.slides?.map((s: Json) => [s.title, s.subtitle]), d.lowerThirds?.map((l: Json) => [l.name, l.role])]);
 
 export const checkDesign = (d: Json, logos: readonly LogoEntry[]): string[] => {
   const errors: string[] = [];
@@ -130,7 +135,6 @@ export const checkDesign = (d: Json, logos: readonly LogoEntry[]): string[] => {
     logo("cardLogoId", "light");
     for (const l of d.lowerThirds ?? [])
       if (!(l.fromSec >= 0 && l.toSec > l.fromSec && l.toSec <= d.videoSeconds)) errors.push(`İsim bandı "${l.name}" için süre hatalı: ${l.fromSec}–${l.toSec} sn, video ${d.videoSeconds} sn.`);
-    if (d.srt) errors.push(...srtProblems(d.srt));
   } else if (d.text) {
     need("logoId");
     logo("logoId", d.logoSurface);
@@ -138,6 +142,7 @@ export const checkDesign = (d: Json, logos: readonly LogoEntry[]): string[] => {
     logo("cardLogoId", "light");
   } else errors.push("Tasarım türü anlaşılamadı: layout (Post), slides (Motion), video (Branded) ya da text (özel kompozisyon) alanı olmalı.");
 
-  for (const s of strings({ ...d, srt: undefined })) errors.push(...dateProblems(s));
+  if (d.srt) errors.push(...srtProblems(d.srt));
+  for (const s of copyText(d)) errors.push(...dateProblems(s));
   return errors;
 };
