@@ -1,5 +1,5 @@
 ---
-type: regex
-pattern: '#(WeAreCIU|CIU)\b'
-target: trace
+type: file_regex
+path: '**/ciktilar/*/paylasim.md'
+pattern: '#WeAreCIU[\s\S]*#CIU\b'
 ---

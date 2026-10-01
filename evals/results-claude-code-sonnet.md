@@ -14,7 +14,7 @@
 | 1. koşu, düzeltilmiş grader'larla (aynı transcript'ler yeniden notlandı) | 11 |
 | 2. koşu (grader + skill düzeltmeleri sonrası; 12 case yeniden koşuldu, 7 case 1. koşudan taşındı) | **19** |
 
-Taşınan 7 case (07, 11, 12, 13, slides 01–03) 1. koşuda geçmişti; ilgili grader'lar ve skill bölümleri bu case'leri etkilemedi, yeniden koşulmadı.
+Taşınan 7 case (07, 11, 12, 13, slides 01–03) 1. koşuda geçmişti; SKILL.md değişikliklerinden sonra yeniden koşulmadı, yani bu 7 case yeniden doğrulanmadı.
 
 ## Tablo
 
@@ -24,7 +24,7 @@ Taşınan 7 case (07, 11, 12, 13, slides 01–03) 1. koşuda geçmişti; ilgili 
 |---|---|---|---|---|
 | ciu-design/01-etkinlik-post-tr | kaldı → geçti | 14/14; tek `final.png`, 15.10.2026 14:00 doğru | 151 sn | 1. koşuda `final-a.png`; SKILL §7 düzeltildi |
 | ciu-design/02-etkinlik-story-en | kaldı → geçti | 11/11; tarih tek satırda | 133 sn | 1. koşuda tarih bölünmüştü; §4 kuralı |
-| ciu-design/03-haber-link-instagram | kaldı → geçti | 10/10; paylasim.md'de TR+EN caption, 7 hashtag | 156 sn | `reply-caption` ölçütü paylasim.md'ye göre güncellendi |
+| ciu-design/03-haber-link-instagram | kaldı → geçti | 10/10; paylasim.md'de TR+EN caption, 7 hashtag | 156 sn | `caption-hashtags` artık paylasim.md dosyasına bakıyor, `reply-caption` ölçütü paylasim.md'ye göre güncellendi |
 | ciu-design/04-fakulte-kare-duyuru | geçti → geçti | 11/11; tek fakülte logosu | 145 sn | orijinal grader'da logo id ve negate hatası vardı |
 | ciu-design/05-reels-uc-fotograf | geçti → geçti | 10/10 | 352 sn | orijinal grader özel composition adlarında kalıyordu |
 | ciu-design/06-video-intro-outro-isim-bandi | geçti → geçti | 13/13 | 206 sn | ara koşuda model `ls` çıktısını yanlış okuyup klibi yok saydı (model hatası, tekrarda düzeldi) |
@@ -49,7 +49,7 @@ Grader tarafı (case başarısı modelden değil ölçütten kaynaklanıyordu):
 - Model özel Remotion composition'ı kullanıyor (`Post…`/`Motion` adları sabit değil) → composition adı eşleşmeleri `\w+`.
 - Başsız modda model AskUserQuestion'a yanıt alamıyor → case prompt'larındaki `eval-final.png` dayatması kaldırıldı, görsel `**/ciktilar/*/final.png` üzerinden bakılıyor.
 - 04 `faculty-logo-id` yanlış logo adı; `no-unit-logo-beside-faculty` `negate` eksikti.
-- 03 `caption-hashtags` yanlış `target`; 09/10 grader'ları design json'a bakacak şekilde düzeltildi.
+- 03 `caption-hashtags` skill dosyalarındaki hashtag'lere takılıyordu, paylasim.md dosyasına bakacak şekilde düzeltildi; 09/10 grader'ları design json'a bakacak şekilde düzeltildi.
 
 Skill tarafı (gerçek hatalar):
 - `final.png` yerine `final-a/b.png` (§7: seçilen/önerilen varyant için tek `final.png`).
