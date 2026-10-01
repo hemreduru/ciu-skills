@@ -4,9 +4,10 @@ import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } fr
 import { homedir } from "node:os";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchRules } from "./remotion-rules.mjs";
+import { restoreDesign } from "./revise.mjs";
 
 const SKILL = join(dirname(fileURLToPath(import.meta.url)), "..");
-const RULES_TARBALL = "https://codeload.github.com/remotion-dev/skills/tar.gz/refs/heads/main";
 const CLAUDEAI = { in: "/mnt/user-data/uploads", out: "/mnt/user-data/outputs", data: "/tmp/ciu-design" };
 const KNOWN_CHROMES = ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome"];
 
@@ -17,7 +18,9 @@ const fail = (code, err) => {
 };
 const sh = (cmd, cwd) => execSync(cmd, { cwd, stdio: ["ignore", "pipe", "pipe"] }).toString();
 
-if (Number(process.versions.node.split(".")[0]) < 18) fail("NODE_TOO_OLD", { message: process.versions.node });
+// check.mjs runs rules.ts directly, which needs Node's built-in type stripping (22.18+)
+const [major, minor] = process.versions.node.split(".").map(Number);
+if (major < 22 || (major === 22 && minor < 18)) fail("NODE_TOO_OLD", { message: process.versions.node });
 
 const env = existsSync("/mnt/user-data") ? "claudeai" : "local";
 const data = env === "claudeai" ? CLAUDEAI.data : process.env.CLAUDE_PLUGIN_DATA || join(homedir(), ".cache", "ciu-design");
@@ -34,11 +37,13 @@ try {
 } catch (e) {
   fail("SETUP_FAILED", e);
 }
+let firstRun = false;
 const stamp = join(work, "node_modules", ".ciu-lock");
 if (!existsSync(stamp) || readFileSync(stamp, "utf8") !== lock) {
   try {
     sh("npm ci --omit=dev --no-audit --no-fund --loglevel=error", work);
     writeFileSync(stamp, lock);
+    firstRun = true;
   } catch (e) {
     fail("NPM_INSTALL_FAILED", e);
   }
@@ -58,15 +63,27 @@ if (!existsSync(rules)) {
   rules = join(data, "remotion-skills");
   if (!existsSync(join(rules, "remotion-best-practices"))) {
     try {
-      mkdirSync(rules, { recursive: true });
-      sh(`curl -fsL ${RULES_TARBALL} | tar -xz -C "${rules}" --strip-components=2 skills-main/skills`);
+      fetchRules(rules);
     } catch {
       rulesWarning = "Remotion kuralları indirilemedi; yalnızca hazır kompozisyonları kullan.";
     }
   }
 }
 
+const revArg = process.argv.find((a) => a.startsWith("--revise"));
+let revise = "";
+if (revArg) {
+  try {
+    const r = restoreDesign(outDir, work, revArg.split("=")[1]);
+    revise = `REVISE_DIR=${r.dir}\nREVISED=${r.restored.join(",") || "yok (yerleşik şablon)"}`;
+  } catch (e) {
+    revise = `REVISE_ERROR=${e.message}`;
+  }
+}
+
 console.log([
   `ENV=${env}`, `IN=${inDir}`, `OUT=${outDir}`, `WORK=${work}`, `REMOTION_RULES=${rules}`, `CHROME=${chrome}`,
   rulesWarning && `RULES_WARNING=${rulesWarning}`,
+  firstRun && "FIRST_RUN=1",
+  revise,
 ].filter(Boolean).join("\n"));
