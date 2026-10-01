@@ -1,15 +1,17 @@
 {
   "name": "ciu-design-remotion",
   "private": true,
+  "type": "module",
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "typecheck": "tsc --noEmit",
-    "test": "node --test src/lib/rules.test.ts"
+    "test": "node --test src/lib/*.test.ts"
   },
   "dependencies": {
     "@remotion/captions": "4.0.532",
     "@remotion/cli": "4.0.532",
     "@remotion/fonts": "4.0.532",
+    "@remotion/install-whisper-cpp": "4.0.532",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "remotion": "4.0.532"

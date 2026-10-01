@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { AbsoluteFill, OffthreadVideo, Sequence, staticFile, useVideoConfig } from "remotion";
 import { colors } from "../brand";
 import { BrandCard } from "../components/BrandCard";
-import { Captions } from "../components/Captions";
+import { Captions, captionReserve } from "../components/Captions";
 import { Logo } from "../components/Logo";
 import { LowerThird } from "../components/LowerThird";
 import { Music } from "../components/Music";
@@ -31,7 +31,7 @@ export const Branded: FC<BrandedProps> = (p) => {
         </div>
         {p.lowerThirds.map((l, i) => (
           <Sequence key={i} from={f(l.fromSec)} durationInFrames={f(l.toSec - l.fromSec)}>
-            <LowerThird name={l.name} role={l.role} frames={f(l.toSec - l.fromSec)} />
+            <LowerThird name={l.name} role={l.role} frames={f(l.toSec - l.fromSec)} lift={p.srt ? captionReserve(u) : 0} />
           </Sequence>
         ))}
         {p.srt && <Captions srt={p.srt} />}

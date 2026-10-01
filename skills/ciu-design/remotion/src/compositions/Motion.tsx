@@ -2,6 +2,7 @@ import type { FC } from "react";
 import { AbsoluteFill, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors } from "../brand";
 import { BrandCard } from "../components/BrandCard";
+import { Captions, captionReserve } from "../components/Captions";
 import { Logo } from "../components/Logo";
 import { PhotoFrame } from "../components/PhotoFrame";
 import { Music } from "../components/Music";
@@ -34,7 +35,7 @@ const SlideView: FC<{ slide: Slide; lang: Lang; frames: number; index: number; f
         slide.photo && <PhotoFrame photo={slide.photo} zoomFrames={frames} />
       )}
       <div style={{ position: "absolute", left: safe.side - 2.5 * u, width: 2, top: safe.top, bottom: safe.bottom, backgroundColor: "rgba(255,255,255,0.5)", transformOrigin: "top", transform: `scaleY(${interpolate(frame, [0, 0.6 * fps], [0, 1], { extrapolateRight: "clamp", easing: ease.out })})` }} />
-      <div style={{ position: "absolute", left: safe.side, right: safe.side, bottom: safe.bottom, transform: "rotate(-3deg)", ...exit(frame, frames) }}>
+      <div style={{ position: "absolute", left: safe.side, right: safe.side, bottom: safe.bottom + (slide.video && slide.srt ? captionReserve(u) : 0), transform: "rotate(-3deg)", ...exit(frame, frames) }}>
         {bars.map((b, i) => (
           <div key={i} style={{ display: "flex", marginLeft: i * 6 * u, marginTop: 1.2 * u, ...(index % 2 ? enter(frame, fps, 8 + i * STAGGER) : wipe(frame, fps, 8 + i * STAGGER)) }}>
             <div style={{ backgroundColor: b.bg, color: colors.white, fontFamily: fonts.heading, fontWeight: b.weight, fontSize: b.size * u, lineHeight: 1.1, letterSpacing: "-0.02em", padding: `${0.6 * u}px ${2.4 * u}px` }}>
@@ -43,6 +44,7 @@ const SlideView: FC<{ slide: Slide; lang: Lang; frames: number; index: number; f
           </div>
         ))}
       </div>
+      {slide.video && slide.srt && <Captions srt={slide.srt} offsetSec={slide.trimStartSec} />}
     </AbsoluteFill>
   );
 };
