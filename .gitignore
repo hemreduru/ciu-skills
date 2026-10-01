@@ -1,0 +1,11 @@
+node_modules/
+dist/
+raw/
+out/
+ciktilar/
+girdiler/
+.superpowers/
+skills/*/vendor/
+skills/ciu-design/remotion/public/input/*
+!skills/ciu-design/remotion/public/input/sample.jpg
+evals/**/results/

@@ -1,0 +1,24 @@
+{
+  "name": "ciu-skills",
+  "owner": { "name": "UKÜ (CIU)" },
+  "metadata": {
+    "description": "Uluslararası Kıbrıs Üniversitesi (CIU) için Claude / Agent Skills seti",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ciu-skills",
+      "description": "Setin tamamı: tüm CIU skill'leri.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/ciu-design"]
+    },
+    {
+      "name": "ciu-design",
+      "description": "UKÜ kurumsal kimliğine uygun post, story, Reels, motion graphic ve markalı video üretir.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/ciu-design"]
+    }
+  ]
+}

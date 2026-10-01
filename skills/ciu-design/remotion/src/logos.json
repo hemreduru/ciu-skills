@@ -1,0 +1,137 @@
+[
+  {
+    "id": "site-ciu-logo1-en-renkli",
+    "file": "logos/site-ciu-logo1-en-renkli.svg",
+    "kind": "main",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.2333,
+    "label": "site/ciu-logo1-en-renkli"
+  },
+  {
+    "id": "site-ciu-logo1-tr-renkli",
+    "file": "logos/site-ciu-logo1-tr-renkli.svg",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.2675,
+    "label": "site/ciu-logo1-tr-renkli"
+  },
+  {
+    "id": "site-ciu-logo3-tr-beyaz",
+    "file": "logos/site-ciu-logo3-tr-beyaz.svg",
+    "kind": "main",
+    "tone": "white",
+    "lang": "tr",
+    "aspect": 5.013,
+    "label": "site/ciu-logo3-tr-beyaz"
+  },
+  {
+    "id": "site-ciu-logo3-tr-gri",
+    "file": "logos/site-ciu-logo3-tr-gri.svg",
+    "kind": "main",
+    "tone": "gray",
+    "lang": "tr",
+    "aspect": 5.0476,
+    "label": "site/ciu-logo3-tr-gri"
+  },
+  {
+    "id": "site-ciu-logo3-tr-renkli",
+    "file": "logos/site-ciu-logo3-tr-renkli.svg",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 5.0476,
+    "label": "site/ciu-logo3-tr-renkli"
+  },
+  {
+    "id": "site-ciu-logo3-tr-siyah",
+    "file": "logos/site-ciu-logo3-tr-siyah.svg",
+    "kind": "main",
+    "tone": "black",
+    "lang": "tr",
+    "aspect": 5.0476,
+    "label": "site/ciu-logo3-tr-siyah"
+  },
+  {
+    "id": "site-dis-hekimligi-fakultesi-tr",
+    "file": "units/site-dis-hekimligi-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7708,
+    "label": "site/dis-hekimligi-fakultesi-tr"
+  },
+  {
+    "id": "site-egitim-fakultesi-tr",
+    "file": "units/site-egitim-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.2917,
+    "label": "site/egitim-fakultesi-tr"
+  },
+  {
+    "id": "site-fen-edebiyat-fakultesi-tr",
+    "file": "units/site-fen-edebiyat-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7708,
+    "label": "site/fen-edebiyat-fakultesi-tr"
+  },
+  {
+    "id": "site-guzel-sanatlar-tasarim-ve-mimarlik-fakultesi-tr",
+    "file": "units/site-guzel-sanatlar-tasarim-ve-mimarlik-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 3.1596,
+    "label": "site/guzel-sanatlar-tasarim-ve-mimarlik-fakultesi-tr"
+  },
+  {
+    "id": "site-iktisadi-ve-idari-bilimler-fakultesi-tr",
+    "file": "units/site-iktisadi-ve-idari-bilimler-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.8511,
+    "label": "site/iktisadi-ve-idari-bilimler-fakultesi-tr"
+  },
+  {
+    "id": "site-iletisim-fakultesi-tr",
+    "file": "units/site-iletisim-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.2917,
+    "label": "site/iletisim-fakultesi-tr"
+  },
+  {
+    "id": "site-muhendislik-fakultesi-tr",
+    "file": "units/site-muhendislik-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7083,
+    "label": "site/muhendislik-fakultesi-tr"
+  },
+  {
+    "id": "site-saglik-bilimleri-fakultesi-tr",
+    "file": "units/site-saglik-bilimleri-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.8958,
+    "label": "site/saglik-bilimleri-fakultesi-tr"
+  },
+  {
+    "id": "site-tarim-bilimleri-ve-teknolojileri-fakultesi-tr",
+    "file": "units/site-tarim-bilimleri-ve-teknolojileri-fakultesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7447,
+    "label": "site/tarim-bilimleri-ve-teknolojileri-fakultesi-tr"
+  }
+]

@@ -1,0 +1,72 @@
+#!/usr/bin/env node
+import { execSync } from "node:child_process";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { basename, dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const SKILL = join(dirname(fileURLToPath(import.meta.url)), "..");
+const RULES_TARBALL = "https://codeload.github.com/remotion-dev/skills/tar.gz/refs/heads/main";
+const CLAUDEAI = { in: "/mnt/user-data/uploads", out: "/mnt/user-data/outputs", data: "/tmp/ciu-design" };
+const KNOWN_CHROMES = ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome"];
+
+const fail = (code, err) => {
+  const detail = String(err?.stderr || err?.message || "").trim().split("\n").slice(-3).join(" | ");
+  console.log(`ERROR=${code}\nDETAIL=${detail}`);
+  process.exit(1);
+};
+const sh = (cmd, cwd) => execSync(cmd, { cwd, stdio: ["ignore", "pipe", "pipe"] }).toString();
+
+if (Number(process.versions.node.split(".")[0]) < 18) fail("NODE_TOO_OLD", { message: process.versions.node });
+
+const env = existsSync("/mnt/user-data") ? "claudeai" : "local";
+const data = env === "claudeai" ? CLAUDEAI.data : process.env.CLAUDE_PLUGIN_DATA || join(homedir(), ".cache", "ciu-design");
+const inDir = env === "claudeai" ? CLAUDEAI.in : join(process.cwd(), "girdiler");
+const outDir = env === "claudeai" ? CLAUDEAI.out : join(process.cwd(), "ciktilar");
+const work = join(data, "remotion");
+let lock;
+try {
+  [data, inDir, outDir].forEach((d) => mkdirSync(d, { recursive: true }));
+  rmSync(join(work, "src"), { recursive: true, force: true });
+  rmSync(join(work, "public"), { recursive: true, force: true });
+  cpSync(join(SKILL, "remotion"), work, { recursive: true, filter: (src) => basename(src) !== "node_modules" });
+  lock = readFileSync(join(work, "package-lock.json"), "utf8");
+} catch (e) {
+  fail("SETUP_FAILED", e);
+}
+const stamp = join(work, "node_modules", ".ciu-lock");
+if (!existsSync(stamp) || readFileSync(stamp, "utf8") !== lock) {
+  try {
+    sh("npm ci --omit=dev --no-audit --no-fund --loglevel=error", work);
+    writeFileSync(stamp, lock);
+  } catch (e) {
+    fail("NPM_INSTALL_FAILED", e);
+  }
+}
+
+let chrome = process.env.CIU_CHROME || "";
+try {
+  sh("npx remotion browser ensure", work);
+} catch (e) {
+  chrome ||= KNOWN_CHROMES.find((p) => existsSync(p)) || "";
+  if (!chrome) fail("BROWSER_DOWNLOAD_FAILED", e);
+}
+
+let rules = join(SKILL, "vendor", "remotion");
+let rulesWarning = "";
+if (!existsSync(rules)) {
+  rules = join(data, "remotion-skills");
+  if (!existsSync(join(rules, "remotion-best-practices"))) {
+    try {
+      mkdirSync(rules, { recursive: true });
+      sh(`curl -fsL ${RULES_TARBALL} | tar -xz -C "${rules}" --strip-components=2 skills-main/skills`);
+    } catch {
+      rulesWarning = "Remotion kuralları indirilemedi; yalnızca hazır kompozisyonları kullan.";
+    }
+  }
+}
+
+console.log([
+  `ENV=${env}`, `IN=${inDir}`, `OUT=${outDir}`, `WORK=${work}`, `REMOTION_RULES=${rules}`, `CHROME=${chrome}`,
+  rulesWarning && `RULES_WARNING=${rulesWarning}`,
+].filter(Boolean).join("\n"));
