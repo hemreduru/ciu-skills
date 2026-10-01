@@ -3,7 +3,7 @@
   "owner": { "name": "UKÜ (CIU)" },
   "metadata": {
     "description": "Uluslararası Kıbrıs Üniversitesi (CIU) için Claude / Agent Skills seti",
-    "version": "0.3.0"
+    "version": "0.3.1"
   },
   "plugins": [
     {

@@ -50,5 +50,19 @@ Run this list against every preview (SKILL.md §6). A hit is evidence of a defau
 35. Tiny type for the info row (date, place) because the title "needs the room". → Info row ≥ 3 % of the canvas short side; shorten the title instead.
 36. Video: every scene zooms in the same direction, every cut is the same fade or push, every line pops on the beat. → Alternate drift direction, vary entrances (wipe / rise / scale), one signature move; hard cuts are fine on the beat.
 
+## Sıra dışı register (art-direction.md §7)
+Only for a sıra dışı variant; kurumsal and canlı use the list above unchanged.
+- **Loosened or changed:**
+  - 3 — stricter instead: the hero is ≥ 5× the next element.
+  - 5 — collage pieces may sit off the axis; the hero and the info row still share one.
+  - 6 — patterns from the emblem's or brand's own geometry are allowed; random circles, blobs, dots, waves, stripes, sparkles and confetti stay out.
+  - 10 — a hero of ≤ 3 words may be all caps (`trUpper`); sentences may not.
+  - 11 — echo rows of kinetic type may alternate colors; a random recolored word inside a sentence is still a hit.
+  - 12 — in the Swiss grid, labels and index numbers are fine when they name real cells (date, place, program).
+  - 13 — a word cut by the canvas edge is intended; the readable headline still has no orphan.
+  - 17 — hard blocks in up to 4 palette tokens, `orange` as a large field included.
+  - 32 — one shape language still, but it may be cut paper (sharp, slightly irregular pieces) or the grid.
+- **Still hits in every register:** 1, 2, 4, 7, 8, 9, 14, 15, 16, 18, 19, 20, 21, 22–25, 26–31, 33–36. Gradients, glow, soft shadows, grain and glitch never become "sıra dışı".
+
 ## Refine pass (after the list)
-Do not add anything. Remove one thing and sharpen one thing: alignment, spacing, crop, or the size of the hero. Ask: "What would UKÜ's senior designer delete here?"
+Do not add anything. Remove one thing and sharpen one thing: alignment, spacing, crop, or the size of the hero. Ask: "What would UKÜ's senior designer delete here?" Sıra dışı: never remove the lever that makes it sıra dışı; its boldness test (art-direction.md §7) comes after this pass.

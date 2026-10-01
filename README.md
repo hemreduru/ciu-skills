@@ -11,11 +11,11 @@ The skills are written for university designers and staff, not developers: you d
 | [`ciu-design`](skills/ciu-design/SKILL.md) | On-brand images and videos: Instagram/Facebook/LinkedIn posts, stories, reels, banners, motion graphics, and branded versions of your own video clips (intro/outro, logo, name bars, subtitles). | `UKÜ için bu fotoğrafla bir duyuru postu yap` |
 | [`ciu-slides`](skills/ciu-slides/SKILL.md) | PowerPoint (`.pptx`) decks on the official UKÜ presentation template, or on your own template. | `UKÜ şablonuyla fakülte tanıtım sunumu hazırla` |
 
-Current version: **0.3.0** ([release](https://github.com/hemreduru/ciu-skills/releases/tag/v0.3.0)).
+Current version: **0.3.1** ([release](https://github.com/hemreduru/ciu-skills/releases/tag/v0.3.1)).
 
 ## Quick start
 
-1. Download `ciu-design.zip` and/or `ciu-slides.zip` from the [latest release](https://github.com/hemreduru/ciu-skills/releases/tag/v0.3.0).
+1. Download `ciu-design.zip` and/or `ciu-slides.zip` from the [latest release](https://github.com/hemreduru/ciu-skills/releases/tag/v0.3.1).
 2. In claude.ai open [Customize → Skills](https://claude.ai/customize/skills) and upload the zip. Make sure **Code execution and file creation** is turned on.
 3. Start a new chat and ask, for example: `UKÜ için bu fotoğrafla bir duyuru postu yap` (attach the photo).
 
@@ -26,7 +26,7 @@ The first run installs what the skill needs and takes 1–3 minutes; later chats
 ### claude.ai (web and desktop chat)
 
 1. Turn on **Code execution and file creation** (Settings → Capabilities).
-2. Open [Customize → Skills](https://claude.ai/customize/skills), choose to upload a skill and select the zip: `ciu-design.zip` or `ciu-slides.zip` from the [release](https://github.com/hemreduru/ciu-skills/releases/tag/v0.3.0). To build the zips yourself, see [Maintainers](#contributing-and-maintainers).
+2. Open [Customize → Skills](https://claude.ai/customize/skills), choose to upload a skill and select the zip: `ciu-design.zip` or `ciu-slides.zip` from the [release](https://github.com/hemreduru/ciu-skills/releases/tag/v0.3.1). To build the zips yourself, see [Maintainers](#contributing-and-maintainers).
 3. Start a new chat and describe what you need.
 
 On Team and Enterprise plans an admin can make a skill available to everyone; in that case step 2 is not needed.
@@ -84,6 +84,7 @@ npx skills update                                        # update
 Creates images and videos that follow the official corporate identity guide and UKÜ's social media style.
 
 - **Post**: stills such as posts, stories, banners and carousels, in the sizes you ask for. By default you get two variants with different layouts to choose from.
+- Starts by asking how the design should feel: **Kurumsal** (corporate: plain, formal, trustworthy), **Canlı** (lively: young and energetic but tidy) or **Sıra dışı** (unconventional: like a magazine cover or festival poster). It does not ask for condolences, formal statements, rector messages and formal academic/administrative announcements (always Kurumsal), when you already named the tone, when a style is saved for the series or unit, in batch runs, or when you say "direkt yap". Your choice is saved to `ciu-hafiza.md`.
 - **Motion**: reels and animations from photos, optionally with music from the built-in pack or your own file.
 - **Branded**: your own video clip with intro and outro cards, logo, name bars and subtitles. Subtitles come from an SRT/text you provide, or are transcribed when you ask for them.
 - Takes a prompt plus optional photos, clips, fonts, music, a `ciu.edu.tr` news/event link, or a CSV/Excel list for **batch** production (one image per row).
