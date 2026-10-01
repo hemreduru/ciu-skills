@@ -70,7 +70,7 @@ const re = (pattern, flags = "") => {
   const inline = /^\(\?([a-z]+)\)/.exec(pattern);
   return new RegExp(inline ? pattern.slice(inline[0].length) : pattern, flags + (inline ? inline[1] : ""));
 };
-const matches = (tx, { tool, input_match }) => tx.tools.map((t, i) => ({ ...t, i })).filter((t) => t.tool === tool && (!input_match || re(input_match).test(flat(t.input))));
+const matches = (tx, { tool, input_match }) => tx.tools.map((t, i) => ({ ...t, i })).filter((t) => new RegExp(`^(?:${tool})$`).test(t.tool) && (!input_match || re(input_match).test(flat(t.input))));
 const files = ({ workDir, dataDir }, pattern) => {
   const [cwd, glob] = pattern.startsWith("data/") ? [dataDir, pattern.slice(5)] : [workDir, pattern];
   return globSync(glob, { cwd }).filter((f) => statSync(join(cwd, f)).isFile()).map((f) => join(cwd, f));

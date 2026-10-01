@@ -35,6 +35,8 @@ test("tool_used: eşleşme, min ve max", () => {
   assert.equal(grade({ type: "tool_used", tool: "Bash", input_match: "batch\\.mjs" }, { tx }).pass, false);
   assert.equal(grade({ type: "tool_used", tool: "Bash", input_match: "final\\.png", min: 0, max: 0 }, { tx }).pass, false);
   assert.equal(grade({ type: "tool_used", tool: "Bash", input_match: "batch\\.mjs", min: 0, max: 0 }, { tx }).pass, true);
+  assert.equal(grade({ type: "tool_used", tool: "Read|Bash", input_match: "final\\.png" }, { tx }).pass, true);
+  assert.equal(grade({ type: "tool_used", tool: "Bas", input_match: "final\\.png" }, { tx }).pass, false);
 });
 
 test("tool_order: önce preview sonra final", () => {
