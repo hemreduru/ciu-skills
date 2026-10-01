@@ -23,12 +23,12 @@ def slug(text: str) -> str:
 
 
 def tone_of(name: str) -> str:
-    n = name.lower()
-    if re.search(r"beyaz|white|negatif", n):
+    n = f"-{slug(name)}-"
+    if re.search(r"-(beyaz|white|negatif)-", n):
         return "white"
-    if re.search(r"siyah|black", n):
+    if re.search(r"-(siyah|black)-", n):
         return "black"
-    if re.search(r"gri|gray|grey", n):
+    if re.search(r"-(gri|gray|grey)-", n):
         return "gray"
     return "color"
 

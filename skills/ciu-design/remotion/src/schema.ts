@@ -29,7 +29,6 @@ export type MotionProps = {
   cardLogoId: string;
   outro: string[];
   music?: string;
-  accent?: Accent;
 };
 
 export type LowerThirdItem = { name: string; role?: string; fromSec: number; toSec: number };
@@ -46,4 +45,17 @@ export type BrandedProps = {
   outro: string[];
   music?: string;
   musicVolume?: number;
+};
+
+/** Props for compositions in src/custom/: text keys are free-form (title, date, venue, …). */
+export type CustomProps = {
+  size: string;
+  lang: Lang;
+  logoId: string;
+  unitLogoId?: string;
+  cardLogoId?: string;
+  photos?: Photo[];
+  text: Record<string, string>;
+  seconds?: number;
+  music?: string;
 };

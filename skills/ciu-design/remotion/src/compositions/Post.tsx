@@ -33,14 +33,20 @@ export const Post: FC<PostProps> = (p) => {
   return (
     <AbsoluteFill style={{ backgroundColor: p.transparent ? undefined : colors.wine }}>
       {p.photo && !p.transparent && <PhotoFrame photo={p.photo} />}
-      {!p.transparent && (
-        <AbsoluteFill style={{ background: `linear-gradient(to top, ${colors.ink}E6 0%, ${colors.ink}00 65%)` }} />
-      )}
-      <div style={{ position: "absolute", top: safe.top, left: safe.side }}>
-        <LogoRow logoId={p.logoId} unitLogoId={p.unitLogoId} height={8 * u} divider={colors.white} />
-      </div>
-      <div style={{ position: "absolute", left: safe.side, right: safe.side, bottom: safe.bottom }}>
-        <TextBlock {...text} color={colors.white} />
+      <div
+        style={{
+          position: "absolute",
+          left: safe.side,
+          right: safe.side,
+          bottom: safe.bottom,
+          padding: p.transparent ? 0 : 5 * u,
+          backgroundColor: p.transparent ? undefined : colors.wine,
+        }}
+      >
+        <div style={{ marginBottom: 5 * u }}>
+          <LogoRow logoId={p.logoId} unitLogoId={p.unitLogoId} height={7 * u} divider={colors.white} />
+        </div>
+        <TextBlock {...text} accent={colors[p.accent ?? "orange"]} color={colors.white} />
       </div>
     </AbsoluteFill>
   );

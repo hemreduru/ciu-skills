@@ -15,15 +15,16 @@ On `ERROR=…` (a `DETAIL=…` line follows) stop and tell the user (Turkish, on
 - SETUP_FAILED → "Skill dosyaları hazırlanamadı. Lütfen 'tekrar dene' yaz; sorun sürerse BT'ye DETAIL satırını ilet."
 - NPM_INSTALL_FAILED → ENV=claudeai: "Gerekli paketler indirilemedi. Yöneticinizden Ayarlar → Kod çalıştırma ağ izinlerinde registry.npmjs.org, remotion.media ve storage.googleapis.com'a izin vermesini isteyin." ENV=local: "İnternet bağlantısını kontrol edip 'tekrar dene' yaz."
 - BROWSER_DOWNLOAD_FAILED → same as NPM_INSTALL_FAILED.
-If CHROME is non-empty, add `--browser-executable=$CHROME` to every remotion command. If RULES_WARNING is present, do not write custom compositions.
+If CHROME is non-empty, add `--browser-executable=$CHROME` to every remotion command. If RULES_WARNING is present, write custom stills only; for video use the built-in Motion/Branded.
 
 ## 1. Load the brand
-Always read `<skill>/brand/brand.md` and `<skill>/brand/style.md`. Look at the 3–5 files in `<skill>/brand/references/` whose names match the request type (duyuru, etkinlik, haber, kampanya, reels; diger for greetings and anything else).
+Always read `<skill>/brand/brand.md`, `<skill>/brand/style.md`, `<skill>/brand/art-direction.md` and `<skill>/brand/slop.md`; for video also `<skill>/brand/motion.md`. Look at the 3–5 files in `<skill>/brand/references/` whose names match the request type (duyuru, etkinlik, haber, kampanya, reels; diger for greetings and anything else).
 
 ## 2. Gather inputs
 - Mode: **Post** (still) by default; **Motion** for "Reels / video / animasyon" from photos; **Branded** when a video clip is provided.
 - Files: ENV=claudeai → `$IN`. Local agent → paths the user gives, or files in `$IN` (tell the user: "Dosyaları çalışma klasöründeki `girdiler` klasörüne koyabilirsin"). If an image is only visible in the chat with no file, ask for the file.
 - Copy every input into `$WORK/public/input/` with a short ASCII name (no spaces, no Turkish letters); in design.json refer to it by file name only (`"src": "hero.jpg"`, `"video": "clip.mp4"`).
+- A design the user likes ("bunun gibi", Pinterest/Behance image) is a **reference**, not material → art-direction.md §4.
 - ciu.edu.tr link → fetch the page; use `og:title`, `og:description`, `og:image`, `<time datetime>`. Download `og:image` into `$WORK/public/input/`; if blocked, ask the user to upload it.
 - Look at every photo yourself: short side < 1080 px → warn; note faces and the focal point (→ `focusX`/`focusY`, 0–1).
 - Clip duration: `cd $WORK && npx remotion ffprobe -v error -show_entries format=duration -of csv=p=0 public/input/<clip>` → `videoSeconds`. Unsupported codec (mov/hevc/webm) → `npx remotion ffmpeg -y -i public/input/<clip> -c:v libx264 -pix_fmt yuv420p -c:a aac public/input/clip.mp4` (also from `cd $WORK`). ENV=claudeai and clip > 180 s → warn that rendering may time out and offer to trim.
@@ -34,37 +35,39 @@ Write a 3–5 line brief (goal, audience, platform, key message, available mater
 - the request is vague (no occasion, text or material, e.g. "bir şey yap") → offer 2–3 concept directions (idea + headline + layout), ask the §4 questions or name your defaults, then stop: render only after the user picks one;
 - something adds clear value (EN version, carousel split, Instagram caption + hashtags, alt text);
 - the user asks ("ne önerirsin", "fikir ver", "düşün").
-Skip this step for clear, complete requests or when the user says "direkt yap". Never block on **İsteğe bağlı** items — proceed with defaults.
+Skip the brief for clear, complete requests or when the user says "direkt yap". Never block on **İsteğe bağlı** items — proceed with defaults.
+**Concept — always, even for "direkt yap":** write the art-direction.md §1 concept (idea, hero, skeleton, register) for each variant before composing. Vague requests: the 2–3 directions above are 2–3 concepts with different skeletons.
 
 ## 4. Ask only what is missing
 At most 2 questions: size, language (tr / en / both), text. Size aliases: post 1080×1350, portrait 1080×1440, kare 1080×1080, story/reels 1080×1920, yatay/youtube 1920×1080, linkedin 1200×628, og 1200×630, or `WxH`.
 
 ## 5. Compose
-Create `$OUT/<YYYYMMDD-HHmm>-<slug>/` and write `design.json` there. Props must match `<skill>/remotion/src/schema.ts`:
-- Post: `PostProps` (layout `band` = photo on top, white text band that also holds the logo; `overlay` = full-bleed photo with text; `transparent: true` = logo+text layer only).
-- Motion: `MotionProps` (slides of 2–5 s, `outro` lines e.g. `["ciu.edu.tr", "@ciu.official"]`).
-- Branded: `BrandedProps` (`lowerThirds` timings in clip seconds, `srt` as SRT text, each caption ≤ ~32 characters, one line, so it never overlaps the name bar).
+Create `$OUT/<YYYYMMDD-HHmm>-<slug>/` (`$D`, written out in full) and write `design.json` there.
+- **Default — art-directed custom composition** (art-direction.md §5): write the concept as code in `$WORK/src/custom/stills.tsx` (post, story, banner, carousel) or `$WORK/src/custom/videos.tsx` (Reels/motion from photos, `seconds` = total length incl. a 3 s `BrandCard` outro). Props = `CustomProps`; video timing and movement follow motion.md. For video read `$REMOTION_RULES/remotion-best-practices/SKILL.md` first.
+- **Built-ins** — `Post` (`PostProps`: `band` = photo top + white band with logo; `overlay` = photo + wine text panel; `transparent: true` = logo+text layer only) and `Motion` (`MotionProps`): only when the user asks for the standard/quick template ("standart", "hızlı", "şablon"), or after a custom composition failed to render twice.
+- **Branded** (`BrandedProps`) stays the default for an uploaded clip: `lowerThirds` timings in clip seconds, `srt` as SRT text, each caption ≤ ~32 characters, one line, so it never overlaps the name bar.
 Rules:
-- Logo ids only from `<skill>/remotion/src/logos.json`. In it, `lang` is the logotype order: `tr` = Turkish line first, `en` = English line first — match it to the post language. Tone: `band` → logo is on the white band → `tone: color`; `overlay`/`transparent` and video bug logos → `tone: white`; white cards (BrandCard intro/outro, `cardLogoId`) → `tone: color`. If no logo has both the needed tone and the language order, tone/contrast wins — the logos are bilingual anyway. Unit logos are color-only → use them on light areas (e.g. the `band` layout). Follow brand.md for unit logos.
-- Copy in the tone of style.md. Dates/times exactly as `15.10.2026 14:00` (one space between date and time; no `|`, not split over two lines). Long titles → `titleScale` 0.7–0.9.
+- Logo ids only from `<skill>/remotion/src/logos.json`. In it, `lang` is the logotype order: `tr` = Turkish line first, `en` = English line first — match it to the post language. Tone follows the area under the logo: dark panel, tint or photo → `tone: white`; white or light area (incl. `band`, BrandCard, `cardLogoId`) → `tone: color`. If no logo has both the needed tone and the language order, tone/contrast wins — the logos are bilingual anyway. Unit logos are color-only → light areas only. Follow brand.md for unit logos.
+- Copy in the tone of style.md. Dates/times exactly as `15.10.2026 14:00` (one space between date and time; no `|`, not split over two lines). Long titles in built-ins → `titleScale` 0.7–0.9.
 - Music only if the user provides an audio file (`music`).
-- If the built-in compositions cannot express the idea, read `$REMOTION_RULES/remotion-best-practices/SKILL.md`, write a new composition in `$WORK/src/custom/`, register it in `$WORK/src/Root.tsx` (never edit `<skill>`), and it must use `<Logo>`, `brand.ts` tokens (`colors`, `fontCss`) and `safeArea`.
 
 ## 6. Preview
-Every remotion command starts with `cd $WORK &&` (shell state is not kept). `$D` = `$OUT/<dir>`, written out in full.
-- Post: two variants (e.g. band vs overlay): `cd $WORK && npx remotion still src/index.ts Post $D/preview-a.png --props=$D/design-a.json --scale=0.5` (and b).
-- Video: storyboard of three frames at the midpoint of each scene (after fades/springs settle), never early frames — e.g. middle of the first slide/clip, middle of a later scene, middle of the outro: `cd $WORK && npx remotion still src/index.ts <Motion|Branded> $D/frame-<n>.png --props=$D/design.json --frame=<n> --scale=0.5`. Frame = seconds × 30. Motion = slides in order, then a 3 s outro; Branded = 2 s intro card, the clip (`videoSeconds`), then a 3 s outro card.
+Every remotion command starts with `cd $WORK &&` (shell state is not kept).
+- Still: two variants with **different skeletons**, exported as e.g. `KariyerA` and `KariyerB`: `cd $WORK && npx remotion still src/index.ts KariyerA $D/preview-a.png --props=$D/design.json --scale=0.5` (and B). Built-in: `Post` with `design-a.json`/`design-b.json`.
+- Video: storyboard at the midpoint of each scene (after entrances settle) plus one frame mid-entrance and one mid-exit: `cd $WORK && npx remotion still src/index.ts <Id> $D/frame-<n>.png --props=$D/design.json --frame=<n> --scale=0.5`. Frame = seconds × 30. Built-in timing: Motion = slides in order, then a 3 s outro; Branded = 2 s intro card, the clip (`videoSeconds`), then a 3 s outro card.
 
 ## 7. Self-check — before showing anything
-Open each rendered image and check: logo intact, correct tone, not too small; a white corner/bug logo sits on a dark enough area, otherwise move it or pick another corner/tone; text legible with enough contrast, nothing overflowing or cut; Turkish letters correct (İ, ı, ğ, ş); on 9:16 nothing important in the top 14 % / bottom 20 %; no faces cropped. Fix and re-render (max 2 rounds), then show the user.
+Open each rendered image and check: logo intact, correct tone, not too small; a white corner/bug logo sits on a dark enough area, otherwise move it or pick another corner/tone; text legible with enough contrast, nothing overflowing or cut; Turkish letters correct (İ, ı, ğ, ş); on 9:16 nothing important in the top 14 % / bottom 20 %; no faces cropped. Then run every item of slop.md and one refine pass (remove or sharpen — never add). Fix and re-render (max 2 rounds), then show the user the previews with each variant's concept in 1–2 lines.
 
 ## 8. Final render & revisions
-- Post: `cd $WORK && npx remotion still src/index.ts Post $D/final.png --props=$D/design.json`
-- Video: `cd $WORK && npx remotion render src/index.ts <Motion|Branded> $D/final.mp4 --props=$D/design.json --codec=h264`
-- Carousel: one design-N.json per slide, rendered as final-N.png.
-Revisions edit design.json and re-render. "Aynısını İngilizce / story yap" → copy design.json, change `lang`/`size`, rewrite text.
-Render error → read it, fix, retry at most twice; then explain plainly what failed and what the user can do.
+- Still: `cd $WORK && npx remotion still src/index.ts <Id> $D/final.png --props=$D/design.json`
+- Video: `cd $WORK && npx remotion render src/index.ts <Id> $D/final.mp4 --props=$D/design.json --codec=h264`
+- Carousel: one design-N.json per slide (same composition), rendered as final-N.png.
+- After a custom final, copy `$WORK/src/custom/stills.tsx` (or `videos.tsx`) into `$D/`. Setup resets `$WORK/src`, so in a later conversation copy that file back into `$WORK/src/custom/` before revising.
+Revisions edit design.json (copy) or the composition (layout) and re-render. "Aynısını İngilizce / story yap" → copy design.json, change `lang`/`size`, rewrite `text`, re-check the layout at the new size.
+Render error → read it, fix, retry at most twice; then fall back to the built-in, or explain plainly what failed and what the user can do.
 
 ## Brand guardrails
+- RENDER (HARD): every image and video is rendered only by Remotion in `$WORK` (`npx remotion still|render`). Never draw or compose output with PIL, ImageMagick, sharp, canvas, HTML screenshots or ffmpeg filters; `npx remotion ffmpeg/ffprobe` only prepares input clips. If Remotion cannot render (setup error, or a render still fails after the built-in fallback), stop and tell the user plainly what failed — never deliver a substitute.
 - HARD (refuse, say why in one sentence, offer an alternative): recolor/outline/shadow/stretch the logo, re-typeset or abbreviate the logo text, add text into the logo, grayscale-convert a logo — see brand.md "Logo misuse".
 - SOFT (warn once, then do it): off-palette colors, non-brand fonts, layouts that contradict style.md.

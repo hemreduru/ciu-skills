@@ -1,30 +1,255 @@
 [
   {
-    "id": "site-ciu-logo1-en-renkli",
-    "file": "logos/site-ciu-logo1-en-renkli.svg",
+    "id": "official-ciu-color-1line-bilingual-center-en",
+    "file": "logos/official-ciu-color-1line-bilingual-center-en.png",
     "kind": "main",
     "tone": "color",
     "lang": "en",
-    "aspect": 2.2333,
-    "label": "site/ciu-logo1-en-renkli"
+    "aspect": 2.2287,
+    "label": "official/ciu-color-1line-bilingual-center-en"
   },
   {
-    "id": "site-ciu-logo1-tr-renkli",
-    "file": "logos/site-ciu-logo1-tr-renkli.svg",
+    "id": "official-ciu-color-1line-bilingual-center-tr",
+    "file": "logos/official-ciu-color-1line-bilingual-center-tr.png",
     "kind": "main",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.2675,
-    "label": "site/ciu-logo1-tr-renkli"
+    "aspect": 2.2673,
+    "label": "official/ciu-color-1line-bilingual-center-tr"
   },
   {
-    "id": "site-ciu-logo3-tr-beyaz",
-    "file": "logos/site-ciu-logo3-tr-beyaz.svg",
+    "id": "official-ciu-color-1line-bilingual-en",
+    "file": "logos/official-ciu-color-1line-bilingual-en.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 5.0,
+    "label": "official/ciu-color-1line-bilingual-en"
+  },
+  {
+    "id": "official-ciu-color-1line-bilingual-horizontal-en",
+    "file": "logos/official-ciu-color-1line-bilingual-horizontal-en.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 9.533,
+    "label": "official/ciu-color-1line-bilingual-horizontal-en"
+  },
+  {
+    "id": "official-ciu-color-1line-bilingual-horizontal-tr",
+    "file": "logos/official-ciu-color-1line-bilingual-horizontal-tr.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 9.533,
+    "label": "official/ciu-color-1line-bilingual-horizontal-tr"
+  },
+  {
+    "id": "official-ciu-color-1line-bilingual-tr",
+    "file": "logos/official-ciu-color-1line-bilingual-tr.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 5.0157,
+    "label": "official/ciu-color-1line-bilingual-tr"
+  },
+  {
+    "id": "official-ciu-color-1line-en",
+    "file": "logos/official-ciu-color-1line-en.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 4.9796,
+    "label": "official/ciu-color-1line-en"
+  },
+  {
+    "id": "official-ciu-color-1line-tr",
+    "file": "logos/official-ciu-color-1line-tr.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 4.8222,
+    "label": "official/ciu-color-1line-tr"
+  },
+  {
+    "id": "official-ciu-color-3lines-bilingual-en",
+    "file": "logos/official-ciu-color-3lines-bilingual-en.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 0.641,
+    "label": "official/ciu-color-3lines-bilingual-en"
+  },
+  {
+    "id": "official-ciu-color-3lines-bilingual-tr",
+    "file": "logos/official-ciu-color-3lines-bilingual-tr.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.618,
+    "label": "official/ciu-color-3lines-bilingual-tr"
+  },
+  {
+    "id": "official-ciu-color-3lines-center-en",
+    "file": "logos/official-ciu-color-3lines-center-en.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 0.9718,
+    "label": "official/ciu-color-3lines-center-en"
+  },
+  {
+    "id": "official-ciu-color-3lines-center-tr",
+    "file": "logos/official-ciu-color-3lines-center-tr.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8963,
+    "label": "official/ciu-color-3lines-center-tr"
+  },
+  {
+    "id": "official-ciu-color-3lines-en",
+    "file": "logos/official-ciu-color-3lines-en.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.7315,
+    "label": "official/ciu-color-3lines-en"
+  },
+  {
+    "id": "official-ciu-color-3lines-tr",
+    "file": "logos/official-ciu-color-3lines-tr.png",
+    "kind": "main",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.5838,
+    "label": "official/ciu-color-3lines-tr"
+  },
+  {
+    "id": "official-ciu-white-1line-bilingual-center-en",
+    "file": "logos/official-ciu-white-1line-bilingual-center-en.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "en",
+    "aspect": 2.2582,
+    "label": "official/ciu-white-1line-bilingual-center-en"
+  },
+  {
+    "id": "official-ciu-white-1line-bilingual-center-tr",
+    "file": "logos/official-ciu-white-1line-bilingual-center-tr.png",
     "kind": "main",
     "tone": "white",
     "lang": "tr",
-    "aspect": 5.013,
-    "label": "site/ciu-logo3-tr-beyaz"
+    "aspect": 2.2692,
+    "label": "official/ciu-white-1line-bilingual-center-tr"
+  },
+  {
+    "id": "official-ciu-white-1line-bilingual-en",
+    "file": "logos/official-ciu-white-1line-bilingual-en.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "en",
+    "aspect": 6.6667,
+    "label": "official/ciu-white-1line-bilingual-en"
+  },
+  {
+    "id": "official-ciu-white-1line-bilingual-horizontal-en",
+    "file": "logos/official-ciu-white-1line-bilingual-horizontal-en.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "en",
+    "aspect": 9.4747,
+    "label": "official/ciu-white-1line-bilingual-horizontal-en"
+  },
+  {
+    "id": "official-ciu-white-1line-bilingual-horizontal-tr",
+    "file": "logos/official-ciu-white-1line-bilingual-horizontal-tr.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "tr",
+    "aspect": 9.4848,
+    "label": "official/ciu-white-1line-bilingual-horizontal-tr"
+  },
+  {
+    "id": "official-ciu-white-1line-bilingual-tr",
+    "file": "logos/official-ciu-white-1line-bilingual-tr.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "tr",
+    "aspect": 5.0157,
+    "label": "official/ciu-white-1line-bilingual-tr"
+  },
+  {
+    "id": "official-ciu-white-1line-en",
+    "file": "logos/official-ciu-white-1line-en.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "en",
+    "aspect": 4.9796,
+    "label": "official/ciu-white-1line-en"
+  },
+  {
+    "id": "official-ciu-white-1line-tr",
+    "file": "logos/official-ciu-white-1line-tr.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "tr",
+    "aspect": 4.8222,
+    "label": "official/ciu-white-1line-tr"
+  },
+  {
+    "id": "official-ciu-white-3lines-bilingual-en",
+    "file": "logos/official-ciu-white-3lines-bilingual-en.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "en",
+    "aspect": 0.7057,
+    "label": "official/ciu-white-3lines-bilingual-en"
+  },
+  {
+    "id": "official-ciu-white-3lines-bilingual-tr",
+    "file": "logos/official-ciu-white-3lines-bilingual-tr.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "tr",
+    "aspect": 0.7033,
+    "label": "official/ciu-white-3lines-bilingual-tr"
+  },
+  {
+    "id": "official-ciu-white-3lines-center-en",
+    "file": "logos/official-ciu-white-3lines-center-en.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "en",
+    "aspect": 0.9742,
+    "label": "official/ciu-white-3lines-center-en"
+  },
+  {
+    "id": "official-ciu-white-3lines-center-tr",
+    "file": "logos/official-ciu-white-3lines-center-tr.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "tr",
+    "aspect": 0.8994,
+    "label": "official/ciu-white-3lines-center-tr"
+  },
+  {
+    "id": "official-ciu-white-3lines-en",
+    "file": "logos/official-ciu-white-3lines-en.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "en",
+    "aspect": 2.9247,
+    "label": "official/ciu-white-3lines-en"
+  },
+  {
+    "id": "official-ciu-white-3lines-tr",
+    "file": "logos/official-ciu-white-3lines-tr.png",
+    "kind": "main",
+    "tone": "white",
+    "lang": "tr",
+    "aspect": 2.6655,
+    "label": "official/ciu-white-3lines-tr"
   },
   {
     "id": "site-ciu-logo3-tr-gri",
@@ -36,15 +261,6 @@
     "label": "site/ciu-logo3-tr-gri"
   },
   {
-    "id": "site-ciu-logo3-tr-renkli",
-    "file": "logos/site-ciu-logo3-tr-renkli.svg",
-    "kind": "main",
-    "tone": "color",
-    "lang": "tr",
-    "aspect": 5.0476,
-    "label": "site/ciu-logo3-tr-renkli"
-  },
-  {
     "id": "site-ciu-logo3-tr-siyah",
     "file": "logos/site-ciu-logo3-tr-siyah.svg",
     "kind": "main",
@@ -54,84 +270,1164 @@
     "label": "site/ciu-logo3-tr-siyah"
   },
   {
-    "id": "site-dis-hekimligi-fakultesi-tr",
-    "file": "units/site-dis-hekimligi-fakultesi-tr.png",
+    "id": "clubs-club-3d-baski-ve-gelistirme-kulubu-tr",
+    "file": "units/clubs-club-3d-baski-ve-gelistirme-kulubu-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.7708,
-    "label": "site/dis-hekimligi-fakultesi-tr"
+    "aspect": 1.4062,
+    "label": "clubs/club-3d-baski-ve-gelistirme-kulubu-tr"
   },
   {
-    "id": "site-egitim-fakultesi-tr",
-    "file": "units/site-egitim-fakultesi-tr.png",
+    "id": "clubs-club-anime-kulubu-tr",
+    "file": "units/clubs-club-anime-kulubu-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.2917,
-    "label": "site/egitim-fakultesi-tr"
+    "aspect": 0.7944,
+    "label": "clubs/club-anime-kulubu-tr"
   },
   {
-    "id": "site-fen-edebiyat-fakultesi-tr",
-    "file": "units/site-fen-edebiyat-fakultesi-tr.png",
+    "id": "clubs-club-ataturkcu-dusunce-tr",
+    "file": "units/clubs-club-ataturkcu-dusunce-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.7708,
-    "label": "site/fen-edebiyat-fakultesi-tr"
+    "aspect": 1.3839,
+    "label": "clubs/club-ataturkcu-dusunce-tr"
   },
   {
-    "id": "site-guzel-sanatlar-tasarim-ve-mimarlik-fakultesi-tr",
-    "file": "units/site-guzel-sanatlar-tasarim-ve-mimarlik-fakultesi-tr.png",
+    "id": "clubs-club-besiktas-tr",
+    "file": "units/clubs-club-besiktas-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 3.1596,
-    "label": "site/guzel-sanatlar-tasarim-ve-mimarlik-fakultesi-tr"
+    "aspect": 0.8174,
+    "label": "clubs/club-besiktas-tr"
   },
   {
-    "id": "site-iktisadi-ve-idari-bilimler-fakultesi-tr",
-    "file": "units/site-iktisadi-ve-idari-bilimler-fakultesi-tr.png",
+    "id": "clubs-club-beslenme-ve-saglikli-yasam-tr",
+    "file": "units/clubs-club-beslenme-ve-saglikli-yasam-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.8511,
-    "label": "site/iktisadi-ve-idari-bilimler-fakultesi-tr"
+    "aspect": 0.6871,
+    "label": "clubs/club-beslenme-ve-saglikli-yasam-tr"
   },
   {
-    "id": "site-iletisim-fakultesi-tr",
-    "file": "units/site-iletisim-fakultesi-tr.png",
+    "id": "clubs-club-bilgisayar-bilimleri-ve-muhendisligi-tr",
+    "file": "units/clubs-club-bilgisayar-bilimleri-ve-muhendisligi-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.2917,
-    "label": "site/iletisim-fakultesi-tr"
+    "aspect": 1.0161,
+    "label": "clubs/club-bilgisayar-bilimleri-ve-muhendisligi-tr"
   },
   {
-    "id": "site-muhendislik-fakultesi-tr",
-    "file": "units/site-muhendislik-fakultesi-tr.png",
+    "id": "clubs-club-binicilik-tr",
+    "file": "units/clubs-club-binicilik-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.7083,
-    "label": "site/muhendislik-fakultesi-tr"
+    "aspect": 0.9453,
+    "label": "clubs/club-binicilik-tr"
   },
   {
-    "id": "site-saglik-bilimleri-fakultesi-tr",
-    "file": "units/site-saglik-bilimleri-fakultesi-tr.png",
+    "id": "clubs-club-biomuhendislik-tr",
+    "file": "units/clubs-club-biomuhendislik-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.8958,
-    "label": "site/saglik-bilimleri-fakultesi-tr"
+    "aspect": 1.1218,
+    "label": "clubs/club-biomuhendislik-tr"
   },
   {
-    "id": "site-tarim-bilimleri-ve-teknolojileri-fakultesi-tr",
-    "file": "units/site-tarim-bilimleri-ve-teknolojileri-fakultesi-tr.png",
+    "id": "clubs-club-bisiklet-tr",
+    "file": "units/clubs-club-bisiklet-tr.png",
     "kind": "unit",
     "tone": "color",
     "lang": "tr",
-    "aspect": 2.7447,
-    "label": "site/tarim-bilimleri-ve-teknolojileri-fakultesi-tr"
+    "aspect": 1.0277,
+    "label": "clubs/club-bisiklet-tr"
+  },
+  {
+    "id": "clubs-club-biyomedikal-medikal-muhendisligi-tr",
+    "file": "units/clubs-club-biyomedikal-medikal-muhendisligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9954,
+    "label": "clubs/club-biyomedikal-medikal-muhendisligi-tr"
+  },
+  {
+    "id": "clubs-club-cevre-tr",
+    "file": "units/clubs-club-cevre-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9009,
+    "label": "clubs/club-cevre-tr"
+  },
+  {
+    "id": "clubs-club-cocuk-gelisimi-tr",
+    "file": "units/clubs-club-cocuk-gelisimi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9932,
+    "label": "clubs/club-cocuk-gelisimi-tr"
+  },
+  {
+    "id": "clubs-club-dalis-tr",
+    "file": "units/clubs-club-dalis-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8474,
+    "label": "clubs/club-dalis-tr"
+  },
+  {
+    "id": "clubs-club-dans-tr",
+    "file": "units/clubs-club-dans-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.6796,
+    "label": "clubs/club-dans-tr"
+  },
+  {
+    "id": "clubs-club-dijital-teknolojiler-tr",
+    "file": "units/clubs-club-dijital-teknolojiler-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.3165,
+    "label": "clubs/club-dijital-teknolojiler-tr"
+  },
+  {
+    "id": "clubs-club-dis-hekimligi-tr",
+    "file": "units/clubs-club-dis-hekimligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.034,
+    "label": "clubs/club-dis-hekimligi-tr"
+  },
+  {
+    "id": "clubs-club-eczacilik-ve-saglikli-yasam-rx-tr",
+    "file": "units/clubs-club-eczacilik-ve-saglikli-yasam-rx-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.5989,
+    "label": "clubs/club-eczacilik-ve-saglikli-yasam-rx-tr"
+  },
+  {
+    "id": "clubs-club-elektrik-elektronik-muhendisligi-tr",
+    "file": "units/clubs-club-elektrik-elektronik-muhendisligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.1144,
+    "label": "clubs/club-elektrik-elektronik-muhendisligi-tr"
+  },
+  {
+    "id": "clubs-club-endustri-muhendisligi-tr",
+    "file": "units/clubs-club-endustri-muhendisligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.7325,
+    "label": "clubs/club-endustri-muhendisligi-tr"
+  },
+  {
+    "id": "clubs-club-enerji-sistemleri-muhendisligi-tr",
+    "file": "units/clubs-club-enerji-sistemleri-muhendisligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.1,
+    "label": "clubs/club-enerji-sistemleri-muhendisligi-tr"
+  },
+  {
+    "id": "clubs-club-felsefe-tr",
+    "file": "units/clubs-club-felsefe-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8073,
+    "label": "clubs/club-felsefe-tr"
+  },
+  {
+    "id": "clubs-club-fenerbahceliler-tr",
+    "file": "units/clubs-club-fenerbahceliler-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.1293,
+    "label": "clubs/club-fenerbahceliler-tr"
+  },
+  {
+    "id": "clubs-club-gastronomi-tr",
+    "file": "units/clubs-club-gastronomi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.2143,
+    "label": "clubs/club-gastronomi-tr"
+  },
+  {
+    "id": "clubs-club-gazetecilik-tr",
+    "file": "units/clubs-club-gazetecilik-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.0092,
+    "label": "clubs/club-gazetecilik-tr"
+  },
+  {
+    "id": "clubs-club-genclik-ve-spor-tr",
+    "file": "units/clubs-club-genclik-ve-spor-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.1746,
+    "label": "clubs/club-genclik-ve-spor-tr"
+  },
+  {
+    "id": "clubs-club-girisimcilik-kulubu-tr",
+    "file": "units/clubs-club-girisimcilik-kulubu-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.0656,
+    "label": "clubs/club-girisimcilik-kulubu-tr"
+  },
+  {
+    "id": "clubs-club-grafiktasarim-tr",
+    "file": "units/clubs-club-grafiktasarim-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.5986,
+    "label": "clubs/club-grafiktasarim-tr"
+  },
+  {
+    "id": "clubs-club-hayvan-dostlari-tr",
+    "file": "units/clubs-club-hayvan-dostlari-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.2731,
+    "label": "clubs/club-hayvan-dostlari-tr"
+  },
+  {
+    "id": "clubs-club-hemsirelik-tr",
+    "file": "units/clubs-club-hemsirelik-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9032,
+    "label": "clubs/club-hemsirelik-tr"
+  },
+  {
+    "id": "clubs-club-hukuk-tr",
+    "file": "units/clubs-club-hukuk-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.897,
+    "label": "clubs/club-hukuk-tr"
+  },
+  {
+    "id": "clubs-club-ingilizce-ogretmenligi-tr",
+    "file": "units/clubs-club-ingilizce-ogretmenligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.1487,
+    "label": "clubs/club-ingilizce-ogretmenligi-tr"
+  },
+  {
+    "id": "clubs-club-inovasyon-kulubu-tr",
+    "file": "units/clubs-club-inovasyon-kulubu-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9,
+    "label": "clubs/club-inovasyon-kulubu-tr"
+  },
+  {
+    "id": "clubs-club-insaat-muhendisligi-tr",
+    "file": "units/clubs-club-insaat-muhendisligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.2104,
+    "label": "clubs/club-insaat-muhendisligi-tr"
+  },
+  {
+    "id": "clubs-club-insan-haklari-tr",
+    "file": "units/clubs-club-insan-haklari-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.3744,
+    "label": "clubs/club-insan-haklari-tr"
+  },
+  {
+    "id": "clubs-club-isletme-tr",
+    "file": "units/clubs-club-isletme-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.7349,
+    "label": "clubs/club-isletme-tr"
+  },
+  {
+    "id": "clubs-club-kalite-ve-surekli-iyilestirme-kulubu-tr",
+    "file": "units/clubs-club-kalite-ve-surekli-iyilestirme-kulubu-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.0952,
+    "label": "clubs/club-kalite-ve-surekli-iyilestirme-kulubu-tr"
+  },
+  {
+    "id": "clubs-club-kizilay-tr",
+    "file": "units/clubs-club-kizilay-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9428,
+    "label": "clubs/club-kizilay-tr"
+  },
+  {
+    "id": "clubs-club-kosu-ve-doga-yuruyusu-kulubu-tr",
+    "file": "units/clubs-club-kosu-ve-doga-yuruyusu-kulubu-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8733,
+    "label": "clubs/club-kosu-ve-doga-yuruyusu-kulubu-tr"
+  },
+  {
+    "id": "clubs-club-kutuphane-tr",
+    "file": "units/clubs-club-kutuphane-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8383,
+    "label": "clubs/club-kutuphane-tr"
+  },
+  {
+    "id": "clubs-club-makine-muhendisligi-tr",
+    "file": "units/clubs-club-makine-muhendisligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.4987,
+    "label": "clubs/club-makine-muhendisligi-tr"
+  },
+  {
+    "id": "clubs-club-mali-ve-ekonomik-faaliyetler-tr",
+    "file": "units/clubs-club-mali-ve-ekonomik-faaliyetler-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.087,
+    "label": "clubs/club-mali-ve-ekonomik-faaliyetler-tr"
+  },
+  {
+    "id": "clubs-club-mekatronik-muhendisligi-kulubu-tr",
+    "file": "units/clubs-club-mekatronik-muhendisligi-kulubu-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9257,
+    "label": "clubs/club-mekatronik-muhendisligi-kulubu-tr"
+  },
+  {
+    "id": "clubs-club-mimarlik-ic-mimarlik-tr",
+    "file": "units/clubs-club-mimarlik-ic-mimarlik-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.0543,
+    "label": "clubs/club-mimarlik-ic-mimarlik-tr"
+  },
+  {
+    "id": "clubs-club-molekuler-biyoloji-ve-genetik-tr",
+    "file": "units/clubs-club-molekuler-biyoloji-ve-genetik-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9292,
+    "label": "clubs/club-molekuler-biyoloji-ve-genetik-tr"
+  },
+  {
+    "id": "clubs-club-muzik-tr",
+    "file": "units/clubs-club-muzik-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8802,
+    "label": "clubs/club-muzik-tr"
+  },
+  {
+    "id": "clubs-club-okul-oncesi-tr",
+    "file": "units/clubs-club-okul-oncesi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9286,
+    "label": "clubs/club-okul-oncesi-tr"
+  },
+  {
+    "id": "clubs-club-oyun-kulubu-tr",
+    "file": "units/clubs-club-oyun-kulubu-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8845,
+    "label": "clubs/club-oyun-kulubu-tr"
+  },
+  {
+    "id": "clubs-club-ozel-egitim-tr",
+    "file": "units/clubs-club-ozel-egitim-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.2529,
+    "label": "clubs/club-ozel-egitim-tr"
+  },
+  {
+    "id": "clubs-club-petrol-ve-dogal-gaz-muhendisligi-tr",
+    "file": "units/clubs-club-petrol-ve-dogal-gaz-muhendisligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.0343,
+    "label": "clubs/club-petrol-ve-dogal-gaz-muhendisligi-tr"
+  },
+  {
+    "id": "clubs-club-psikoloji-tr",
+    "file": "units/clubs-club-psikoloji-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8417,
+    "label": "clubs/club-psikoloji-tr"
+  },
+  {
+    "id": "clubs-club-radyo-ve-televizyon-tr",
+    "file": "units/clubs-club-radyo-ve-televizyon-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8581,
+    "label": "clubs/club-radyo-ve-televizyon-tr"
+  },
+  {
+    "id": "clubs-club-rehberlik-ve-psikolojik-danismanlik-guidance-and-psychological-counseling-tr",
+    "file": "units/clubs-club-rehberlik-ve-psikolojik-danismanlik-guidance-and-psychological-counseling-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.27,
+    "label": "clubs/club-rehberlik-ve-psikolojik-danismanlik-guidance-and-psychological-counseling-tr"
+  },
+  {
+    "id": "clubs-club-sac-ve-makyaj-tr",
+    "file": "units/clubs-club-sac-ve-makyaj-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.7466,
+    "label": "clubs/club-sac-ve-makyaj-tr"
+  },
+  {
+    "id": "clubs-club-satranc-tr",
+    "file": "units/clubs-club-satranc-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.6089,
+    "label": "clubs/club-satranc-tr"
+  },
+  {
+    "id": "clubs-club-siber-guvenlik-tr",
+    "file": "units/clubs-club-siber-guvenlik-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8129,
+    "label": "clubs/club-siber-guvenlik-tr"
+  },
+  {
+    "id": "clubs-club-sinif-ogretmenligi-tr",
+    "file": "units/clubs-club-sinif-ogretmenligi-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.1055,
+    "label": "clubs/club-sinif-ogretmenligi-tr"
+  },
+  {
+    "id": "clubs-club-staj-ve-gonulluluk-programlari-tr",
+    "file": "units/clubs-club-staj-ve-gonulluluk-programlari-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9248,
+    "label": "clubs/club-staj-ve-gonulluluk-programlari-tr"
+  },
+  {
+    "id": "clubs-club-surdurulebilirlik-tr",
+    "file": "units/clubs-club-surdurulebilirlik-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9192,
+    "label": "clubs/club-surdurulebilirlik-tr"
+  },
+  {
+    "id": "clubs-club-tarim-tr",
+    "file": "units/clubs-club-tarim-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.7925,
+    "label": "clubs/club-tarim-tr"
+  },
+  {
+    "id": "clubs-club-teknofest-kulubu-tr",
+    "file": "units/clubs-club-teknofest-kulubu-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8495,
+    "label": "clubs/club-teknofest-kulubu-tr"
+  },
+  {
+    "id": "clubs-club-tip-ogrencileri-tr",
+    "file": "units/clubs-club-tip-ogrencileri-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.2844,
+    "label": "clubs/club-tip-ogrencileri-tr"
+  },
+  {
+    "id": "clubs-club-tiyatro-tr",
+    "file": "units/clubs-club-tiyatro-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9358,
+    "label": "clubs/club-tiyatro-tr"
+  },
+  {
+    "id": "clubs-club-turizm-tr",
+    "file": "units/clubs-club-turizm-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.778,
+    "label": "clubs/club-turizm-tr"
+  },
+  {
+    "id": "clubs-club-turkce-tr",
+    "file": "units/clubs-club-turkce-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.8077,
+    "label": "clubs/club-turkce-tr"
+  },
+  {
+    "id": "clubs-club-ultraslan-tr",
+    "file": "units/clubs-club-ultraslan-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 0.9159,
+    "label": "clubs/club-ultraslan-tr"
+  },
+  {
+    "id": "clubs-club-uluslararasi-hukuk-tr",
+    "file": "units/clubs-club-uluslararasi-hukuk-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.6186,
+    "label": "clubs/club-uluslararasi-hukuk-tr"
+  },
+  {
+    "id": "clubs-club-uluslararasi-iliskiler-tr",
+    "file": "units/clubs-club-uluslararasi-iliskiler-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.4603,
+    "label": "clubs/club-uluslararasi-iliskiler-tr"
+  },
+  {
+    "id": "clubs-club-yaratici-dusunce-ve-inovasyon-tr",
+    "file": "units/clubs-club-yaratici-dusunce-ve-inovasyon-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.0837,
+    "label": "clubs/club-yaratici-dusunce-ve-inovasyon-tr"
+  },
+  {
+    "id": "clubs-club-yardim-gonulluleri-tr",
+    "file": "units/clubs-club-yardim-gonulluleri-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 1.0137,
+    "label": "clubs/club-yardim-gonulluleri-tr"
+  },
+  {
+    "id": "official-achc-en",
+    "file": "units/official-achc-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.3848,
+    "label": "official/achc-en"
+  },
+  {
+    "id": "official-achc-tr",
+    "file": "units/official-achc-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.6677,
+    "label": "official/achc-tr"
+  },
+  {
+    "id": "official-aic-en",
+    "file": "units/official-aic-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.4769,
+    "label": "official/aic-en"
+  },
+  {
+    "id": "official-aic-tr",
+    "file": "units/official-aic-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.6585,
+    "label": "official/aic-tr"
+  },
+  {
+    "id": "official-brc-en",
+    "file": "units/official-brc-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.0991,
+    "label": "official/brc-en"
+  },
+  {
+    "id": "official-brc-tr",
+    "file": "units/official-brc-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 3.0856,
+    "label": "official/brc-tr"
+  },
+  {
+    "id": "official-carbet-en",
+    "file": "units/official-carbet-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.5319,
+    "label": "official/carbet-en"
+  },
+  {
+    "id": "official-carbet-tr",
+    "file": "units/official-carbet-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.9939,
+    "label": "official/carbet-tr"
+  },
+  {
+    "id": "official-cus-en",
+    "file": "units/official-cus-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.9088,
+    "label": "official/cus-en"
+  },
+  {
+    "id": "official-cus-tr",
+    "file": "units/official-cus-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.6972,
+    "label": "official/cus-tr"
+  },
+  {
+    "id": "official-cybee-en",
+    "file": "units/official-cybee-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.2646,
+    "label": "official/cybee-en"
+  },
+  {
+    "id": "official-cybee-tr",
+    "file": "units/official-cybee-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.4726,
+    "label": "official/cybee-tr"
+  },
+  {
+    "id": "official-cycom-en",
+    "file": "units/official-cycom-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.0521,
+    "label": "official/cycom-en"
+  },
+  {
+    "id": "official-cycom-tr",
+    "file": "units/official-cycom-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.5976,
+    "label": "official/cycom-tr"
+  },
+  {
+    "id": "official-cygen-en",
+    "file": "units/official-cygen-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.9215,
+    "label": "official/cygen-en"
+  },
+  {
+    "id": "official-cygen-tr",
+    "file": "units/official-cygen-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.8485,
+    "label": "official/cygen-tr"
+  },
+  {
+    "id": "official-cypmed-en",
+    "file": "units/official-cypmed-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.6942,
+    "label": "official/cypmed-en"
+  },
+  {
+    "id": "official-cypmed-tr",
+    "file": "units/official-cypmed-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.5976,
+    "label": "official/cypmed-tr"
+  },
+  {
+    "id": "official-erc-en",
+    "file": "units/official-erc-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.1131,
+    "label": "official/erc-en"
+  },
+  {
+    "id": "official-erc-tr",
+    "file": "units/official-erc-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7697,
+    "label": "official/erc-tr"
+  },
+  {
+    "id": "official-faculty-of-agricultural-sciences-and-technologies-en",
+    "file": "units/official-faculty-of-agricultural-sciences-and-technologies-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.2583,
+    "label": "official/faculty-of-agricultural-sciences-and-technologies-en"
+  },
+  {
+    "id": "official-faculty-of-agricultural-sciences-and-technologies-tr",
+    "file": "units/official-faculty-of-agricultural-sciences-and-technologies-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7426,
+    "label": "official/faculty-of-agricultural-sciences-and-technologies-tr"
+  },
+  {
+    "id": "official-faculty-of-arts-and-sciences-en",
+    "file": "units/official-faculty-of-arts-and-sciences-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.3212,
+    "label": "official/faculty-of-arts-and-sciences-en"
+  },
+  {
+    "id": "official-faculty-of-arts-and-sciences-tr",
+    "file": "units/official-faculty-of-arts-and-sciences-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.8152,
+    "label": "official/faculty-of-arts-and-sciences-tr"
+  },
+  {
+    "id": "official-faculty-of-communication-en",
+    "file": "units/official-faculty-of-communication-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.2152,
+    "label": "official/faculty-of-communication-en"
+  },
+  {
+    "id": "official-faculty-of-communication-tr",
+    "file": "units/official-faculty-of-communication-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.3333,
+    "label": "official/faculty-of-communication-tr"
+  },
+  {
+    "id": "official-faculty-of-dentistry-en",
+    "file": "units/official-faculty-of-dentistry-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.5563,
+    "label": "official/faculty-of-dentistry-en"
+  },
+  {
+    "id": "official-faculty-of-dentistry-tr",
+    "file": "units/official-faculty-of-dentistry-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.8218,
+    "label": "official/faculty-of-dentistry-tr"
+  },
+  {
+    "id": "official-faculty-of-economics-and-administrative-sciences-en",
+    "file": "units/official-faculty-of-economics-and-administrative-sciences-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.1192,
+    "label": "official/faculty-of-economics-and-administrative-sciences-en"
+  },
+  {
+    "id": "official-faculty-of-economics-and-administrative-sciences-tr",
+    "file": "units/official-faculty-of-economics-and-administrative-sciences-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.8548,
+    "label": "official/faculty-of-economics-and-administrative-sciences-tr"
+  },
+  {
+    "id": "official-faculty-of-education-en",
+    "file": "units/official-faculty-of-education-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.6358,
+    "label": "official/faculty-of-education-en"
+  },
+  {
+    "id": "official-faculty-of-education-tr",
+    "file": "units/official-faculty-of-education-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.3333,
+    "label": "official/faculty-of-education-tr"
+  },
+  {
+    "id": "official-faculty-of-engineering-en",
+    "file": "units/official-faculty-of-engineering-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.8278,
+    "label": "official/faculty-of-engineering-en"
+  },
+  {
+    "id": "official-faculty-of-engineering-tr",
+    "file": "units/official-faculty-of-engineering-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7525,
+    "label": "official/faculty-of-engineering-tr"
+  },
+  {
+    "id": "official-faculty-of-fine-arts-design-and-architecture-en",
+    "file": "units/official-faculty-of-fine-arts-design-and-architecture-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.0166,
+    "label": "official/faculty-of-fine-arts-design-and-architecture-en"
+  },
+  {
+    "id": "official-faculty-of-fine-arts-design-and-architecture-tr",
+    "file": "units/official-faculty-of-fine-arts-design-and-architecture-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 3.1584,
+    "label": "official/faculty-of-fine-arts-design-and-architecture-tr"
+  },
+  {
+    "id": "official-faculty-of-health-sciences-en",
+    "file": "units/official-faculty-of-health-sciences-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.1589,
+    "label": "official/faculty-of-health-sciences-en"
+  },
+  {
+    "id": "official-faculty-of-health-sciences-tr",
+    "file": "units/official-faculty-of-health-sciences-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.9406,
+    "label": "official/faculty-of-health-sciences-tr"
+  },
+  {
+    "id": "official-faculty-of-law-en",
+    "file": "units/official-faculty-of-law-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.4901,
+    "label": "official/faculty-of-law-en"
+  },
+  {
+    "id": "official-faculty-of-law-tr",
+    "file": "units/official-faculty-of-law-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.3333,
+    "label": "official/faculty-of-law-tr"
+  },
+  {
+    "id": "official-faculty-of-medicine-en",
+    "file": "units/official-faculty-of-medicine-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.5629,
+    "label": "official/faculty-of-medicine-en"
+  },
+  {
+    "id": "official-faculty-of-medicine-tr",
+    "file": "units/official-faculty-of-medicine-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.3333,
+    "label": "official/faculty-of-medicine-tr"
+  },
+  {
+    "id": "official-faculty-of-pharmacy-en",
+    "file": "units/official-faculty-of-pharmacy-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.6424,
+    "label": "official/faculty-of-pharmacy-en"
+  },
+  {
+    "id": "official-faculty-of-pharmacy-tr",
+    "file": "units/official-faculty-of-pharmacy-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.3762,
+    "label": "official/faculty-of-pharmacy-tr"
+  },
+  {
+    "id": "official-institute-of-graduate-studies-and-research-en",
+    "file": "units/official-institute-of-graduate-studies-and-research-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.7285,
+    "label": "official/institute-of-graduate-studies-and-research-en"
+  },
+  {
+    "id": "official-school-of-applied-sciences-en",
+    "file": "units/official-school-of-applied-sciences-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.245,
+    "label": "official/school-of-applied-sciences-en"
+  },
+  {
+    "id": "official-school-of-applied-sciences-tr",
+    "file": "units/official-school-of-applied-sciences-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.5578,
+    "label": "official/school-of-applied-sciences-tr"
+  },
+  {
+    "id": "official-school-of-foreign-languages-en",
+    "file": "units/official-school-of-foreign-languages-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.457,
+    "label": "official/school-of-foreign-languages-en"
+  },
+  {
+    "id": "official-school-of-health-sciences-en",
+    "file": "units/official-school-of-health-sciences-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.1258,
+    "label": "official/school-of-health-sciences-en"
+  },
+  {
+    "id": "official-school-of-health-sciences-tr",
+    "file": "units/official-school-of-health-sciences-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 3.3102,
+    "label": "official/school-of-health-sciences-tr"
+  },
+  {
+    "id": "official-school-of-physical-education-and-sports-en",
+    "file": "units/official-school-of-physical-education-and-sports-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 3.394,
+    "label": "official/school-of-physical-education-and-sports-en"
+  },
+  {
+    "id": "official-school-of-physical-education-and-sports-tr",
+    "file": "units/official-school-of-physical-education-and-sports-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7987,
+    "label": "official/school-of-physical-education-and-sports-tr"
+  },
+  {
+    "id": "official-school-of-tourism-and-hotel-management-en",
+    "file": "units/official-school-of-tourism-and-hotel-management-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.8311,
+    "label": "official/school-of-tourism-and-hotel-management-en"
+  },
+  {
+    "id": "official-school-of-tourism-and-hotel-management-tr",
+    "file": "units/official-school-of-tourism-and-hotel-management-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 3.231,
+    "label": "official/school-of-tourism-and-hotel-management-tr"
+  },
+  {
+    "id": "official-serc-en",
+    "file": "units/official-serc-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.1723,
+    "label": "official/serc-en"
+  },
+  {
+    "id": "official-serc-tr",
+    "file": "units/official-serc-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.189,
+    "label": "official/serc-tr"
+  },
+  {
+    "id": "official-vocational-school-en",
+    "file": "units/official-vocational-school-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.4901,
+    "label": "official/vocational-school-en"
+  },
+  {
+    "id": "official-vocational-school-of-health-sciences-en",
+    "file": "units/official-vocational-school-of-health-sciences-en.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "en",
+    "aspect": 2.6788,
+    "label": "official/vocational-school-of-health-sciences-en"
+  },
+  {
+    "id": "official-vocational-school-of-health-sciences-tr",
+    "file": "units/official-vocational-school-of-health-sciences-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.7987,
+    "label": "official/vocational-school-of-health-sciences-tr"
+  },
+  {
+    "id": "official-vocational-school-tr",
+    "file": "units/official-vocational-school-tr.png",
+    "kind": "unit",
+    "tone": "color",
+    "lang": "tr",
+    "aspect": 2.6337,
+    "label": "official/vocational-school-tr"
   }
 ]

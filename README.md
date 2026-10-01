@@ -36,8 +36,9 @@ Node.js gerekir. Kurulu ajanlar otomatik algılanır:
 ## Bakımcı için
 
 - Test: `cd skills/ciu-design/remotion && npm test && npm run typecheck`
+- Tasarım kalitesi: `brand/art-direction.md` (konsept + iskelet kataloğu), `brand/slop.md` (yapma listesi), `brand/motion.md` (video hareket kuralları). Özel kompozisyonlar `remotion/src/custom/` altında; her export otomatik kayıtlı.
 - Logolar değişti: yeni dosyaları `raw/` altına koy → `python3 tools/make_logos.py`
 - claude.ai paketleri: `node tools/build.mjs` → her skill için `dist/<skill>.zip`
 - Sürüm: `.claude-plugin/marketplace.json` → `metadata.version`'ı artır (Claude Code güncellemeleri); `npx skills update` doğrudan repodan çeker.
 - Yeni skill eklemek: `skills/<ad>/SKILL.md` oluştur; marketplace.json'a `<ad>` girişi ekle ve `ciu-skills` girişinin `skills` dizisine `./skills/<ad>` yaz; README tablosunu güncelle. `build.mjs` ve `npx skills` yeni skill'i otomatik bulur.
-- Lisans: Remotion (https://github.com/remotion-dev/remotion/blob/main/LICENSE.md) — UKÜ'nün kâr amacı gütmeyen statüsü teyit edilmeli. Source Sans 3: SIL OFL 1.1.
+- Lisans: Remotion (https://github.com/remotion-dev/remotion/blob/main/LICENSE.md) — UKÜ'nün kâr amacı gütmeyen statüsü teyit edilmeli. Source Sans 3 ve Poppins: SIL OFL 1.1.

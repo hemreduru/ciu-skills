@@ -32,7 +32,7 @@ LinkedIn is behind a login wall and was not observed. References live in `refere
   - A translucent rounded panel over a photo (`instagram-01-duyuru.jpg`).
 - Text on color or on a photo is white almost everywhere. Dark `ink` text appears only on the white corporate template (`web-10-diger.jpg`). In tables, lime text (≈`#C5DE78`) alternates with white text (`instagram-01-duyuru.jpg`).
 - No decorative gradients were observed (the only gradient is inside the third-party THE badge). Colors are flat; depth comes from photos.
-- Mapping for this skill: deep panel → `wine` or `ink`; highlight bars and stat boxes → `orange`; kicker bars and caption bands → `wine`/`red`. This follows the observed roles while keeping the brand.md rule of no ad-hoc hex values.
+- Mapping for this skill: deep panel → `wine`, `ink` or the `panels.*` token (the sampled values above) that matches the photo; highlight bars and stat boxes → `orange`; kicker bars and caption bands → `wine`/`red`. This follows the observed roles while keeping the brand.md rule of no ad-hoc hex values.
 
 ## Typography
 - **Case:** headlines are Title Case in English ("Blockchain Unlocked: Beyond the Basics", `web-01`) and sentence or Title case in Turkish ("Kültürlerarası Yemek Farkındalığı", `web-04`; "Hayaline Ek Tercihle Ulaş,", `x-01`). ALL CAPS is used only for short kickers of 4 words or fewer:
@@ -99,7 +99,7 @@ LinkedIn is behind a login wall and was not observed. References live in `refere
 - **News covers** (`web-08-haber.jpg`, `web-09-haber.jpg`): photo only, 1110×391, with no text or logo overlay. The UKÜ name appears only physically in the scene (banners, backdrops) or as a partner stamp.
 
 ## Logo placement
-- The emblem with the three-line logotype stacked to its right is the default on social designs (same layout as `site-ciu-logo1-*`, aspect ≈ 2.2). The language matches the design: TR lockup on Turkish posts (`x-01`, `web-07`), EN lockup on English posts (`web-01`, `x-03`).
+- The emblem with the three-line logotype stacked to its right is the default on social designs (`official-ciu-<tone>-3lines-<tr|en>` in logos.json). The language matches the design: TR lockup on Turkish posts (`x-01`, `web-07`), EN lockup on English posts (`web-01`, `x-03`).
 - White is the dominant tone. The full-color lockup appears only on light backgrounds (sky in `x-03-duyuru.jpg`, white in `web-10-diger.jpg`).
 - Positions and sizes by format:
 

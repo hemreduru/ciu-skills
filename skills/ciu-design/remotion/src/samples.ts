@@ -1,8 +1,8 @@
 import { contact } from "./brand";
-import type { BrandedProps, MotionProps, PostProps } from "./schema";
+import type { BrandedProps, CustomProps, MotionProps, PostProps } from "./schema";
 
-export const LOGO_COLOR = "site-ciu-logo3-tr-renkli";
-export const LOGO_WHITE = "site-ciu-logo3-tr-beyaz";
+export const LOGO_COLOR = "official-ciu-color-1line-bilingual-tr";
+export const LOGO_WHITE = "official-ciu-white-1line-bilingual-tr";
 
 export const samplePost: PostProps = {
   size: "post",
@@ -37,4 +37,14 @@ export const sampleBranded: BrandedProps = {
   lowerThirds: [{ name: "Prof. Dr. Ad Soyad", role: "Rektör", fromSec: 0.5, toSec: 3.5 }],
   srt: "1\n00:00:00,500 --> 00:00:02,000\nUKÜ'ye hoş geldiniz\n\n2\n00:00:02,000 --> 00:00:03,800\nYeni dönemde başarılar\n",
   outro: [contact.web, contact.instagram],
+};
+
+export const sampleCustom: CustomProps = {
+  size: "post",
+  lang: "tr",
+  logoId: LOGO_WHITE,
+  cardLogoId: LOGO_COLOR,
+  photos: [{ src: "sample.jpg" }],
+  text: { title: "Oryantasyon Günleri Başlıyor", subtitle: "Kampüste görüşmek üzere", date: "11.09.2026 09:00" },
+  seconds: 6,
 };
