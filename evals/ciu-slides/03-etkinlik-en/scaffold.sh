@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-mkdir -p girdiler
+source "$(dirname "$0")/../scaffold-common.sh"
