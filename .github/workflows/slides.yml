@@ -1,0 +1,61 @@
+name: Slides
+
+on:
+  push:
+    branches: ["**"]
+    paths: ["skills/ciu-slides/**", ".github/workflows/slides.yml", "tools/build.mjs"]
+  pull_request:
+    paths: ["skills/ciu-slides/**", ".github/workflows/slides.yml", "tools/build.mjs"]
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r skills/ciu-slides/requirements.txt
+      - run: python -m unittest discover -s skills/ciu-slides/scripts -p 'test_*.py'
+
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: setup.mjs in a clean directory (TLS-verified template download)
+        run: |
+          mkdir -p "$RUNNER_TEMP/clean" && cd "$RUNNER_TEMP/clean"
+          CLAUDE_PLUGIN_DATA="$RUNNER_TEMP/ciu-slides-data" node "$GITHUB_WORKSPACE/skills/ciu-slides/scripts/setup.mjs" | tee setup.out
+          grep -q '^TEMPLATE_STATUS=fresh$' setup.out
+          echo "PY=$(sed -n 's/^PYTHON=//p' setup.out)" >> "$GITHUB_ENV"
+          echo "TPL=$(sed -n 's/^TEMPLATES=//p' setup.out)" >> "$GITHUB_ENV"
+          echo "SOFFICE=$(sed -n 's/^SOFFICE=//p' setup.out)" >> "$GITHUB_ENV"
+      - name: build the sample deck on each real template, then check
+        run: |
+          S="$GITHUB_WORKSPACE/skills/ciu-slides/scripts"
+          mkdir -p "$RUNNER_TEMP/out"
+          for t in 1 2 3; do
+            sed "s/\"template\": 1/\"template\": $t/; s/\"name\": \"smoke\"/\"name\": \"smoke-$t\"/" "$S/smoke-deck.json" > "$RUNNER_TEMP/deck-$t.json"
+            "$PY" "$S/build.py" "$RUNNER_TEMP/deck-$t.json" --templates "$TPL" --out "$RUNNER_TEMP/out"
+            "$PY" "$S/check.py" "$RUNNER_TEMP/out/smoke-$t.pptx"
+          done
+      - name: PDF preview when soffice is available
+        run: |
+          if [ -n "$SOFFICE" ]; then
+            "$SOFFICE" --headless --convert-to pdf --outdir "$RUNNER_TEMP/out" "$RUNNER_TEMP/out/smoke-1.pptx"
+            test -s "$RUNNER_TEMP/out/smoke-1.pdf"
+          else
+            echo "soffice yok; önizleme atlandı"
+          fi
+      - name: package
+        run: |
+          node tools/build.mjs
+          test -s dist/ciu-slides.zip
+          unzip -l dist/ciu-slides.zip | grep -q 'ciu-slides/SKILL.md'
+          ! unzip -l dist/ciu-slides.zip | grep -qi '\.pptx$'
