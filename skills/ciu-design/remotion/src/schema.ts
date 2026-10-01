@@ -54,6 +54,8 @@ export type CustomProps = {
   logoId: string;
   unitLogoId?: string;
   cardLogoId?: string;
+  /** Zemin under logoId/unitLogoId: lets the validator check logo tone. */
+  logoSurface?: "light" | "dark";
   photos?: Photo[];
   text: Record<string, string>;
   seconds?: number;
