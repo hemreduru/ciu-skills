@@ -18,6 +18,10 @@ Colors and fonts are fixed, so distinctiveness comes from these:
 - **Photo treatment** — none · single-hue tint at 75–85 % (`panels.*` or `wine`) · duotone via `<PhotoFrame duotone={[shadow, highlight]}>` e.g. `[colors.wine, colors.orange]`, `[panels.navy, colors.white]` · cutout in an arch or circle · split.
 - **Color field** — one deep field (`wine`, `ink`, or the `panels.*` token that matches the photo's mood) plus at most one accent (`orange`), used small: bars, numbers, rules.
 - **Weight range** — Poppins 300/400/600/700/900 and 900 italic; Source Sans 3 200–900. Pair extremes (900 hero + 300/400 support), not 700 everywhere.
+- **Grid breaking** — keep one strong grid, then break it once on purpose: one element bleeds off the canvas edge (3–8 % cut off), overlaps the photo seam, or sits off the shared axis. Break it for the hero only, never for the logo or the info row.
+- **Contrast floor** — text vs. its ground ≥ 4.5:1 (white on `wine`/`ink`/`panels.*` passes; white on `orange` only for bold type ≥ 5 % of the short side). Hierarchy needs at least three clearly different sizes (hero / support / info) and two weights.
+- **Color split** — roughly 60 % calm ground (photo or deep field), 30 % second tone (photo tint, white), ≤ 10 % `orange`/`red` accent.
+- **Hook** — a still must be understood in 1 s: the hero is readable at thumbnail size (phone feed, ≈ 300 px wide). Video: the hero or a bold first line is on screen within the first second.
 - **Rhythm** — repeat one element (bars, tiles, photo strips, hairlines) and break the repetition once, on purpose.
 
 ## 3. Skeletons — choose by content, not habit
@@ -51,3 +55,12 @@ If the user shares a design they like ("bunun gibi", "şu tarzda", a Pinterest o
   - Bar stack: wrapper `transform: "rotate(-3deg)"`; each line `display: "flex"` with an inner block carrying `backgroundColor` and horizontal padding.
   - Kicker caps in Turkish: `trUpper(text, lang)` from `lib/rules` (handles i → İ).
 - No auto-fit: estimate the width (Poppins Bold ≈ 0.6 × font size per character), then trust the render, not the estimate.
+
+## 6. Audience 16–30: how it should feel
+Prospective and current students scroll fast and distrust brochures. Aim for *a student-run magazine with a university's discipline*, not a corporate leaflet and not trend cosplay.
+- **Look like a person made it:** a real campus or student photo, cropped with intent, beats a perfect stock scene. Imperfect-but-real is fine; blurry is not (min short side 1080 px).
+- **Big, short, specific:** 2–6 words at hero scale, a real number or a name; details in a small, quiet info row.
+- **Energy from structure, not decoration:** tilted label bars (−3°), an extreme crop, one oversized number, a hard color field. No gradients, glow, grain or sticker clutter (brand: flat).
+- **Calm topics stay calm:** condolences, academic announcements and formal statements ignore this section's loudness; only the "real photo, short, specific" part applies.
+- **Video tempo:** scenes 1.5–3 s, first line within 1 s, cuts on the beat of the music when one is used, an end card of 3 s.
+- **Not for this audience:** long paragraphs on the image, formal "sayın" register, stock handshakes, outdated memes, slang that dates in a month.

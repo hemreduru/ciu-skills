@@ -56,6 +56,12 @@ test("dateProblems: only 15.10.2026 14:00 form passes", () => {
   assert.equal(dateProblems("15.10.2026 14.00").length, 1);
   assert.equal(dateProblems("5.10.2026").length, 1);
   assert.equal(dateProblems("15/10/2026").length, 1);
+  assert.deepEqual(dateProblems("11.09.2026 09:00"), []);
+  assert.match(dateProblems("2026-09-11").join(), /11\.09\.2026/);
+  assert.match(dateProblems("2026-09-11 9:00").join(), /11\.09\.2026 09:00/);
+  assert.match(dateProblems("2026-09-11T09:00").join(), /11\.09\.2026 09:00/);
+  assert.match(dateProblems("2026/9/1 14:30").join(), /01\.09\.2026 14:30/);
+  assert.match(dateProblems("11.09.2026 9:00").join(), /11\.09\.2026 09:00/);
   assert.deepEqual(dateProblems("Sürüm 2.5 çıktı"), []);
   assert.deepEqual(dateProblems("Saat 10.00-12.00 arası"), []);
 });
@@ -106,4 +112,45 @@ test("checkDesign: custom needs text; motion needs slides; unknown shape", () =>
   assert.match(checkDesign({ ...custom, text: { date: "15.10.26" } }, LOGOS).join(), /15\.10\.26/);
   assert.match(checkDesign({ size: "reels", lang: "tr", slides: [], bugLogoId: "w", cardLogoId: "c", outro: [] }, LOGOS).join(), /slides/);
   assert.match(checkDesign({ size: "post" }, LOGOS).join(), /tür/i);
+});
+
+import { designWarnings, type FileInfo } from "./rules.ts";
+
+const files = (have: Record<string, { sec?: number; w?: number; h?: number }>): FileInfo => ({
+  exists: (n) => n in have,
+  seconds: (n) => have[n]?.sec,
+  size: (n) => (have[n]?.w ? { width: have[n].w!, height: have[n].h! } : undefined),
+  tracks: ["sakin-next-to-you"],
+});
+const motion = (slide: object, extra: object = {}) => ({ size: "reels", lang: "tr", slides: [{ seconds: 4, ...slide }], bugLogoId: "w", cardLogoId: "c", outro: ["x"], ...extra });
+
+test("file checks: missing, wrong type, video shorter than slide, trim, branded length, music", () => {
+  const f = files({ "a.jpg": { w: 800, h: 600 }, "v.mp4": { sec: 10 }, "m.mp3": {}, "f.ttf": {} });
+  assert.deepEqual(checkDesign(motion({ photo: { src: "a.jpg" } }), LOGOS, f), []);
+  assert.match(checkDesign(motion({ photo: { src: "yok.jpg" } }), LOGOS, f).join(), /yok\.jpg" bulunamadı/);
+  assert.match(checkDesign(motion({ photo: { src: "a.gif" } }), LOGOS, f).join(), /fotoğraf dosyası olamaz/);
+  assert.deepEqual(checkDesign(motion({ video: "v.mp4", trimStartSec: 2 }), LOGOS, f), []);
+  assert.match(checkDesign(motion({ video: "v.mp4", trimStartSec: 8 }), LOGOS, f).join(), /kullanılan kısmı 2\.0 sn/);
+  assert.match(checkDesign(motion({ video: "v.mp4", trimEndSec: 12 }), LOGOS, f).join(), /videonun süresinden/);
+  assert.match(checkDesign(motion({}), LOGOS, f).join(), /fotoğraf .* ya da video gerekli/);
+  assert.match(checkDesign(motion({ photo: { src: "a.jpg" }, video: "v.mp4" }), LOGOS, f).join(), /birlikte olamaz/);
+  const branded = { size: "reels", lang: "tr", video: "v.mp4", videoSeconds: 4, bugLogoId: "w", cardLogoId: "c", lowerThirds: [], outro: ["x"] };
+  assert.match(checkDesign(branded, LOGOS, f).join(), /gerçek süresi 10\.0 sn/);
+  assert.match(checkDesign(motion({ photo: { src: "a.jpg" } }, { music: "m.mp3", musicTrack: "sakin-next-to-you" }), LOGOS, f).join(), /birlikte olamaz/);
+  assert.match(checkDesign(motion({ photo: { src: "a.jpg" } }, { musicTrack: "yok" }), LOGOS, f).join(), /musicTrack bulunamadı/);
+  assert.match(checkDesign(motion({ photo: { src: "a.jpg" } }, { font: { file: "f.exe" } }), LOGOS, f).join(), /font dosyası olamaz/);
+  assert.deepEqual(checkDesign(motion({ photo: { src: "a.jpg" } }, { font: { file: "f.ttf" } }), LOGOS), []);
+});
+
+test("designWarnings: low-res photo and off-brand font", () => {
+  const f = files({ "a.jpg": { w: 800, h: 600 } });
+  assert.match(designWarnings({ photo: { src: "a.jpg" } }, f).join(), /düşük çözünürlüklü \(800×600\)/);
+  assert.match(designWarnings({ font: { file: "f.ttf" } }).join(), /Marka fontu/);
+  assert.deepEqual(designWarnings({ photo: { src: "a.jpg" } }), []);
+});
+
+test("dateProblems: date ranges are not read as date + time", () => {
+  assert.deepEqual(dateProblems("11.09.2026 - 13.09.2026"), []);
+  assert.deepEqual(dateProblems("11.09.2026-13.09.2026"), []);
+  assert.deepEqual(dateProblems("11.09.2026–13.09.2026"), []);
 });

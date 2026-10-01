@@ -65,13 +65,28 @@ jobs:
           cat > "$OUT_DIR/motion.json" <<'JSON'
           {"size":"reels","lang":"tr","slides":[{"photo":{"src":"sample.jpg"},"title":"Yeni Dönem","seconds":1}],"bugLogoId":"official-ciu-white-1line-bilingual-tr","cardLogoId":"official-ciu-color-1line-bilingual-tr","outro":["www.ciu.edu.tr"]}
           JSON
-          node skills/ciu-design/scripts/check.mjs "$OUT_DIR/post.json"
-          node skills/ciu-design/scripts/check.mjs "$OUT_DIR/motion.json"
+          node skills/ciu-design/scripts/check.mjs "$OUT_DIR/post.json" --work "$WORK"
+          node skills/ciu-design/scripts/check.mjs "$OUT_DIR/motion.json" --work "$WORK"
           B=${CHROME:+--browser-executable=$CHROME}
           cd "$WORK"
           npx remotion still src/index.ts Post "$OUT_DIR/post.png" --props="$OUT_DIR/post.json" --scale=0.5 $B
           npx remotion render src/index.ts Motion "$OUT_DIR/motion.mp4" --props="$OUT_DIR/motion.json" --frames=0-44 --scale=0.25 --codec=h264 $B
           test -s "$OUT_DIR/post.png" && test -s "$OUT_DIR/motion.mp4"
+      - name: user video + bundled music (audio track present)
+        run: |
+          B=${CHROME:+--browser-executable=$CHROME}
+          cat > "$OUT_DIR/src.json" <<'JSON'
+          {"size":"reels","lang":"tr","slides":[{"photo":{"src":"sample.jpg"},"title":"Kaynak","seconds":3}],"bugLogoId":"official-ciu-white-1line-bilingual-tr","cardLogoId":"official-ciu-color-1line-bilingual-tr","outro":["www.ciu.edu.tr"],"musicTrack":"hafif-bossa"}
+          JSON
+          cat > "$OUT_DIR/video.json" <<'JSON'
+          {"size":"reels","lang":"tr","slides":[{"video":"klip.mp4","trimStartSec":1,"title":"Yeni Dönem","subtitle":"Hoş geldiniz!","seconds":2}],"bugLogoId":"official-ciu-white-1line-bilingual-tr","cardLogoId":"official-ciu-color-1line-bilingual-tr","outro":["www.ciu.edu.tr"],"musicTrack":"enerjik-awake"}
+          JSON
+          cd "$WORK"
+          npx remotion render src/index.ts Motion "$OUT_DIR/src.mp4" --props="$OUT_DIR/src.json" --scale=0.25 --codec=h264 $B
+          node "$GITHUB_WORKSPACE/skills/ciu-design/scripts/input.mjs" "$OUT_DIR/src.mp4" --work "$WORK" --name klip
+          node "$GITHUB_WORKSPACE/skills/ciu-design/scripts/check.mjs" "$OUT_DIR/video.json" --work "$WORK"
+          npx remotion render src/index.ts Motion "$OUT_DIR/video.mp4" --props="$OUT_DIR/video.json" --frames=0-59 --scale=0.25 --codec=h264 $B
+          npx remotion ffprobe -v error -show_entries stream=codec_type -of csv=p=0 "$OUT_DIR/video.mp4" | grep -qx audio
       - name: second setup run is not a first run
         run: |
           cd "$RUNNER_TEMP/clean"
