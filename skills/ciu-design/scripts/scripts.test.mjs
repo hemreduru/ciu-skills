@@ -10,6 +10,7 @@ import { importCues, protectNames } from "./captions.mjs";
 import { apply, formatMemory, parseMemory, personalData } from "./hafiza.mjs";
 import { lintSection, loadRules, renderPack } from "./paylasim.mjs";
 import { restoreDesign } from "./revise.mjs";
+import { assemblePsd, exportPdf, getModules, readPsdLayers } from "./export.mjs";
 
 const run = (script, ...args) => spawnSync("node", [join(import.meta.dirname, script), ...args], { encoding: "utf8" });
 const tmp = () => mkdtempSync(join(tmpdir(), "ciu-"));
@@ -233,4 +234,98 @@ test("hafiza: hand-written lines and notes survive a rewrite; personal-data filt
   for (const keep of ["Elle eklenen serbest satır", "## Notlar", "Bayram haftası logo küçük olsun.", "- madde de korunur"]) assert.ok(out.includes(keep), keep);
   assert.deepEqual(parseMemory(out), m);
   assert.throws(() => apply(m, "add", ["begeni", "ad@ciu.edu.tr"]), /Kişisel veri/);
+});
+
+test("export: assemblePsd merges synthetic PNG layers and readPsdLayers round-trips names and dimensions", () => {
+  const { agPsd, pngjs } = getModules();
+  const makePng = (w, h, r, g, b, a) => {
+    const p = new pngjs.PNG({ width: w, height: h });
+    for (let i = 0; i < w * h; i++) {
+      p.data[i * 4] = r;
+      p.data[i * 4 + 1] = g;
+      p.data[i * 4 + 2] = b;
+      p.data[i * 4 + 3] = a;
+    }
+    return p;
+  };
+
+  const l1 = makePng(4, 4, 134, 38, 51, 255);
+  const l2 = makePng(4, 4, 255, 255, 255, 200);
+  const buf = assemblePsd({
+    width: 4,
+    height: 4,
+    layers: [
+      { name: "arka-plan", imageData: { width: 4, height: 4, data: l1.data } },
+      { name: "logo", imageData: { width: 4, height: 4, data: l2.data } },
+    ],
+    agPsd,
+    pngjs,
+  });
+
+  assert.ok(buf.length > 0);
+  const back = readPsdLayers(buf, agPsd);
+  assert.equal(back.width, 4);
+  assert.equal(back.height, 4);
+  assert.deepEqual(back.layers.map((l) => l.name), ["arka-plan", "logo"]);
+  assert.equal(back.layers[0].width, 4);
+  assert.equal(back.layers[1].height, 4);
+});
+
+test("paylasim.mjs: includes psd and pdf files in table if they exist next to the png", () => {
+  const d = tmp();
+  writeFileSync(join(d, "final.png"), "png");
+  writeFileSync(join(d, "final.psd"), "psd");
+  writeFileSync(join(d, "final.pdf"), "pdf");
+  const section = { title: "T", platform: "linkedin", topicTags: ["A", "B", "C"], caption: { tr: "Kısa ve net bir cümle.", en: "A short, clear sentence." }, files: [{ file: "final.png", alt: { tr: "a", en: "b" } }] };
+  writeFileSync(join(d, "p.json"), JSON.stringify({ sections: [section] }));
+  const ok = run("paylasim.mjs", join(d, "p.json"), "--out", join(d, "paylasim.md"));
+  assert.equal(ok.status, 0);
+  const md = readFileSync(join(d, "paylasim.md"), "utf8");
+  assert.match(md, /\| final\.png \|/);
+  assert.match(md, /\| final\.psd \|.*\| PSD \(Photoshop\) \|/);
+  assert.match(md, /\| final\.pdf \|.*\| PDF \(Illustrator\) \|/);
+});
+
+test("export: assemblePsd handles single-layer fallback and CLI reports usage", () => {
+  const { agPsd, pngjs } = getModules();
+  const p = new pngjs.PNG({ width: 2, height: 2 });
+  p.data.fill(100);
+  const buf = assemblePsd({
+    width: 2,
+    height: 2,
+    layers: [{ name: "Katman 1", imageData: { width: 2, height: 2, data: p.data } }],
+    agPsd,
+    pngjs,
+  });
+  const back = readPsdLayers(buf, agPsd);
+  assert.deepEqual(back.layers.map((l) => l.name), ["Katman 1"]);
+
+  const badRun = run("export.mjs");
+  assert.equal(badRun.status, 2);
+  assert.match(badRun.stdout, /Kullanım:/);
+});
+
+
+test("export: PDF text is live text - brand fonts embedded as real fonts, no Type3", { timeout: 300_000 }, async () => {
+  const d = tmp();
+  try {
+    const design = {
+      size: "post",
+      lang: "tr",
+      layout: "band",
+      title: "Kıbrıs İlim Üniversitesi Mezuniyet Töreni",
+      subtitle: "2026 Akademik Yılı Mezuniyet Coşkusu",
+      meta: "15.10.2026 14:00 • Kampüs Amfi Tiyatro",
+      logoId: "official-ciu-color-1line-bilingual-tr",
+    };
+    const { path } = await exportPdf({ design, id: "Post", out: d, name: "fonts.pdf" });
+    const pdf = readFileSync(path).toString("latin1");
+    const type3 = pdf.match(/\/Subtype\s*\/Type3/g) ?? [];
+    const baseFonts = [...pdf.matchAll(/\/BaseFont\s*\/(?:[A-Z]{6}\+)?([^\s/>\[\]]+)/g)].map((m) => m[1]);
+    assert.equal(type3.length, 0, `Type3 fonts found (not editable in Illustrator): ${type3.length}`);
+    assert.ok(baseFonts.some((n) => n.startsWith("Poppins")), `no Poppins BaseFont in ${baseFonts}`);
+    assert.ok(baseFonts.some((n) => n.startsWith("SourceSans3")), `no SourceSans3 BaseFont in ${baseFonts}`);
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
 });

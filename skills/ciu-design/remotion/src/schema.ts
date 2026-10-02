@@ -24,6 +24,7 @@ export type PostProps = {
   accent?: Accent;
   transparent?: boolean;
   font?: FontChoice;
+  exportLayer?: string;
 };
 
 /** `srt` is timed to the source clip (0 = clip start), so trimStartSec is applied automatically. */
@@ -66,4 +67,5 @@ export type CustomProps = MusicProps & {
   text: Record<string, string>;
   seconds?: number;
   font?: FontChoice;
+  exportLayer?: string;
 };
