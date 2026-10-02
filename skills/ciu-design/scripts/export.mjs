@@ -13,11 +13,23 @@ export const getModules = (workDir = DEFAULT_WORK) => {
     ? join(workDir, "package.json")
     : join(DEFAULT_WORK, "package.json");
   const req = createRequire(targetPkg);
+  let bundler;
+  let renderer;
+  let agPsd;
+  let pngjs;
   return {
-    bundler: req("@remotion/bundler"),
-    renderer: req("@remotion/renderer"),
-    agPsd: req("ag-psd"),
-    pngjs: req("pngjs"),
+    get bundler() {
+      return (bundler ??= req("@remotion/bundler"));
+    },
+    get renderer() {
+      return (renderer ??= req("@remotion/renderer"));
+    },
+    get agPsd() {
+      return (agPsd ??= req("ag-psd"));
+    },
+    get pngjs() {
+      return (pngjs ??= req("pngjs"));
+    },
   };
 };
 
