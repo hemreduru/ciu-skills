@@ -11,3 +11,4 @@ skills/ciu-design/remotion/public/input/*
 evals/**/results/
 __pycache__/
 skills/ciu-design/.remotion/
+.remotion/
