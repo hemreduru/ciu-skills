@@ -26,7 +26,7 @@ node <skill>/scripts/export.mjs both <D>/design.json --id <Id> --work $WORK --ou
 
 2. **Vektör PDF (`final.pdf`):**
    - Metinler gerçek metin olarak yer alır; seçilebilir ve düzenlenebilirdir.
-   - Marka fontları (Source Sans 3) ve Türkçe karakter eşlemeleri (ToUnicode CMap: İ, ı, ğ, ş, ç, ö, ü) PDF içine gömülüdür.
+   - Marka fontları (Poppins başlık, Source Sans 3 gövde) gerçek font olarak (Type3 değil) ve Türkçe karakter eşlemeleri (ToUnicode CMap: İ, ı, ğ, ş, ç, ö, ü) PDF içine gömülüdür; Illustrator'da canlı metin olarak açılır.
    - Sayfa boyutu tasarım px boyutuyla aynı orandadır (sıfır kenar boşluğu, arka plan baskılı).
 
 ## Notlar ve Kısıtlar

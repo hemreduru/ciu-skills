@@ -17,7 +17,7 @@ Colors and fonts are fixed, so distinctiveness comes from these:
 - **One axis** — one strong alignment line (left edge, center, a column) that everything hangs on. White hairlines (2 px, 40–60 % opacity) make the grid visible, as in UKÜ event designs.
 - **Photo treatment** — none · single-hue tint at 75–85 % (`panels.*` or `wine`) · duotone via `<PhotoFrame duotone={[shadow, highlight]}>` e.g. `[colors.wine, colors.orange]`, `[panels.navy, colors.white]` · cutout in an arch or circle · split.
 - **Color field** — one deep field (`wine`, `ink`, or the `panels.*` token that matches the photo's mood) plus at most one accent (`orange`), used small: bars, numbers, rules.
-- **Weight range** — Poppins 300/400/600/700/900 and 900 italic; Source Sans 3 200–900. Pair extremes (900 hero + 300/400 support), not 700 everywhere.
+- **Weight range** — Poppins 300/400/600/700/900 and 900 italic; Source Sans 3 300/400/600/700 (static files; other weights fall back to the nearest). Pair extremes (900 hero + 300/400 support), not 700 everywhere.
 - **Grid breaking** — keep one strong grid, then break it once on purpose: one element bleeds off the canvas edge (3–8 % cut off), overlaps the photo seam, or sits off the shared axis. Break it for the hero only, never for the logo or the info row.
 - **Contrast floor** — text vs. its ground ≥ 4.5:1 (white on `wine`/`ink`/`panels.*` passes; white on `orange` only for bold type ≥ 5 % of the short side). Hierarchy needs at least three clearly different sizes (hero / support / info) and two weights.
 - **Color split** — roughly 60 % calm ground (photo or deep field), 30 % second tone (photo tint, white), ≤ 10 % `orange`/`red` accent.

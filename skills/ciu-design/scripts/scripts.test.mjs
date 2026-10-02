@@ -10,7 +10,7 @@ import { importCues, protectNames } from "./captions.mjs";
 import { apply, formatMemory, parseMemory, personalData } from "./hafiza.mjs";
 import { lintSection, loadRules, renderPack } from "./paylasim.mjs";
 import { restoreDesign } from "./revise.mjs";
-import { assemblePsd, getModules, readPsdLayers } from "./export.mjs";
+import { assemblePsd, exportPdf, getModules, readPsdLayers } from "./export.mjs";
 
 const run = (script, ...args) => spawnSync("node", [join(import.meta.dirname, script), ...args], { encoding: "utf8" });
 const tmp = () => mkdtempSync(join(tmpdir(), "ciu-"));
@@ -305,3 +305,27 @@ test("export: assemblePsd handles single-layer fallback and CLI reports usage", 
   assert.match(badRun.stdout, /Kullanım:/);
 });
 
+
+test("export: PDF text is live text - brand fonts embedded as real fonts, no Type3", { timeout: 300_000 }, async () => {
+  const d = tmp();
+  try {
+    const design = {
+      size: "post",
+      lang: "tr",
+      layout: "band",
+      title: "Kıbrıs İlim Üniversitesi Mezuniyet Töreni",
+      subtitle: "2026 Akademik Yılı Mezuniyet Coşkusu",
+      meta: "15.10.2026 14:00 • Kampüs Amfi Tiyatro",
+      logoId: "official-ciu-color-1line-bilingual-tr",
+    };
+    const { path } = await exportPdf({ design, id: "Post", out: d, name: "fonts.pdf" });
+    const pdf = readFileSync(path).toString("latin1");
+    const type3 = pdf.match(/\/Subtype\s*\/Type3/g) ?? [];
+    const baseFonts = [...pdf.matchAll(/\/BaseFont\s*\/(?:[A-Z]{6}\+)?([^\s/>\[\]]+)/g)].map((m) => m[1]);
+    assert.equal(type3.length, 0, `Type3 fonts found (not editable in Illustrator): ${type3.length}`);
+    assert.ok(baseFonts.some((n) => n.startsWith("Poppins")), `no Poppins BaseFont in ${baseFonts}`);
+    assert.ok(baseFonts.some((n) => n.startsWith("SourceSans3")), `no SourceSans3 BaseFont in ${baseFonts}`);
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});
