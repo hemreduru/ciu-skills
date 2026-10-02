@@ -56,18 +56,31 @@ export const lintSection = (s, rules, exists = () => true) => {
 
 const mb = (bytes) => `${(bytes / 1048576).toFixed(1)} MB`;
 
-export const renderPack = (data, rules, sizeOf) => {
+export const renderPack = (data, rules, sizeOf, exists = () => false) => {
   const out = ["# Paylaşım paketi", ""];
   data.sections.forEach((s, i) => {
     const tags = tagSet(rules, s.topicTags ?? []);
     const plat = rules.platforms[s.platform];
+    const fileRows = [];
+    const listed = new Set((s.files ?? []).map((f) => f.file));
+    for (const f of s.files ?? []) {
+      fileRows.push(`| ${f.file} | ${mb(sizeOf(f.file))} | ${f.platform ?? s.platform} |`);
+      const stem = f.file.replace(/\.[^.]+$/, "");
+      for (const [ext, label] of [[".psd", "PSD (Photoshop)"], [".pdf", "PDF (Illustrator)"]]) {
+        const extra = `${stem}${ext}`;
+        if (!listed.has(extra) && exists(extra)) {
+          fileRows.push(`| ${extra} | ${mb(sizeOf(extra))} | ${label} |`);
+          listed.add(extra);
+        }
+      }
+    }
     out.push(
       `## ${i + 1}. ${s.title} — ${s.platform}`, "",
       "### Caption (TR)", "", s.caption.tr.trim(), "",
       "### Caption (EN)", "", s.caption.en.trim(), "",
       "### Etiketler", "", tags.join(" "), "", `Bu platformda (${s.platform}): ${tags.slice(0, plat.tags).join(" ")}`, "",
       "### Alt text", "", ...s.files.flatMap((f) => [`- \`${f.file}\``, `  - TR: ${f.alt.tr.trim()}`, `  - EN: ${f.alt.en.trim()}`]), "",
-      "### Dosyalar", "", "| Dosya | Boyut | Platform |", "|---|---|---|", ...s.files.map((f) => `| ${f.file} | ${mb(sizeOf(f.file))} | ${f.platform ?? s.platform} |`), "",
+      "### Dosyalar", "", "| Dosya | Boyut | Platform |", "|---|---|---|", ...fileRows, "",
     );
   });
   out.push("## Önerilen paylaşım saati", "", data.time ?? rules.postTime, "");
@@ -94,7 +107,7 @@ const main = () => {
   const exists = (f) => existsSync(join(dir, f));
   const errors = data.sections?.length ? data.sections.flatMap((s) => lintSection(s, rules, exists)) : ["- sections boş: en az bir paylaşım gerekir."];
   if (errors.length) (console.log(errors.map((x) => (x.startsWith("- ") ? x : `- ${x}`)).join("\n")), process.exit(1));
-  writeFileSync(out, renderPack(data, rules, (f) => statSync(join(dir, f)).size));
+  writeFileSync(out, renderPack(data, rules, (f) => statSync(join(dir, f)).size, exists));
   console.log(`OK\nPAYLASIM=${out}`);
 };
 
