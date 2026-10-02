@@ -8,45 +8,16 @@ import { TextBlock } from "../components/TextBlock";
 import { safeArea } from "../lib/rules";
 import { useUserFont } from "../lib/useUserFont";
 import type { PostProps } from "../schema";
+import { BandPost } from "./BandPost";
 
-export const Post: FC<PostProps> = (p) => {
+export const Post: FC<PostProps> = (p) => (p.layout === "band" && !p.transparent ? <BandPost {...p} /> : <OverlayPost {...p} />);
+
+const OverlayPost: FC<PostProps> = (p) => {
   const { width, height } = useVideoConfig();
   const u = Math.min(width, height) / 100;
   const safe = safeArea(width, height);
   const fonts = useUserFont(p.font);
   const text = { fonts, title: p.title, subtitle: p.subtitle, meta: p.meta, lang: p.lang, accent: colors[p.accent ?? "red"], u, titleScale: p.titleScale };
-
-  if (p.layout === "band" && !p.transparent) {
-    const bandH = Math.round(height * 0.38);
-    const topH = height - bandH;
-    return (
-      <LayerProvider value={p.exportLayer}>
-        <AbsoluteFill>
-          <Layer name="arka-plan">
-            <AbsoluteFill style={{ backgroundColor: colors.white }} />
-          </Layer>
-          <Layer name="panel">
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: topH, backgroundColor: colors.wine }} />
-          </Layer>
-          {p.photo && (
-            <Layer name="foto">
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: topH, overflow: "hidden" }}>
-                <PhotoFrame photo={p.photo} />
-              </div>
-            </Layer>
-          )}
-          <div style={{ position: "absolute", left: safe.side, right: safe.side, top: topH + 5 * u }}>
-            <TextBlock {...text} color={colors.ink} />
-          </div>
-          <Layer name="logo">
-            <div style={{ position: "absolute", right: safe.side, bottom: safe.bottom }}>
-              <LogoRow logoId={p.logoId} unitLogoId={p.unitLogoId} height={8 * u} divider={colors.gray} />
-            </div>
-          </Layer>
-        </AbsoluteFill>
-      </LayerProvider>
-    );
-  }
 
   return (
     <LayerProvider value={p.exportLayer}>
