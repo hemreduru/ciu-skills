@@ -66,7 +66,7 @@ export const renderPack = (data, rules, sizeOf, exists = () => false) => {
     for (const f of s.files ?? []) {
       fileRows.push(`| ${f.file} | ${mb(sizeOf(f.file))} | ${f.platform ?? s.platform} |`);
       const stem = f.file.replace(/\.[^.]+$/, "");
-      for (const [ext, label] of [[".psd", "PSD (Photoshop)"], [".pdf", "PDF (Illustrator)"]]) {
+      for (const [ext, label] of [[".psd", "PSD (Photoshop)"], [".ai", "AI (Illustrator)"], [".pdf", "PDF (Illustrator)"]]) {
         const extra = `${stem}${ext}`;
         if (!listed.has(extra) && exists(extra)) {
           fileRows.push(`| ${extra} | ${mb(sizeOf(extra))} | ${label} |`);

@@ -11,11 +11,11 @@ Skill'ler yazılımcılar için değil, üniversitenin tasarımcıları ve perso
 | [`ciu-design`](skills/ciu-design/SKILL.md) | Kurumsal kimliğe uygun görsel ve video: Instagram/Facebook/LinkedIn postları, story, Reels, banner, hareketli grafik ve kendi video klipleriniz için markalı sürümler (intro/outro, logo, isim bandı, altyazı). | `UKÜ için bu fotoğrafla bir duyuru postu yap` |
 | [`ciu-slides`](skills/ciu-slides/SKILL.md) | UKÜ'nün resmi sunum şablonuyla ya da kendi şablonunuzla PowerPoint (`.pptx`) sunumu. | `UKÜ şablonuyla fakülte tanıtım sunumu hazırla` |
 
-Güncel sürüm: **0.4.1** ([sürüm sayfası](https://github.com/hemreduru/ciu-skills/releases/tag/v0.4.1)).
+Güncel sürüm: **0.5.0** ([sürüm sayfası](https://github.com/hemreduru/ciu-skills/releases/tag/v0.5.0)).
 
 ## Hızlı başlangıç
 
-1. [Sürüm sayfasından](https://github.com/hemreduru/ciu-skills/releases/tag/v0.4.1) `ciu-design.zip` ve/veya `ciu-slides.zip` dosyasını indirin.
+1. [Sürüm sayfasından](https://github.com/hemreduru/ciu-skills/releases/tag/v0.5.0) `ciu-design.zip` ve/veya `ciu-slides.zip` dosyasını indirin.
 2. claude.ai'de [Customize → Skills](https://claude.ai/customize/skills) sayfasını açıp zip dosyasını yükleyin. **Code execution and file creation** (kod çalıştırma ve dosya oluşturma) seçeneğinin açık olduğundan emin olun.
 3. Yeni bir sohbette şunu yazın: `UKÜ için bu fotoğrafla bir duyuru postu yap` (fotoğrafı ekleyin).
 
@@ -26,7 +26,7 @@ Güncel sürüm: **0.4.1** ([sürüm sayfası](https://github.com/hemreduru/ciu-
 ### claude.ai (web ve masaüstü sohbet)
 
 1. **Code execution and file creation** seçeneğini açın (Settings → Capabilities).
-2. [Customize → Skills](https://claude.ai/customize/skills) sayfasında skill yüklemeyi seçip zip dosyasını gösterin: [sürüm sayfasındaki](https://github.com/hemreduru/ciu-skills/releases/tag/v0.4.1) `ciu-design.zip` veya `ciu-slides.zip`. Zip'leri kendiniz üretmek için [Bakımcılar](#katkı-ve-bakımcılar) bölümüne bakın.
+2. [Customize → Skills](https://claude.ai/customize/skills) sayfasında skill yüklemeyi seçip zip dosyasını gösterin: [sürüm sayfasındaki](https://github.com/hemreduru/ciu-skills/releases/tag/v0.5.0) `ciu-design.zip` veya `ciu-slides.zip`. Zip'leri kendiniz üretmek için [Bakımcılar](#katkı-ve-bakımcılar) bölümüne bakın.
 3. Yeni bir sohbet açıp ihtiyacınızı anlatın.
 
 Team ve Enterprise planlarında yönetici skill'i herkese açabilir; bu durumda 2. adım gerekmez.
@@ -91,7 +91,7 @@ Resmi kurumsal kimlik kılavuzuna ve UKÜ'nün sosyal medya diline uygun görsel
 - Her teslimatla birlikte `paylasim.md` gelir: Türkçe ve İngilizce açıklamalar, hashtag'ler, alternatif metinler ve paylaşım saati önerisi.
 - Biriminizi, sık kullandığınız boyutları ve post serilerinizi `ciu-hafiza.md` dosyasında hatırlar; örneğin "haftalık etkinlik serisi, 5. sayı".
 - Logoyu yeniden renklendirme, çerçeveleme, esnetme ya da yazısını değiştirme isteklerini nedenini söyleyerek reddeder. Palet dışı renk ve marka dışı font için bir kez uyarır, sonra yapar.
-- **Katmanlı export**: durağan görsel tesliminden sonra Photoshop (PSD) ve Illustrator için düzenlenebilir/vektör PDF çıktıları sunar. PSD'de her obje ayrı, adlandırılmış şeffaf bir katmandır; PDF'te metinler seçilebilir ve düzenlenebilirdir.
+- **Katmanlı export**: durağan görsel tesliminden sonra Photoshop (PSD) ve Illustrator (AI) dosyaları sunar. PSD'de her obje ayrı, adlandırılmış şeffaf bir katmandır; AI'da metinler canlı ve düzenlenebilirdir.
 - Her şey Remotion ile üretilir; başka görsel araçlarla çizim yapılmaz.
 
 Marka ve sanat yönetimi kuralları [`skills/ciu-design/brand/`](skills/ciu-design/brand) altındadır.

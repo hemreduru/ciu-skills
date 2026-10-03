@@ -10,7 +10,7 @@ import { importCues, protectNames } from "./captions.mjs";
 import { apply, formatMemory, parseMemory, personalData } from "./hafiza.mjs";
 import { lintSection, loadRules, renderPack } from "./paylasim.mjs";
 import { restoreDesign } from "./revise.mjs";
-import { assemblePsd, exportPdf, getModules, readPsdLayers } from "./export.mjs";
+import { assemblePsd, exportAi, exportPdf, getModules, readPsdLayers } from "./export.mjs";
 
 const run = (script, ...args) => spawnSync("node", [join(import.meta.dirname, script), ...args], { encoding: "utf8" });
 const tmp = () => mkdtempSync(join(tmpdir(), "ciu-"));
@@ -275,6 +275,7 @@ test("paylasim.mjs: includes psd and pdf files in table if they exist next to th
   const d = tmp();
   writeFileSync(join(d, "final.png"), "png");
   writeFileSync(join(d, "final.psd"), "psd");
+  writeFileSync(join(d, "final.ai"), "ai");
   writeFileSync(join(d, "final.pdf"), "pdf");
   const section = { title: "T", platform: "linkedin", topicTags: ["A", "B", "C"], caption: { tr: "Kısa ve net bir cümle.", en: "A short, clear sentence." }, files: [{ file: "final.png", alt: { tr: "a", en: "b" } }] };
   writeFileSync(join(d, "p.json"), JSON.stringify({ sections: [section] }));
@@ -283,6 +284,7 @@ test("paylasim.mjs: includes psd and pdf files in table if they exist next to th
   const md = readFileSync(join(d, "paylasim.md"), "utf8");
   assert.match(md, /\| final\.png \|/);
   assert.match(md, /\| final\.psd \|.*\| PSD \(Photoshop\) \|/);
+  assert.match(md, /\| final\.ai \|.*\| AI \(Illustrator\) \|/);
   assert.match(md, /\| final\.pdf \|.*\| PDF \(Illustrator\) \|/);
 });
 
@@ -327,5 +329,50 @@ test("export: PDF text is live text - brand fonts embedded as real fonts, no Typ
     assert.ok(baseFonts.some((n) => n.startsWith("SourceSans3")), `no SourceSans3 BaseFont in ${baseFonts}`);
   } finally {
     rmSync(d, { recursive: true, force: true });
+  }
+});
+
+test("export: exportAi writes a PDF-compatible final.ai through the vector PDF pipeline", async () => {
+  const d = tmp();
+  const bundleDir = join(d, "bundle");
+  mkdirSync(bundleDir);
+  const calls = [];
+  const modules = {
+    bundler: { bundle: async () => bundleDir },
+    renderer: {
+      selectComposition: async () => ({ width: 10, height: 20 }),
+      renderStill: async (opts) => {
+        calls.push(opts);
+        writeFileSync(opts.output, "%PDF-1.7\nmock");
+      },
+    },
+  };
+  try {
+    const res = await exportAi({ design: {}, out: d, modules });
+    assert.equal(res.path, join(d, "final.ai"));
+    assert.ok(readFileSync(res.path).toString("latin1").startsWith("%PDF-"));
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].imageFormat, "pdf");
+    assert.ok(!existsSync(join(d, "final.pdf")));
+
+    const named = await exportAi({ design: {}, out: d, name: "ozel.ai", modules });
+    assert.equal(named.path, join(d, "ozel.ai"));
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});
+
+test("export: CLI accepts psd/ai/both/pdf and rejects other modes", () => {
+  const missing = join(tmp(), "yok.json");
+  for (const mode of ["psd", "ai", "both", "pdf"]) {
+    const r = run("export.mjs", mode, missing);
+    assert.equal(r.status, 1, `${mode} should pass mode check (fails later on the missing design file)`);
+    assert.match(r.stdout, /design\.json okunamadı/);
+  }
+  for (const mode of ["svg", "png", "ai2"]) {
+    const r = run("export.mjs", mode, missing);
+    assert.equal(r.status, 2, `${mode} should be rejected`);
+    assert.match(r.stdout, /Kullanım: node export\.mjs <psd\|ai\|both>/);
+    assert.doesNotMatch(r.stdout, /pdf|svg/i);
   }
 });
