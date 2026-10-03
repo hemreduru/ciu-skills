@@ -91,7 +91,7 @@ Creates images and videos that follow the official corporate identity guide and 
 - Every delivery includes `paylasim.md`: Turkish and English captions, hashtags, alt text and a posting-time suggestion.
 - Remembers your unit, usual sizes and post series in `ciu-hafiza.md`, for example "weekly event series, issue 5".
 - Refuses to recolor, outline, stretch or retype the logo, and says why. Off-palette colors and non-brand fonts get one warning, then it proceeds.
-- **Layered export**: offers Photoshop (PSD) and editable/vector PDF exports for Illustrator after final still delivery. In PSD, each object is a separate, named transparent layer; in PDF, text is selectable and editable.
+- **Layered export**: offers Photoshop (PSD) and Illustrator (AI) files after final still delivery. In PSD, each object is a separate, named transparent layer; in AI, text stays live and editable.
 - Everything is rendered with Remotion; nothing is drawn with other image tools.
 
 Brand and art-direction rules live in [`skills/ciu-design/brand/`](skills/ciu-design/brand).

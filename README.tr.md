@@ -91,7 +91,7 @@ Resmi kurumsal kimlik kılavuzuna ve UKÜ'nün sosyal medya diline uygun görsel
 - Her teslimatla birlikte `paylasim.md` gelir: Türkçe ve İngilizce açıklamalar, hashtag'ler, alternatif metinler ve paylaşım saati önerisi.
 - Biriminizi, sık kullandığınız boyutları ve post serilerinizi `ciu-hafiza.md` dosyasında hatırlar; örneğin "haftalık etkinlik serisi, 5. sayı".
 - Logoyu yeniden renklendirme, çerçeveleme, esnetme ya da yazısını değiştirme isteklerini nedenini söyleyerek reddeder. Palet dışı renk ve marka dışı font için bir kez uyarır, sonra yapar.
-- **Katmanlı export**: durağan görsel tesliminden sonra Photoshop (PSD) ve Illustrator için düzenlenebilir/vektör PDF çıktıları sunar. PSD'de her obje ayrı, adlandırılmış şeffaf bir katmandır; PDF'te metinler seçilebilir ve düzenlenebilirdir.
+- **Katmanlı export**: durağan görsel tesliminden sonra Photoshop (PSD) ve Illustrator (AI) dosyaları sunar. PSD'de her obje ayrı, adlandırılmış şeffaf bir katmandır; AI'da metinler canlı ve düzenlenebilirdir.
 - Her şey Remotion ile üretilir; başka görsel araçlarla çizim yapılmaz.
 
 Marka ve sanat yönetimi kuralları [`skills/ciu-design/brand/`](skills/ciu-design/brand) altındadır.
