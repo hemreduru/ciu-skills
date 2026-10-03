@@ -197,6 +197,11 @@ export const exportPdf = async ({ design, id = "Post", work = DEFAULT_WORK, out 
   }
 };
 
+// Illustrator opens a PDF-compatible .ai natively (live text), so .ai reuses the vector PDF render.
+export const exportAi = (opts) => exportPdf({ ...opts, name: opts.name ?? "final.ai" });
+
+const MODES = ["psd", "ai", "both", "pdf"];
+
 const main = async () => {
   const args = process.argv.slice(2);
   const arg = (n) => {
@@ -207,8 +212,8 @@ const main = async () => {
   const mode = args[0] && !args[0].startsWith("--") && !args[0].endsWith(".json") ? args[0].toLowerCase() : "both";
   const fileArg = args.find((a) => a.endsWith(".json") && !a.startsWith("--")) ?? (args[0] && args[0].endsWith(".json") ? args[0] : args[1]);
 
-  if (!fileArg || !["psd", "pdf", "both"].includes(mode)) {
-    console.log("Kullanım: node export.mjs <psd|pdf|both> <design.json> --id <CompositionId> --work <WORK> --out <OUT> [--name <name>]");
+  if (!fileArg || !MODES.includes(mode)) {
+    console.log("Kullanım: node export.mjs <psd|ai|both> <design.json> --id <CompositionId> --work <WORK> --out <OUT> [--name <name>]");
     process.exit(2);
   }
 
@@ -233,9 +238,14 @@ const main = async () => {
     console.log(`OK\nPSD=${res.path}`);
   }
 
-  if (mode === "pdf" || mode === "both") {
-    const pdfName = nameArg && mode === "pdf" ? nameArg : "final.pdf";
-    const res = await exportPdf({ design, id, work, out, name: pdfName, modules });
+  if (mode === "ai" || mode === "both") {
+    const aiName = nameArg && mode === "ai" ? nameArg : "final.ai";
+    const res = await exportAi({ design, id, work, out, name: aiName, modules });
+    console.log(`OK\nAI=${res.path}`);
+  }
+
+  if (mode === "pdf") {
+    const res = await exportPdf({ design, id, work, out, name: nameArg ?? "final.pdf", modules });
     console.log(`OK\nPDF=${res.path}`);
   }
 };
