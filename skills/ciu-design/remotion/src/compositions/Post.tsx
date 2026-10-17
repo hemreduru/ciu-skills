@@ -42,7 +42,7 @@ const OverlayPost: FC<PostProps> = (p) => {
           }}
         >
           {!p.transparent && (
-            <Layer name="panel">
+            <Layer name="panel" kind="shape">
               <div style={{ position: "absolute", inset: 0, backgroundColor: colors.wine }} />
             </Layer>
           )}
