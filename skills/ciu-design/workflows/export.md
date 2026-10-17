@@ -18,9 +18,10 @@ node <skill>/scripts/export.mjs both <D>/design.json --id <Id> --work $WORK --ou
 ## Format Özellikleri
 
 1. **PSD (`final.psd`):**
-   - Her obje ayrı, adlandırılmış bir katmandır (`arka-plan`, `foto`, `panel`, `logo`, `baslik`, `metin`).
+   - Her obje ayrı, adlandırılmış bir katmandır (`arka-plan`, `foto`, `panel`, `logo`, `vurgu`, `baslik`, `metin`, `bilgi`).
    - Metin katmanları (`kind="text"`) Photoshop'ta canlı, düzenlenebilir Type layer'dır (`layer.text`); raster önizleme içerir. Bilgisayarda font (Poppins/Source Sans 3) kurulu değilse Photoshop "Update text layers" (metin katmanlarını güncelle) uyarısı verebilir.
-   - Panel/şekil katmanları (`kind="shape"`) vektör maskeli (`vectorMask` + `vectorFill`) şekil katmanıdır.
+   - Panel/vurgu çubuğu gibi şekil katmanları (`kind="shape"`) vektör maskeli (`vectorMask` + `vectorFill`) şekil katmanıdır.
+   - Bir metin katmanı tek stil taşır (font, boyut, ağırlık, renk): farklı stildeki metin ayrı katmandır (`metin` = alt başlık, `bilgi` = tarih/yer satırı). Metinle birlikte çizilen çubuk/süs `vurgu` gibi ayrı şekil katmanına konur; yoksa "Update text layers" sonrası kaybolur.
    - Fotoğraf ve logo katmanları piksel (raster) katman kalır.
    - Katman sırası = çizim sırası (en altta arka plan).
    - Photoshop'ta açıldığında her katman bağımsız taşınabilir ve düzenlenebilir.

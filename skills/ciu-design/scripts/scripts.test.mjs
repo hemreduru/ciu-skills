@@ -473,3 +473,33 @@ test("export: PSD has live text layers and vector shape layers", { timeout: 300_
   }
 });
 
+test("export: TextBlock splits accent bar, title, subtitle and meta into separate typed layers", { timeout: 300_000 }, async () => {
+  const d = tmp();
+  try {
+    const design = {
+      size: "post",
+      lang: "tr",
+      layout: "overlay",
+      title: "Oryantasyon Günleri Başlıyor",
+      subtitle: "Yeni öğrencilerimizi kampüste ağırlamaya hazırız.",
+      meta: "11.09.2026 09:00 · UKÜ Kampüsü",
+      logoId: "official-ciu-white-1line-bilingual-tr",
+    };
+    const { path } = await exportPsd({ design, id: "Post", out: d, name: "final.psd" });
+    const { agPsd } = getModules();
+    initPsd(agPsd);
+    const psd = agPsd.readPsd(readFileSync(path), { useImageData: true, skipCompositeImageData: true });
+    const layer = (name) => psd.children.find((l) => l.name === name);
+    const flat = (l) => l.text.text.replace(/\s+/g, " ").trim();
+
+    assert.ok(layer("vurgu")?.vectorMask && !layer("vurgu").text, "vurgu must be a shape layer, not text");
+    assert.equal(flat(layer("baslik")), design.title, "baslik must hold only the title");
+    assert.equal(flat(layer("metin")), design.subtitle, "metin must hold only the subtitle");
+    assert.equal(flat(layer("bilgi")), design.meta, "bilgi must hold the meta line");
+    assert.equal(layer("metin").text.style.font.name, "SourceSans3-Light");
+    assert.equal(layer("bilgi").text.style.font.name, "SourceSans3-SemiBold");
+    assert.ok(layer("bilgi").text.style.fontSize < layer("metin").text.style.fontSize, "meta is smaller than subtitle");
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});
