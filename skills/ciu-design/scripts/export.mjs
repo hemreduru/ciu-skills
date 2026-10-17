@@ -125,7 +125,7 @@ export const buildShapeLayerData = (meta) => {
   if (!color) return null;
 
   const { left, top, right, bottom } = meta.rect;
-  const r = meta.borderRadius || 0;
+  const r = Math.min(meta.borderRadius || 0, (right - left) / 2, (bottom - top) / 2);
 
   let knots;
   if (r > 0) {

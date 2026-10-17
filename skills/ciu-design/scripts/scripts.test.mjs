@@ -10,7 +10,7 @@ import { importCues, protectNames } from "./captions.mjs";
 import { apply, formatMemory, parseMemory, personalData } from "./hafiza.mjs";
 import { lintSection, loadRules, renderPack } from "./paylasim.mjs";
 import { restoreDesign } from "./revise.mjs";
-import { assemblePsd, exportAi, exportPdf, exportPsd, getModules, initPsd, readPsdLayers } from "./export.mjs";
+import { assemblePsd, buildShapeLayerData, exportAi, exportPdf, exportPsd, getModules, initPsd, readPsdLayers } from "./export.mjs";
 
 const run = (script, ...args) => spawnSync("node", [join(import.meta.dirname, script), ...args], { encoding: "utf8" });
 const tmp = () => mkdtempSync(join(tmpdir(), "ciu-"));
@@ -502,4 +502,11 @@ test("export: TextBlock splits accent bar, title, subtitle and meta into separat
   } finally {
     rmSync(d, { recursive: true, force: true });
   }
+});
+
+test("export: shape corner radius is clamped to half the shorter side", () => {
+  const rect = { left: 0, top: 0, right: 100, bottom: 20, width: 100, height: 20 };
+  const { vectorMask } = buildShapeLayerData({ rect, color: { r: 0, g: 0, b: 0 }, borderRadius: 999 });
+  const ys = vectorMask.paths[0].knots.flatMap((k) => k.points.filter((_, i) => i % 2 === 1));
+  assert.ok(Math.min(...ys) >= 0 && Math.max(...ys) <= 20, "path must stay inside the rect");
 });
