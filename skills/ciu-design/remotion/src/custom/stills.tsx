@@ -26,11 +26,11 @@ export const Starter: FC<CustomProps> = ({ lang, logoId, photos = [], text, expo
           </Layer>
         )}
         <div style={{ position: "absolute", left: safe.side, right: safe.side, bottom: safe.bottom, color: colors.white }}>
-          <Layer name="baslik">
+          <Layer name="baslik" kind="text">
             <div style={{ fontFamily: fontCss.heading, fontWeight: 700, fontSize: 7 * u, lineHeight: 1.05 }}>{text.title}</div>
           </Layer>
           {text.date && (
-            <Layer name="metin">
+            <Layer name="metin" kind="text">
               <div style={{ fontFamily: fontCss.body, fontSize: 3.4 * u, marginTop: 2 * u }}>{text.date}</div>
             </Layer>
           )}

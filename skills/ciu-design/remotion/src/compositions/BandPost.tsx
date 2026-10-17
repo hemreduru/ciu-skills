@@ -70,7 +70,7 @@ export const BandPost: FC<PostProps> = (p) => {
         <Layer name="arka-plan">
           <AbsoluteFill style={{ backgroundColor: colors.white }} />
         </Layer>
-        <Layer name="panel">
+        <Layer name="panel" kind="shape">
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: layout.topH, backgroundColor: colors.wine }} />
         </Layer>
         {p.photo && (
