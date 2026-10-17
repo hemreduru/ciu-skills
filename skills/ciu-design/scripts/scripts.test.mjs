@@ -10,7 +10,7 @@ import { importCues, protectNames } from "./captions.mjs";
 import { apply, formatMemory, parseMemory, personalData } from "./hafiza.mjs";
 import { lintSection, loadRules, renderPack } from "./paylasim.mjs";
 import { restoreDesign } from "./revise.mjs";
-import { assemblePsd, exportAi, exportPdf, getModules, readPsdLayers } from "./export.mjs";
+import { assemblePsd, exportAi, exportPdf, exportPsd, getModules, initPsd, readPsdLayers } from "./export.mjs";
 
 const run = (script, ...args) => spawnSync("node", [join(import.meta.dirname, script), ...args], { encoding: "utf8" });
 const tmp = () => mkdtempSync(join(tmpdir(), "ciu-"));
@@ -376,3 +376,100 @@ test("export: CLI accepts psd/ai/both/pdf and rejects other modes", () => {
     assert.doesNotMatch(r.stdout, /pdf|svg/i);
   }
 });
+
+test("export: assemblePsd builds live text layers with imageData and vector shape layers", () => {
+  const { agPsd, pngjs } = getModules();
+  const p = new pngjs.PNG({ width: 10, height: 10 });
+  p.data.fill(200);
+
+  const buf = assemblePsd({
+    width: 100,
+    height: 100,
+    layers: [
+      {
+        name: "arka-plan",
+        imageData: { width: 10, height: 10, data: p.data },
+      },
+      {
+        name: "panel",
+        imageData: { width: 10, height: 10, data: p.data },
+        meta: {
+          name: "panel",
+          kind: "shape",
+          rect: { left: 0, top: 0, right: 100, bottom: 40, width: 100, height: 40 },
+          color: { r: 134, g: 38, b: 51 },
+          borderRadius: 0,
+        },
+      },
+      {
+        name: "baslik",
+        imageData: { width: 10, height: 10, data: p.data },
+        meta: {
+          name: "baslik",
+          kind: "text",
+          text: "Kıbrıs İlim Üniversitesi\rMezuniyet",
+          rect: { left: 10, top: 50, right: 90, bottom: 80, width: 80, height: 30 },
+          fontFamily: "Source Sans 3",
+          fontWeight: 700,
+          fontSize: 24,
+          lineHeight: 28,
+          letterSpacing: 0,
+          color: "rgb(255, 255, 255)",
+          textAlign: "left",
+        },
+      },
+    ],
+    agPsd,
+    pngjs,
+  });
+
+  initPsd(agPsd);
+  const psd = agPsd.readPsd(buf, { useImageData: true });
+  const textLayer = psd.children.find((l) => l.name === "baslik");
+  assert.ok(textLayer?.text, "baslik must have text");
+  assert.match(textLayer.text.text, /Kıbrıs İlim Üniversitesi[\r\n]+Mezuniyet/);
+  assert.equal(textLayer.text.style.font.name, "SourceSans3-Bold");
+  assert.ok(textLayer.imageData, "text layer must have raster preview imageData");
+
+  const shapeLayer = psd.children.find((l) => l.name === "panel");
+  assert.ok(shapeLayer?.vectorMask, "panel must have vectorMask");
+  assert.deepEqual(shapeLayer.vectorFill?.color, { r: 134, g: 38, b: 51 });
+});
+
+test("export: PSD has live text layers and vector shape layers", { timeout: 300_000 }, async () => {
+  const d = tmp();
+  try {
+    const design = {
+      size: "post",
+      lang: "tr",
+      layout: "band",
+      title: "Kıbrıs İlim Üniversitesi Mezuniyet Töreni",
+      subtitle: "2026 Akademik Yılı Mezuniyet Coşkusu",
+      meta: "15.10.2026 14:00 • Kampüs Amfi Tiyatro",
+      logoId: "official-ciu-color-1line-bilingual-tr",
+    };
+    const { path } = await exportPsd({ design, id: "Post", out: d, name: "final.psd" });
+    const { agPsd } = getModules();
+    initPsd(agPsd);
+    const buf = readFileSync(path);
+    const psd = agPsd.readPsd(buf, { useImageData: true, skipCompositeImageData: true });
+
+    const textLayers = (psd.children ?? []).filter((l) => l.text);
+    assert.ok(textLayers.length >= 1, "≥1 text katmanı olmalı");
+    assert.ok(
+      textLayers.some((l) => l.text?.text?.replace(/[\r\n\s]+/g, " ").includes(design.title.replace(/[\r\n\s]+/g, " "))),
+      "text içeriği design.json başlığıyla eşleşmeli"
+    );
+    assert.ok(textLayers.some((l) => l.text?.style?.font?.name?.startsWith("SourceSans3-")), "font adı SourceSans3-* olmalı");
+
+    const shapeLayers = (psd.children ?? []).filter((l) => l.vectorMask);
+    assert.ok(shapeLayers.length >= 1, "≥1 katmanda vectorMask olmalı");
+
+    const imageLayers = (psd.children ?? []).filter((l) => !l.text && !l.vectorMask);
+    assert.ok(imageLayers.length >= 1, "≥1 image katmanı olmalı");
+    assert.ok(imageLayers.every((l) => !!l.imageData && l.imageData.width > 0), "image katmanları imageData taşımalı");
+  } finally {
+    rmSync(d, { recursive: true, force: true });
+  }
+});
+
